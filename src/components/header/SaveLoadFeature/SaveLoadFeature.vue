@@ -20,17 +20,10 @@ import {Character} from "@/types";
 
 export default defineComponent({
 	name: "SaveLoadFeature",
-	emits: ['clear', 'load'],
 	components: {
 		LoadWindow,
 		ModalWindow,
 		Button
-	},
-	props: {
-		character: {
-			type: Object as PropType<Character>,
-			required: true
-		}
 	},
 	data() {
 		return {
@@ -39,18 +32,24 @@ export default defineComponent({
 	},
 	methods: {
 		save() {
-			const file = new Blob([atob(JSON.stringify(this.character))], {
+			const file = new Blob([JSON.stringify(this.$store.state.character)], {
 				type: 'text/plain'
 			});
+			const link = document.createElement("a");
+			link.href = URL.createObjectURL(file);
+			link.download = this.$store.state.character.name + '.fate'
+			link.click();
+			URL.revokeObjectURL(link.href);
 		},
 		openLoadModal() {
 			this.modal = true
 		},
 		load(character: Character) {
+			this.$store.state.
 			this.$emit('load', character)
 		},
 		clear() {
-			this.$emit('clear')
+			this.$store.commit('clearCharacter')
 		}
 	}
 })

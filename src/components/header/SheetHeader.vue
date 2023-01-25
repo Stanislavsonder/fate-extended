@@ -1,22 +1,16 @@
 <template>
 <header>
-	<SaveLoadFeature :character="character"/>
+	<SaveLoadFeature/>
 </header>
 </template>
 
 <script lang="ts">
 import SaveLoadFeature from "@/components/header/SaveLoadFeature/SaveLoadFeature.vue";
-import {defineComponent, PropType} from "vue";
-import {Character} from "@/types";
+import { defineComponent } from "vue";
 
 export default defineComponent({
 	name: "SheetHeader",
+	emits: ['character-loaded', 'clear'],
 	components: {SaveLoadFeature},
-	props: {
-		character: {
-			type: Object as PropType<Character>,
-			required: true
-		}
-	}
 })
 </script>

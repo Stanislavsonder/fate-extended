@@ -1,7 +1,7 @@
 <template>
     <TextSection
         title="Equipment & inventory"
-        :model-value="inventory"
+        :model-value="this.$store.state.character.inventory"
         @update:model-value="update"/>
 </template>
 
@@ -12,19 +12,12 @@ import TextSection from "@/components/common/TextSection.vue";
 
 export default defineComponent({
     name: "Inventory",
-    emits: ['update:inventory'],
     components: {
         TextSection
     },
-    props: {
-        inventory: {
-            type: String,
-            required: true
-        }
-    },
     methods: {
         update(value: string) {
-            this.$emit('update:inventory', value)
+            this.$store.commit('updateInventory', value)
         }
     }
 

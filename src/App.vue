@@ -7,13 +7,38 @@
 import { defineComponent } from 'vue';
 import CharList from "@/components/CharList.vue";
 import SheetHeader from "@/components/header/SheetHeader.vue";
+import {Character} from "@/types";
+import {validateCharacter} from "@/consts/validators";
+
+interface Data {
+	char: Character
+}
 
 export default defineComponent({
 	name: 'App',
 	components: {
 		SheetHeader,
 		CharList
-  }
+	},
+	watch: {
+		'$store.state.character': {
+			handler(value){
+				window.localStorage.character = JSON.stringify(value);
+			},
+			deep: true
+		}
+	},
+	mounted() {
+		if (!window.localStorage.character) {
+			return
+		}
+
+		const character = JSON.parse(window.localStorage.character)
+		if (validateCharacter(character)) {
+			this.$store.commit('setCharacter', character)
+		}
+	}
+
 });
 </script>
 

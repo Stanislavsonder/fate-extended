@@ -5,11 +5,6 @@ export enum AspectType {
     Problem = 'problem'
 }
 
-
-type Aaa = {
-    a: string
-}
-
 export type Aspect = {
     title: string
     description: string
@@ -59,7 +54,7 @@ export type CharacterCoreModule = {
     name: string
     race: string
     level: number
-    modules: Module[]
+    modules: string[]
     aspects: Aspect[]
     description: string
     inventory: string

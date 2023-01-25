@@ -8,7 +8,7 @@
         </template>
         <template v-slot:content>
             <ul class="skills__list">
-                <li v-for="(skill, index) in skills" :key="skill.name">
+                <li v-for="(skill, index) in this.$store.state.character.skills" :key="skill.name">
                     <Skill
 						:skill="skill"
 						@remove="remove(index)"
@@ -20,7 +20,7 @@
     </Card>
     <ModalWindow v-model="addModal" title="Add new skill">
         <AddSkill
-            :existed-skills="skills"
+            :existed-skills="this.$store.state.character.skills"
             @close="addModal = false"
             @add="addSkill" />
     </ModalWindow>
@@ -30,7 +30,7 @@
 import Card from "@/components/common/Card.vue";
 import Skill from "@/components/sheet-elements/Skill.vue";
 import {Skill as SkillType} from "@/types"
-import {defineComponent, PropType} from "vue";
+import {defineComponent} from "vue";
 import ConfigButton from "@/components/ui/ConfigButton.vue";
 import ModalWindow from "@/components/common/ModalWindow.vue";
 import AddSkill from "@/components/edit/AddSkill.vue";
@@ -44,30 +44,23 @@ export default defineComponent({
         Skill,
 		Card
     },
-    emits: ['update:skills'],
-    props: {
-        skills: {
-            type: Array as PropType<SkillType[]>,
-            required: true
-        }
-    },
     methods: {
         add() {
             this.addModal = true
         },
         addSkill(skill: SkillType) {
-            this.$emit('update:skills', [...this.skills, skill])
+			this.$store.commit('updateSkills',  [...this.$store.state.character.skills, skill])
         },
 		update(skill: SkillType, index: number) {
-			const newSkills = [...this.skills]
+			const newSkills = [...this.$store.state.character.skills]
 			newSkills.splice(index, 1, skill);
 			newSkills.sort((a,b) => {
 				return b.level - a.level? b.level - a.level : b.experience - a.experience
 			})
-			this.$emit('update:skills', newSkills)
+			this.$store.commit('updateSkills',  newSkills)
 		},
 		remove(index: number) {
-			this.$emit('update:skills', this.skills.filter((e, i) => i !== index))
+			this.$store.commit('updateSkills', this.$store.state.character.skills.filter((e: SkillType, i: number) => i !== index))
 		}
     },
     data() {

@@ -12,16 +12,16 @@
                 </div>
                 <div class="character__bars">
                     <div class="character__info">
-                        <h2>{{ name }}</h2>
-                        <h3>{{ race }}</h3>
+                        <h2>{{ this.$store.state.character.name }}</h2>
+                        <h3>{{ this.$store.state.character.race }}</h3>
                     </div>
                     <div class="character__core-bars">
-                        <HealthBar :health="health"/>
-                        <MentalBar :mental="mental"/>
+                        <HealthBar/>
+                        <MentalBar/>
                     </div>
                     <div class="character__additional-bars">
-                        <ManaBar :mana="mana"/>
-                        <IntoxicationBar :intoxication="intoxication"/>
+                        <ManaBar :mana="this.$store.state.character.mana"/>
+                        <IntoxicationBar :intoxication="this.$store.state.character.intoxication"/>
                     </div>
                 </div>
             </div>
@@ -42,33 +42,6 @@ export default defineComponent({
     name: "Character",
     components: {
         IntoxicationBar, ManaBar, MentalBar, HealthBar, Card
-    },
-    props: {
-        name: {
-            type: String,
-            required: true
-        },
-        race: {
-            type: String,
-            required: true
-        },
-        health: {
-            type: Object as PropType<Health>,
-            required: true
-        },
-        mental: {
-            type: Object as PropType<Mental>,
-            required: true
-        },
-        mana: {
-            type: Object as PropType<Mana>,
-            required: false
-        },
-        intoxication: {
-            type: Object as PropType<Intoxication>,
-            required: false
-        }
-
     },
 })
 </script>

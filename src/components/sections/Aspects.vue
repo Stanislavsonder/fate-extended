@@ -5,7 +5,7 @@
         </template>
         <template v-slot:content >
             <ul class="aspects__content">
-                <li v-for="(aspect, index) in aspects" :key="aspect.type">
+                <li v-for="(aspect, index) in $store.state.character.aspects" :key="aspect.type">
                     <AspectComponent
                         :aspect="aspect"
                         @remove="remove(index)"
@@ -28,7 +28,7 @@
 <script lang="ts">
 import Card from "@/components/common/Card.vue";
 import AspectComponent from "@/components/sheet-elements/Aspect.vue";
-import {defineComponent, PropType} from "vue";
+import {defineComponent} from "vue";
 import {Aspect, AspectType} from "@/types";
 import ModalWindow from "@/components/common/ModalWindow.vue";
 import ConfigButton from "@/components/ui/ConfigButton.vue";
@@ -42,13 +42,6 @@ export default defineComponent({
         }
     },
     components: {AspectEdit, ConfigButton, ModalWindow, AspectComponent, Card},
-    emits: ['update:aspects'],
-    props: {
-        aspects: {
-            type: Array as PropType<Aspect[]>,
-            required: true
-        }
-    },
     data() {
         return {
             modal: false
@@ -56,15 +49,15 @@ export default defineComponent({
     },
     methods: {
         update(aspect: Aspect, id: number) {
-            const newAspects = [...this.aspects]
+            const newAspects = [...this.$store.state.character.aspects]
             newAspects.splice(id, 1, aspect);
-            this.$emit('update:aspects', newAspects)
+			this.$store.commit('updateAspects', newAspects)
         },
         remove(id: number) {
-            this.$emit('update:aspects', this.aspects.filter((e, i) => i !== id))
+            this.$store.commit('updateAspects', this.$store.state.character.aspects.filter((e: Aspect, i: number) => i !== id))
         },
         add(aspect: Aspect) {
-            this.$emit('update:aspects', [...this.aspects, aspect])
+			this.$store.commit('updateAspects', [...this.$store.state.character.aspects, aspect])
         }
     }
 

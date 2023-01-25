@@ -1,7 +1,7 @@
 <template>
     <TextSection
         title="Origin & Appearance"
-        :model-value="description"
+        :model-value="this.$store.state.character.description"
         @update:model-value="update"/>
 </template>
 
@@ -12,19 +12,12 @@ import TextSection from "@/components/common/TextSection.vue";
 
 export default defineComponent({
     name: "Description",
-    emits: ['update:description'],
     components: {
         TextSection
     },
-    props: {
-        description: {
-            type: String,
-            required: true
-        }
-    },
     methods: {
         update(value: string) {
-            this.$emit('update:description', value)
+			this.$store.commit('updateDescription', value);
         }
     }
 

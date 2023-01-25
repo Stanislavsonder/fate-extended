@@ -42,6 +42,7 @@ button {
 	}
 
 	&:disabled {
+		cursor: default;
 		opacity: 0.5;
 	}
 }

@@ -8,7 +8,7 @@
         </template>
         <template v-slot:content>
             <ul>
-                <li v-for="(stunt, index) in stunts" :key="stunt.name">
+                <li v-for="(stunt, index) in this.$store.state.character.stunts" :key="stunt.name">
                     <Stunt
 						@remove="() => remove(index)"
 						@update="newStunt => update(newStunt, index)"
@@ -38,13 +38,6 @@ import StuntAddAndEdit from "@/components/edit/StuntAddAndEdit.vue";
 export default defineComponent({
     name: "Stunts",
     components: {StuntAddAndEdit, ModalWindow, ConfigButton, Stunt, Card},
-    emits: ['update:stunts'],
-    props: {
-        stunts: {
-            type: Array as PropType<StuntType[]>,
-            required: true
-        }
-    },
     data() {
         return {
             modal: false
@@ -52,15 +45,15 @@ export default defineComponent({
     },
     methods: {
         add(stunt: StuntType) {
-            this.$emit('update:stunts', [...this.stunts, stunt])
+			this.$store.commit('updateStunts', [...this.$store.state.character.stunts, stunt])
         },
 		update(stunt: StuntType, id: number) {
-			const newStunts = [...this.stunts]
+			const newStunts = [...this.$store.state.character.stunts]
 			newStunts.splice(id, 1, stunt);
-			this.$emit('update:stunts', newStunts)
+			this.$store.commit('updateStunts', newStunts)
 		},
 		remove(id: number) {
-			this.$emit('update:stunts', this.stunts.filter((e, i) => i !== id))
+			this.$store.commit('updateStunts', this.$store.state.character.stunts.filter((e: StuntType, i: number) => i !== id))
 		},
     }
 

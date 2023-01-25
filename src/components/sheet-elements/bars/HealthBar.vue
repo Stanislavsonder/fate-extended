@@ -1,5 +1,5 @@
 <template>
-    <MainBar :value="health">
+    <MainBar :value="$store.state.character.hp">
         <template v-slot:icon>
             <HealthIcon/>
         </template>
@@ -17,12 +17,6 @@ export default defineComponent({
     components: {
         MainBar,
         HealthIcon
-    },
-    props: {
-        health: {
-            type: Object as PropType<Health>,
-            required: true
-        }
     }
 })
 </script>

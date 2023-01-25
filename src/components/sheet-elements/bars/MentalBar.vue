@@ -1,5 +1,5 @@
 <template>
-    <MainBar :value="mental">
+    <MainBar :value="$store.state.character.mental">
         <template v-slot:icon>
             <MindIcon/>
         </template>
@@ -16,12 +16,6 @@ export default defineComponent({
     name: "MentalBar",
     components: {
         MindIcon, MainBar
-    },
-    props: {
-        mental: {
-            type: Object as PropType<Mental>,
-            required: true
-        }
     }
 })
 </script>
