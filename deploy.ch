@@ -6,6 +6,6 @@ cd dist
 git init
 git add -A
 git commit -m 'deploy'
-git push -f git@github.com:Stanislavsonder/fate-extended-character-sheet.git master:gh-pages
+git push -f git@github.com:Stanislavsonder/fate-extended.git main:gh-pages
 
 cd -
