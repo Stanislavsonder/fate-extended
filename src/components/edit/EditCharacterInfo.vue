@@ -33,7 +33,7 @@
 						type="number"
 						inputmode="number"
 						:min="0"
-						:max="6">
+						:max="4">
 				</label>
 			</div>
 			<nav>

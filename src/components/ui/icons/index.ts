@@ -14,11 +14,20 @@ import Save from "@/components/ui/icons/Save.vue";
 import Load from "@/components/ui/icons/Load.vue";
 import Restore from "@/components/ui/icons/Restore.vue";
 import Dices from "@/components/ui/icons/Dices.vue";
-
+import DiceNeutral from "@/components/ui/icons/DiceNeutral.vue";
+import DiceNegative from "@/components/ui/icons/DiceNegative.vue";
+import DicePositive from "@/components/ui/icons/DicePositive.vue";
+import LuckyDiceNeutral from "@/components/ui/icons/LuckyDiceNeutral.vue";
+import LuckyDicePositive from "@/components/ui/icons/LuckyDicePositive.vue";
 
 export default  {
     ArrowIcon,
     Dices,
+    DiceNegative,
+    DiceNeutral,
+    DicePositive,
+    LuckyDicePositive,
+    LuckyDiceNeutral,
     Load,
     Save,
     Luck,
