@@ -1,6 +1,6 @@
 <template>
     <TextSection
-        title="Equipment & inventory"
+        :title="$t('equipment-and-inventory')"
         :model-value="this.$store.state.character.inventory"
         @update:model-value="update"/>
 </template>

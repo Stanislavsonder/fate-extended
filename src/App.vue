@@ -26,9 +26,15 @@ export default defineComponent({
 				window.localStorage.character = JSON.stringify(value);
 			},
 			deep: true
+		},
+		'$i18n.locale'(value) {
+			window.localStorage.lang = value;
 		}
 	},
 	mounted() {
+		if (window.localStorage.lang) {
+			this.$i18n.locale = window.localStorage.lang
+		}
 		if (!window.localStorage.character) {
 			return
 		}
@@ -37,6 +43,7 @@ export default defineComponent({
 		if (validateCharacter(character)) {
 			this.$store.commit('setCharacter', character)
 		}
+
 	}
 
 });

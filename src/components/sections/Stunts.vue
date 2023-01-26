@@ -1,10 +1,11 @@
 <template>
-    <Card title="Stunts">
+    <Card :title="$t('stunts')">
         <template v-slot:buttons>
             <ConfigButton
+				hint="Add new Skill"
                 @click="modal = true"
                 type="PlusIcon"
-                transparent/>
+				variant="transparent"/>
         </template>
         <template v-slot:content>
             <ul>

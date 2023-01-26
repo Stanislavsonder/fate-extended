@@ -1,8 +1,10 @@
 <template>
 <button
+	:title="hint"
     class="config-button"
-    :class="{'config-button--transparent': transparent}">
-    <component :is="type"/>
+    :class="modifiers">
+    <component
+		:is="type"/>
 </button>
 </template>
 
@@ -18,23 +20,39 @@ export default defineComponent({
             type: String,
             required: true
         },
-        transparent: {
-            type: Boolean,
-            default: false
-        }
-    }
+        variant: {
+            type: [String, Array],
+            default: ''
+        },
+		hint: {
+			type: String,
+			default: ''
+		}
+    },
+	computed: {
+		modifiers(): string {
+
+			if (typeof this.variant === 'string' && this.variant) {
+				return 'config-button--' + this.variant
+			}
+			if (Array.isArray(this.variant)){
+				return this.variant.map(e => 'config-button--' + e).join(' ')
+			}
+			return ''
+		}
+	}
 
 })
 </script>
 
 <style lang="scss">
 .config-button {
-    display: grid;
+    display: inline-grid;
     place-content: center;
     box-sizing: border-box;
     border: none;
-    height: 24px;
-    width: 24px;
+    height: 36px;
+    width: 36px;
     border-radius: 100%;
     background-color: white;
     cursor: pointer;
@@ -44,17 +62,29 @@ export default defineComponent({
         background-color: rgba(255, 255, 255, 0.3);
     }
 
+	& > svg {
+		width: 20px;
+		height: 20px;
+	}
+
     &--transparent {
         background-color: transparent;
+
+		svg,
+		path,
+		circle {
+			fill: white;
+		}
     }
 
-    &--transparent & {
+	&--danger {
+		svg,
+		path,
+		circle {
+			fill: #f87070;
+		}
+	}
 
-    }
 
-    & > svg {
-        width: 14px;
-        height: 14px;
-    }
 }
 </style>

@@ -4,9 +4,10 @@
         :title="title">
         <template v-slot:buttons>
             <ConfigButton
+				hint="Edit"
                 @click="editMode = true"
                 type="EditIcon"
-                transparent/>
+				variant="transparent"/>
         </template>
         <template v-slot:content>
             <p v-if="!editMode">

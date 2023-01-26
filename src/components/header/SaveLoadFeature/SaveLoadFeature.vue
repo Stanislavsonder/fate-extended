@@ -1,8 +1,20 @@
 <template>
 <nav>
-	<Button @click="save">Save</Button>
-	<Button @click="openLoadModal">Load</Button>
-	<Button @click="clear" secondary>Clear</Button>
+	<ConfigButton
+		variant="transparent"
+		type="Save"
+		@click="save"
+		title="Save character into the file"/>
+	<ConfigButton
+		variant="transparent"
+		type="Load"
+		@click="openLoadModal"
+		title="Load character from the file"/>
+	<ConfigButton
+		:variant="['transparent', 'danger']"
+		type="Restore"
+		@click="clear"
+		title="Restore character sheet"/>
 </nav>
 	<ModalWindow v-model="modal">
 		<LoadWindow
@@ -12,18 +24,18 @@
 </template>
 
 <script lang="ts">
-import Button from "@/components/ui/Button.vue";
-import {defineComponent, PropType} from "vue";
+import {defineComponent,} from "vue";
 import ModalWindow from "@/components/common/ModalWindow.vue";
 import LoadWindow from "@/components/header/LoadWindow.vue";
 import {Character} from "@/types";
+import ConfigButton from "@/components/ui/ConfigButton.vue";
 
 export default defineComponent({
 	name: "SaveLoadFeature",
 	components: {
+		ConfigButton,
 		LoadWindow,
 		ModalWindow,
-		Button
 	},
 	data() {
 		return {
@@ -37,7 +49,7 @@ export default defineComponent({
 			});
 			const link = document.createElement("a");
 			link.href = URL.createObjectURL(file);
-			link.download = this.$store.state.character.name + '.fate'
+			link.download = (this.$store.state.character.name || 'Unnamed Character') + '.fate'
 			link.click();
 			URL.revokeObjectURL(link.href);
 		},

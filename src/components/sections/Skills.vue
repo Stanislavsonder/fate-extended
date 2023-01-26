@@ -1,8 +1,9 @@
 <template>
-    <Card title="Skills" class="skills">
+    <Card :title="$t('skills')" class="skills">
         <template v-slot:buttons>
             <ConfigButton
-                transparent
+				hint="Add new Skill"
+				variant="transparent"
                 @click="add"
                 type="PlusIcon"/>
         </template>

@@ -1,10 +1,10 @@
 <template>
-    <div class="main-bar">
+    <div class="main-bar" v-if="$store.getters.maxMana">
         <div class="main-bar__numbers">
             <span class="main-bar__icon">
                <ManaIcon/>
             </span>
-            <h6>{{ mana.current }} / {{ mana.max }}</h6>
+            <h6>{{ $store.state.character.mana.current }} / {{ $store.getters.maxMana }}</h6>
         </div>
         <div :style="{ background: bg }" class="main-bar__bar">
             <span class="main-bar__bubbles"/>
@@ -29,17 +29,11 @@ import {Mana} from "@/types";
 export default defineComponent({
     name: "ManaBar",
     components: {ManaIcon},
-    props: {
-        mana: {
-            type: Object as PropType<Mana>,
-            required: true
-        }
-    },
     computed: {
-        percent() {
-            return this.mana.current / this.mana.max * 100
+        percent(): number {
+            return this.$store.state.character.mana.current / this.$store.getters.maxMana * 100
         },
-        bg() {
+        bg(): string {
             return `linear-gradient(90deg, #181818 0%, #181818 ${this.percent}%, transparent ${this.percent}%)`
         }
     },

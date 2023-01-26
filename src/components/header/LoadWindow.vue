@@ -54,13 +54,6 @@ export default defineComponent({
 			error: ''
 		}
 	},
-	watch: {
-		loadedChar(value) {
-
-			console.log(validateCharacter(value), value);
-		}
-	},
-
 	computed: {
 		charValidator(): boolean {
 			return !!this.loadedChar && validateCharacter(this.loadedChar);

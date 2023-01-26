@@ -10,11 +10,12 @@ export const validateCharacter = (data: unknown): boolean => {
         typeof char.description === 'string' &&
         typeof char.inventory === 'string' &&
         typeof char.level === 'number' &&
+        typeof char.luck === 'number' &&
         char.skills.every(validateSkill) &&
         char.stunts.every(validateStunt) &&
         char.aspects.every(validateAspect) &&
         char.skills.every(validateSkill) &&
-        validateMainParam(char.hp) &&
+        validateMainParam(char.health) &&
         validateMainParam(char.mental)) {
         return true
     }
@@ -80,9 +81,8 @@ export const validateMainParam = (data: unknown): boolean => {
         return false
     }
     const params = data as MainParam
-    if (typeof params.max === 'number' &&
-        typeof params.current === 'number' &&
-        params.current <= params.max &&
+    if (typeof params.current === 'number' &&
+        typeof params.modifier === 'number' &&
         params.consequences.every(validateConsequence)){
         return true;
     }

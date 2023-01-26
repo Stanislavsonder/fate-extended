@@ -1,6 +1,6 @@
 <template>
     <TextSection
-        title="Origin & Appearance"
+        :title="$t('origin-and-appearance')"
         :model-value="this.$store.state.character.description"
         @update:model-value="update"/>
 </template>

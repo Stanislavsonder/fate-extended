@@ -4,7 +4,7 @@
             <span class="main-bar__icon">
                 <slot name="icon"/>
             </span>
-            <h6>{{ value.current }} / {{ value.max }}</h6>
+            <h6>{{ current }} / {{ max }}</h6>
         </div>
         <div :style="{
                 background: `linear-gradient(90deg, #181818 0%, #181818 ${percent}%, transparent ${percent}%)`}"
@@ -23,20 +23,23 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType} from "vue";
-import {MainParam} from "@/types";
+import { defineComponent } from "vue";
 
 export default defineComponent({
     name: "MainBar",
     props: {
-        value: {
-            type: Object as PropType<MainParam>,
+        current: {
+            type: Number,
             required: true
-        }
+        },
+		max: {
+			type: Number,
+			required: true
+		}
     },
     computed: {
         percent() {
-            return this.value.current / this.value.max * 100
+            return this.current / this.max * 100
         }
     }
 })

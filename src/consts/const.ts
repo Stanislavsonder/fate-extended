@@ -1,4 +1,4 @@
-import {AspectType, ModuleStatus, SkillType} from "@/types";
+import {AspectType, Character, ModuleStatus, SkillType} from "@/types";
 
 export const MODULES_LIST = [
     {
@@ -299,26 +299,33 @@ export function copy<T>(object: T): T {
     return JSON.parse(JSON.stringify(object))
 }
 
-export const EMPTY_CHARACTER = {
+
+export const BASE_HEALTH = 50
+export const BASE_MENTAL = 35
+export const BASE_MANA = 0
+export const BASE_INTOXICATION = 20
+
+export const EMPTY_CHARACTER: Character = {
     name: '',
     race: '',
-    hp: {
-        max: 50,
-        current: 50,
+    luck: 0,
+    health: {
+        current: BASE_HEALTH,
+        modifier: 0,
         consequences: []
     },
     mental: {
-        max: 35,
-        current: 35,
+        current: BASE_MENTAL,
+        modifier: 0,
         consequences: []
     },
     mana: {
-        max: 50,
-        current: 50
+        modifier: 0,
+        current: BASE_MANA
     },
     intoxication: {
-        max: 50,
-        current: 0
+        modifier: 0,
+        current: BASE_INTOXICATION
     },
     aspects: [],
     inventory: '',

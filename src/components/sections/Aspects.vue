@@ -1,7 +1,10 @@
 <template>
-    <Card title="Aspects" class="aspects">
+    <Card :title="$t('aspects')" class="aspects">
         <template v-slot:buttons>
-            <ConfigButton @click="modal = true" type="PlusIcon" transparent/>
+            <ConfigButton
+				hint="Add new Aspect"
+				@click="modal = true" type="PlusIcon"
+				variant="transparent"/>
         </template>
         <template v-slot:content >
             <ul class="aspects__content">

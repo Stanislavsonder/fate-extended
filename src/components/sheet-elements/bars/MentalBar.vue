@@ -1,5 +1,7 @@
 <template>
-    <MainBar :value="$store.state.character.mental">
+    <MainBar
+		:max="$store.getters.maxMental"
+		:current="$store.state.character.mental.current">
         <template v-slot:icon>
             <MindIcon/>
         </template>

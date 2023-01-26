@@ -40,8 +40,8 @@ export type Consequence = {
 }
 
 export type MainParam = {
-    max: number
     current: number,
+    modifier: number
     consequences: Consequence[]
 }
 export type Health = MainParam
@@ -60,8 +60,9 @@ export type CharacterCoreModule = {
     inventory: string
     skills: Skill[]
     stunts: Stunt[]
-    hp: Health
+    health: Health
     mental: Mental
+    luck: number
 }
 
 

@@ -31,7 +31,7 @@ export default defineComponent({
     },
     computed: {
         percent() {
-            return this.intoxication.current / this.intoxication.max * 100
+            return this.intoxication.current / this.$store.getters.maxIntoxication * 100
         },
         gradient() {
             return {
