@@ -2,7 +2,7 @@
 <section class="modules">
     <img
         class="modules__fate-logo"
-        src="/logo.png"
+        src="../../assets/Logo.png"
         alt="Fate Extended Logo">
     <ul
         class="modules__list"

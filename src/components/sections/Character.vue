@@ -12,7 +12,7 @@
 				<div class="character__person">
 					<img
 						class="character__image"
-						src="/img/Character%20Placeholder.png"
+						src="../../assets/CharacterPlaceholder.png"
 						alt="Character Placeholder">
 					<span class="character__level">
 						{{ $store.state.character.level }}
