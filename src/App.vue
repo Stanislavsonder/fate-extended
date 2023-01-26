@@ -49,8 +49,10 @@ export default defineComponent({
 });
 </script>
 
-<style src="./reset.css"/>
+<style src="./styles/reset.css"/>
 <style lang="scss">
+@import 'src/styles/breakpoints';
+
 :root {
     --inter: Inter, Avenir, Helvetica, Arial, sans-serif;
 }
@@ -58,7 +60,6 @@ button {
     cursor: pointer;
 }
 body {
-
     font-family: var(--inter);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

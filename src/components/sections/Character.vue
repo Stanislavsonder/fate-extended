@@ -79,24 +79,43 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+@use "src/styles/breakpoints";
+
 .character {
 	position: relative;
 	width: 100%;
+
+	@include breakpoints.media-breakpoint-down(sm) {
+		width: auto;
+	}
 
 	&__content {
 		display: flex;
 		width: 100%;
 		gap: 50px;
+
+		@include breakpoints.media-breakpoint-down(xs) {
+			flex-direction: column;
+			gap: 16px;
+			padding-bottom: 60px;
+		}
+
 	}
 
 	&__person {
 		position: relative;
 		height: 183px;
+
 	}
 
 	&__info {
 		display: flex;
 		justify-content: space-between;
+
+		@include breakpoints.media-breakpoint-down(xs) {
+			flex-direction: column;
+			gap: 6px;
+		}
 
 		h2 {
 			font-size: 24px;
@@ -112,7 +131,7 @@ export default defineComponent({
 		height: 100%;
 		aspect-ratio: 1/1;
 		object-fit: cover;
-		border: 1px solid black;
+		border: 1px solid #181818;
 		box-sizing: border-box;
 		border-radius: 5px;
 	}
@@ -127,8 +146,16 @@ export default defineComponent({
 		height: 48px;
 		border-radius: 14px 0 4px 0;
 		background-color: white;
-		right: 1px;
-		bottom: 1px;
+		right: 0;
+		bottom: 0;
+		border: 1px solid #181818;
+		box-sizing: border-box;
+
+		@include breakpoints.media-breakpoint-down(xs) {
+			right: 50%;
+			transform: translateX(50%);
+			border-radius: 14px 14px 0 0;
+		}
 	}
 
 	&__bars {
@@ -158,6 +185,11 @@ export default defineComponent({
 		bottom: 15px;
 		width: 48px;
 		height: 48px;
+
+		@include breakpoints.media-breakpoint-down(xs) {
+			right: 50%;
+			transform: translateX(50%);
+		}
 
 	}
 	&__luck-value {

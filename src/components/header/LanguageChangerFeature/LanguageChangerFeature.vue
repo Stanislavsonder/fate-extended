@@ -2,7 +2,7 @@
 <nav class="language">
 	<button class="language__current" @click="modal = !modal">
 		<LanguageFlag :lang="$i18n.locale"/>
-		<span>
+		<span class="language__current-name">
 			{{ languages.find(e => e.lang === $i18n.locale)?.name || ''}}
 		</span>
 	</button>
@@ -19,7 +19,7 @@
 				:title="language.name"
 				>
 				<LanguageFlag :lang="language.lang"/>
-				<span>
+				<span class="language__list-name">
 					{{language.name}}
 				</span>
 			</button>
@@ -68,10 +68,17 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+@use "src/styles/breakpoints";
+
 .language {
 	width: 200px;
 	box-sizing: border-box;
 	padding-left: 6px;
+	margin-left: auto;
+
+	@include breakpoints.media-breakpoint-only(xs) {
+		width: auto
+	}
 
 	&__current,
 	&__button {
@@ -85,6 +92,10 @@ export default defineComponent({
 		padding: 2px 8px;
 		gap: 8px;
 		border-radius: 5px;
+
+		@include breakpoints.media-breakpoint-only(xs) {
+			width: auto
+		}
 
 		&:hover {
 			background-color: rgba(255, 255, 255, 0.1);
@@ -101,17 +112,36 @@ export default defineComponent({
 		}
 	}
 
+	&__current-name {
+		@include breakpoints.media-breakpoint-only(xs) {
+			display: none;
+		}
+	}
+
+	&__list-name {
+		@include breakpoints.media-breakpoint-only(xs) {
+			display: none;
+		}
+	}
+
+
 	&__button {
 		height: 50px;
 	}
 	&__list {
 		position: absolute;
+		z-index: 100;
 		right: 0;
 		top: 50px;
 		background-color: #181818;
 		padding: 10px;
 		border-radius: 0 0 8px 8px;
 		width: 200px;
+
+		@include breakpoints.media-breakpoint-only(xs) {
+			width: auto;
+			padding: 6px 18px;
+		}
 	}
 }
 </style>

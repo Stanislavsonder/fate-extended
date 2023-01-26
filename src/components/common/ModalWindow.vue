@@ -60,7 +60,7 @@ export default defineComponent({
     }
 
     &__main {
-        min-width: 800px;
+        min-width: min(800px, 80vw);
         border-radius: 10px;
         background: white;
         position: absolute;

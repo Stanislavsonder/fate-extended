@@ -51,14 +51,25 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@use "src/styles/breakpoints";
+
 .char-sheet {
     &__main-section {
         display: flex;
+
+		@include breakpoints.media-breakpoint-down(sm) {
+			flex-direction:column-reverse;
+		}
     }
 
     &__half-section {
         display: grid;
         grid-template-columns: 1fr 1fr;
+
+		@include breakpoints.media-breakpoint-down(sm) {
+			grid-template-columns: auto;
+		}
+
     }
 }
 </style>

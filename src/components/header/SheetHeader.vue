@@ -1,6 +1,7 @@
 <template>
 <header>
 	<SaveLoadFeature/>
+	<span/>
 	<RollDiceFeature/>
 	<LanguageChangerFeature/>
 </header>
@@ -25,7 +26,13 @@ header {
 	padding: 0 16px;
 	background-color: #181818;
 	display: flex;
-	justify-content: space-between;
+	gap: 16px;
 	align-items: center;
+
+	& > span {
+		width: 1px;
+		height: 50%;
+		background-color: #a8a8a8;
+	}
 }
 </style>

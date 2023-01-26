@@ -8,6 +8,9 @@ module.exports = defineConfig({
     themeColor: "#181818",
     msTileColor: "#FFFFFF",
     appleMobileWebAppCapable: 'yes'
+  },
+  configureWebpack: {
+
   }
 
 })
