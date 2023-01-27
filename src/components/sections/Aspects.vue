@@ -8,7 +8,7 @@
         </template>
         <template v-slot:content >
             <ul class="aspects__content">
-                <li v-for="(aspect, index) in $store.state.character.aspects" :key="aspect.type">
+                <li v-for="(aspect, index) in $store.state.characters[$store.state.current].aspects" :key="aspect.type">
                     <AspectComponent
                         :aspect="aspect"
                         @remove="remove(index)"
@@ -52,15 +52,15 @@ export default defineComponent({
     },
     methods: {
         update(aspect: Aspect, id: number) {
-            const newAspects = [...this.$store.state.character.aspects]
+            const newAspects = [...this.$store.state.characters[this.$store.state.current].aspects]
             newAspects.splice(id, 1, aspect);
 			this.$store.commit('updateAspects', newAspects)
         },
         remove(id: number) {
-            this.$store.commit('updateAspects', this.$store.state.character.aspects.filter((e: Aspect, i: number) => i !== id))
+            this.$store.commit('updateAspects', this.$store.state.characters[this.$store.state.current].aspects.filter((e: Aspect, i: number) => i !== id))
         },
         add(aspect: Aspect) {
-			this.$store.commit('updateAspects', [...this.$store.state.character.aspects, aspect])
+			this.$store.commit('updateAspects', [...this.$store.state.characters[this.$store.state.current].aspects, aspect])
         }
     }
 

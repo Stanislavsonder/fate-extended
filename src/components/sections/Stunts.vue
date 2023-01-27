@@ -9,7 +9,7 @@
         </template>
         <template v-slot:content>
             <ul>
-                <li v-for="(stunt, index) in this.$store.state.character.stunts" :key="stunt.name">
+                <li v-for="(stunt, index) in $store.state.characters[$store.state.current].stunts" :key="stunt.name">
                     <Stunt
 						@remove="() => remove(index)"
 						@update="newStunt => update(newStunt, index)"
@@ -46,15 +46,15 @@ export default defineComponent({
     },
     methods: {
         add(stunt: StuntType) {
-			this.$store.commit('updateStunts', [...this.$store.state.character.stunts, stunt])
+			this.$store.commit('updateStunts', [...this.$store.state.characters[this.$store.state.current].stunts, stunt])
         },
 		update(stunt: StuntType, id: number) {
-			const newStunts = [...this.$store.state.character.stunts]
+			const newStunts = [...this.$store.state.characters[this.$store.state.current].stunts]
 			newStunts.splice(id, 1, stunt);
 			this.$store.commit('updateStunts', newStunts)
 		},
 		remove(id: number) {
-			this.$store.commit('updateStunts', this.$store.state.character.stunts.filter((e: StuntType, i: number) => i !== id))
+			this.$store.commit('updateStunts', this.$store.state.characters[this.$store.state.current].stunts.filter((e: StuntType, i: number) => i !== id))
 		},
     }
 

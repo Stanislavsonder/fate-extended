@@ -1,5 +1,6 @@
 <template>
 <header>
+	<CharacterChangerFeature/>
 	<SaveLoadFeature/>
 	<span/>
 	<RollDiceFeature/>
@@ -12,11 +13,12 @@ import SaveLoadFeature from "@/components/header/SaveLoadFeature/SaveLoadFeature
 import { defineComponent } from "vue";
 import LanguageChangerFeature from "@/components/header/LanguageChangerFeature/LanguageChangerFeature.vue";
 import RollDiceFeature from "@/components/header/RollDiceFeature/RollDiceFeature.vue";
+import CharacterChangerFeature from "@/components/header/CharacterChangerFeature/CharacterChangerFeature.vue";
 
 export default defineComponent({
 	name: "SheetHeader",
 	emits: ['character-loaded', 'clear'],
-	components: {RollDiceFeature, LanguageChangerFeature, SaveLoadFeature},
+	components: {CharacterChangerFeature, RollDiceFeature, LanguageChangerFeature, SaveLoadFeature},
 })
 </script>
 

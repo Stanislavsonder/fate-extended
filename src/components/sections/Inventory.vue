@@ -1,7 +1,7 @@
 <template>
     <TextSection
         :title="$t('equipment-and-inventory')"
-        :model-value="this.$store.state.character.inventory"
+        :model-value="$store.state.characters[$store.state.current].inventory"
         @update:model-value="update"/>
 </template>
 

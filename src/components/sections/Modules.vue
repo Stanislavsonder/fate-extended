@@ -30,7 +30,7 @@ export default {
     name: "Modules",
 	computed: {
 		modules() {
-			return this.$store.state.character.modules.map(this.getModule).filter(e => e)
+			return this.$store.state.characters[this.$store.state.current].modules.map(this.getModule).filter(e => e)
 		}
 	},
 	methods: {

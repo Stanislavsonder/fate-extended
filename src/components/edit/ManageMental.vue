@@ -78,21 +78,21 @@ export default defineComponent({
 		}
 	},
 	mounted() {
-		this.modifier = this.$store.state.character.mental.modifier
+		this.modifier = this.$store.state.characters[this.$store.state.current].mental.modifier
 	},
 	methods: {
 		heal() {
-			this.$store.state.character.mental.current = Math.min(
-				this.$store.state.character.mental.current + this.value, this.$store.getters.maxMental)
+			this.$store.state.characters[this.$store.state.current].mental.current = Math.min(
+				this.$store.state.characters[this.$store.state.current].mental.current + this.value, this.$store.getters.maxMental)
 			this.close()
 		},
 		damage() {
-			this.$store.state.character.mental.current = Math.max(
-				this.$store.state.character.mental.current - this.value, 0)
+			this.$store.state.characters[this.$store.state.current].mental.current = Math.max(
+				this.$store.state.characters[this.$store.state.current].mental.current - this.value, 0)
 			this.close()
 		},
 		changeModifier() {
-			this.$store.state.character.mental.modifier = this.modifier
+			this.$store.state.characters[this.$store.state.current].mental.modifier = this.modifier
 			this.close()
 		},
 		close() {

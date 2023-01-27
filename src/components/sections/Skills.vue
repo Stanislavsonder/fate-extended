@@ -9,7 +9,7 @@
         </template>
         <template v-slot:content>
             <ul class="skills__list">
-                <li v-for="(skill, index) in this.$store.state.character.skills" :key="skill.name">
+                <li v-for="(skill, index) in $store.state.characters[$store.state.current].skills" :key="skill.name">
                     <Skill
 						:skill="skill"
 						@remove="remove(index)"
@@ -21,7 +21,7 @@
     </Card>
     <ModalWindow v-model="addModal" title="Add new skill">
         <AddSkill
-            :existed-skills="this.$store.state.character.skills"
+            :existed-skills="$store.state.characters[$store.state.current].skills"
             @close="addModal = false"
             @add="addSkill" />
     </ModalWindow>
@@ -50,10 +50,10 @@ export default defineComponent({
             this.addModal = true
         },
         addSkill(skill: SkillType) {
-			this.$store.commit('updateSkills',  [...this.$store.state.character.skills, skill])
+			this.$store.commit('updateSkills',  [...this.$store.state.characters[this.$store.state.current].skills, skill])
         },
 		update(skill: SkillType, index: number) {
-			const newSkills = [...this.$store.state.character.skills]
+			const newSkills = [...this.$store.state.characters[this.$store.state.current].skills]
 			newSkills.splice(index, 1, skill);
 			newSkills.sort((a,b) => {
 				return b.level - a.level? b.level - a.level : b.experience - a.experience
@@ -61,7 +61,7 @@ export default defineComponent({
 			this.$store.commit('updateSkills',  newSkills)
 		},
 		remove(index: number) {
-			this.$store.commit('updateSkills', this.$store.state.character.skills.filter((e: SkillType, i: number) => i !== index))
+			this.$store.commit('updateSkills', this.$store.state.characters[this.$store.state.current].skills.filter((e: SkillType, i: number) => i !== index))
 		}
     },
     data() {

@@ -15,17 +15,17 @@
 						src="../../assets/CharacterPlaceholder.png"
 						alt="Character Placeholder">
 					<span class="character__level">
-						{{ $store.state.character.level }}
+						{{ $store.state.characters[$store.state.current].level }}
 					</span>
 				</div>
 				<div class="character__bars">
 					<div class="character__info">
 						<h2>
-							{{ this.$store.state.character.name || 'New Character' }}
+							{{ $store.state.characters[$store.state.current].name || 'New Character' }}
 						</h2>
 						<h3>
 							{{
-								this.$store.state.character.race ||
+								$store.state.characters[$store.state.current].race ||
 								"Click 'Edit' button above to change race and name"
 							}}
 						</h3>
@@ -35,15 +35,15 @@
 						<MentalBar/>
 					</div>
 					<div class="character__additional-bars">
-						<ManaBar :mana="this.$store.state.character.mana"/>
+						<ManaBar :mana="$store.state.characters[$store.state.current].mana"/>
 						<IntoxicationBar
 							v-if="false"
-							:intoxication="this.$store.state.character.intoxication"/>
+							:intoxication="$store.state.characters[$store.state.current].intoxication"/>
 					</div>
 				</div>
 				<div class="character__luck">
 					<span class="character__luck-value">
-						{{ $store.state.character.luck }}
+						{{ $store.state.characters[$store.state.current].luck }}
 					</span>
 					<Luck class="character__luck-icon"/>
 				</div>

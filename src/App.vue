@@ -21,9 +21,9 @@ export default defineComponent({
 		CharList
 	},
 	watch: {
-		'$store.state.character': {
+		'$store.state.characters': {
 			handler(value){
-				window.localStorage.character = JSON.stringify(value);
+				window.localStorage.characters = JSON.stringify(value);
 			},
 			deep: true
 		},
@@ -35,13 +35,13 @@ export default defineComponent({
 		if (window.localStorage.lang) {
 			this.$i18n.locale = window.localStorage.lang
 		}
-		if (!window.localStorage.character) {
+		if (!window.localStorage.characters) {
 			return
 		}
 
-		const character = JSON.parse(window.localStorage.character)
-		if (validateCharacter(character)) {
-			this.$store.commit('setCharacter', character)
+		const characters = JSON.parse(window.localStorage.characters)
+		if (characters.every(validateCharacter)) {
+			this.$store.commit('loadCharacters', characters)
 		}
 
 	}
@@ -66,5 +66,32 @@ body {
     text-align: center;
     color: #2c3e50;
     background-color: #fdfcfc;
+
+	&::-webkit-scrollbar {
+		display: none;
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+}
+/* width */
+::-webkit-scrollbar {
+	width: 16px;
+}
+
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #181818;
+	border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
 }
 </style>

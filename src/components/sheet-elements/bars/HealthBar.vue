@@ -1,7 +1,7 @@
 <template>
     <MainBar
 		:max="$store.getters.maxHealth"
-		:current="$store.state.character.health.current">
+		:current="$store.state.characters[$store.state.current].health.current">
         <template v-slot:icon>
             <HealthIcon/>
         </template>

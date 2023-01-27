@@ -4,7 +4,7 @@
             <span class="main-bar__icon">
                <ManaIcon/>
             </span>
-            <h6>{{ $store.state.character.mana.current }} / {{ $store.getters.maxMana }}</h6>
+            <h6>{{ $store.state.characters[$store.state.current].mana.current }} / {{ $store.getters.maxMana }}</h6>
         </div>
         <div :style="{ background: bg }" class="main-bar__bar">
             <span class="main-bar__bubbles"/>
@@ -31,7 +31,7 @@ export default defineComponent({
     components: {ManaIcon},
     computed: {
         percent(): number {
-            return this.$store.state.character.mana.current / this.$store.getters.maxMana * 100
+            return this.$store.state.characters[this.$store.state.current].mana.current / this.$store.getters.maxMana * 100
         },
         bg(): string {
             return `linear-gradient(90deg, #181818 0%, #181818 ${this.percent}%, transparent ${this.percent}%)`

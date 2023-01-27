@@ -1,6 +1,6 @@
 <template>
     <Teleport to="body">
-        <div v-if="modelValue" class="modal-window" >
+        <div v-if="modelValue" class="modal-window" :class="`modal-window--${type}`" >
             <div @click="close" class="modal-window__bg"/>
             <div class="modal-window__main">
                 <header class="modal-window__header">
@@ -29,8 +29,17 @@ export default defineComponent({
         title: {
             type: String,
             default: ''
-        }
+        },
+		type: {
+			type: String,
+			default: 'default'
+		}
     },
+	watch: {
+		modelValue(value) {
+			document.body.style.overflowY = value? 'hidden' : 'auto'
+		}
+	},
     methods: {
         close() {
             this.$emit('update:modelValue', false)
@@ -41,6 +50,8 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+@use "src/styles/breakpoints";
+
 .modal-window {
     position: fixed;
     top: 0;
@@ -69,15 +80,26 @@ export default defineComponent({
         z-index: 200;
         box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.25);
         transform: translateX(-50%);
+
+		@include breakpoints.media-breakpoint-down(sm) {
+			width: calc(100vw - 10px);
+			top: 50px;
+		}
     }
 
     &__close {
         position: relative;
         border: none;
-        width: 20px;
-        height: 20px;
+        width: 24px;
+        height: 24px;
+		box-sizing: border-box;
         border-radius: 100%;
         transition: background-color 0.15s ease-out;
+
+		@include breakpoints.media-breakpoint-down(sm) {
+			width: 48px;
+			height: 48px;
+		}
 
         &:hover {
             background-color: rgba(255,255,255,0.75);
@@ -108,7 +130,7 @@ export default defineComponent({
         justify-content: space-between;
         align-items: center;
         padding: 0 15px;
-        height: 30px;
+        height: 50px;
         border-radius: 10px 10px 0 0;
         background: #181818;
     }

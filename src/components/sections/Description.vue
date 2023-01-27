@@ -1,7 +1,7 @@
 <template>
     <TextSection
         :title="$t('origin-and-appearance')"
-        :model-value="this.$store.state.character.description"
+        :model-value="$store.state.characters[$store.state.current].description"
         @update:model-value="update"/>
 </template>
 

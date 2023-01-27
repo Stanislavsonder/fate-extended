@@ -44,12 +44,12 @@ export default defineComponent({
 	},
 	methods: {
 		save() {
-			const file = new Blob([JSON.stringify(this.$store.state.character)], {
+			const file = new Blob([JSON.stringify(this.$store.state.characters[this.$store.state.current])], {
 				type: 'text/plain'
 			});
 			const link = document.createElement("a");
 			link.href = URL.createObjectURL(file);
-			link.download = (this.$store.state.character.name || 'Unnamed Character') + '.fate'
+			link.download = (this.$store.state.characters[this.$store.state.current].name || 'Unnamed Character') + '.fate'
 			link.click();
 			URL.revokeObjectURL(link.href);
 		},

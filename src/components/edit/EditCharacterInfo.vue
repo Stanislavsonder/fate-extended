@@ -80,9 +80,9 @@ export default defineComponent({
 			if (!value) {
 				return
 			}
-			this.luck = this.$store.state.character.luck
-			this.name = this.$store.state.character.name
-			this.race = this.$store.state.character.race
+			this.luck = this.$store.state.characters[this.$store.state.current].luck
+			this.name = this.$store.state.characters[this.$store.state.current].name
+			this.race = this.$store.state.characters[this.$store.state.current].race
 		}
 	},
 	methods: {
