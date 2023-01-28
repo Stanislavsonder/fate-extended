@@ -13,7 +13,7 @@ import SaveLoadFeature from "@/components/header/SaveLoadFeature/SaveLoadFeature
 import { defineComponent } from "vue";
 import LanguageChangerFeature from "@/components/header/LanguageChangerFeature/LanguageChangerFeature.vue";
 import RollDiceFeature from "@/components/header/RollDiceFeature/RollDiceFeature.vue";
-import SwitchCharacterFeature from "@/components/header/CharacterChangerFeature/SwitchCharacterFeature.vue";
+import SwitchCharacterFeature from "@/components/header/SwitchCharacterFeature/SwitchCharacterFeature.vue";
 
 export default defineComponent({
 	name: "SheetHeader",

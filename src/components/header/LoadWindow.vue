@@ -9,21 +9,17 @@
 				class="load-window__input"
 				type="file"
 				accept=".fate"
+				multiple
 				@change="load">
 		</label>
 		<div v-if="charValidator">
-			<h3>
+			<h3 v-for="(character, index) in loadedCharacters" :key="character.name + index">
 				<strong>
-					{{ loadedChar.name }},
+					{{ character.name }},
 				</strong>
-				{{ loadedChar.race }}
-				({{ loadedChar.level}} level)
+				{{ character.race }}
+				({{ character.level}} level)
 			</h3>
-			<ul class="load-window__modules">
-				<li class="load-window__module" v-for="module in MODULES_LIST()" :key="module.title">
-					<ModuleIcon :type="module.icon"/>
-				</li>
-			</ul>
 		</div>
 		<Button
 			class="load-window__button"
@@ -31,7 +27,7 @@
 			@click="confirmLoading">
 			Confirm
 		</Button>
-		<p>{{ error }}</p>
+		<p v-for="error in errors" :key="error">{{ error }}</p>
 	</div>
 </template>
 
@@ -41,47 +37,64 @@ import {validateCharacter} from "@/consts/validators";
 import Button from "@/components/ui/Button.vue";
 import UploadIcon from "@/components/ui/icons/UploadIcon.vue";
 import {MODULES_LIST} from "@/consts/const";
-import ModuleIcon from "@/components/ui/icons/modules/ModuleIcon.vue";
+import {Character} from "@/types";
+
+interface Data {
+	loadedCharacters: Character[]
+	errors: string[]
+}
 
 export default defineComponent({
 	MODULES_LIST: MODULES_LIST,
 	name: "LoadWindow",
-	components: {ModuleIcon, UploadIcon, Button},
+	components: {UploadIcon, Button},
 	emits: ['close'],
-	data() {
+	data(): Data {
 		return {
-			loadedChar: undefined,
-			error: ''
-		}
-	},
-	computed: {
-		charValidator(): boolean {
-			return !!this.loadedChar && validateCharacter(this.loadedChar);
+			loadedCharacters: [],
+			errors: []
 		}
 	},
 	methods: {
+		charValidator(char: unknown): boolean {
+			return validateCharacter(char);
+		},
 		MODULES_LIST() {
 			return MODULES_LIST
 		},
 		load(e: any) {
 			if (!e.target.files.length) {
-				this.loadedChar = undefined
+				this.loadedCharacters = []
 				return;
 			}
-			const file = e.target.files[0] as File
-			const reader = new FileReader()
-			reader.readAsText(file, 'UTF-8');
-			reader.onload = (event) => {
-				if (typeof event?.target?.result === 'string') {
-					this.loadedChar = JSON.parse(event.target.result)
+
+			console.log(e.target.files)
+			const files = [...e.target.files] as File[]
+
+			files.forEach((file, index) => {
+				const reader = new FileReader()
+				reader.readAsText(file, 'UTF-8');
+				reader.onload = (event) => {
+					if (typeof event?.target?.result === 'string') {
+						const char = JSON.parse(event.target.result)
+						if (this.charValidator(char)) {
+							this.loadedCharacters.push(char as Character)
+						}
+						else {
+							this.errors.push(`Unable to load '${char.name || index + 'nd'}' character.`)
+						}
+
+					}
 				}
-				else {
-					this.loadedChar = undefined
-				}
-			}
+			})
+
 		},
 		confirmLoading() {
-			this.$store.commit('setCharacter', this.loadedChar)
+			this.loadedCharacters.forEach(character => {
+				this.$store.commit('setCharacter', character)
+			})
+			this.errors = []
+			this.loadedCharacters = []
 			this.$store.commit('changeCharacter', this.$store.state.characters.length - 1)
 			this.$emit('close')
 		}

@@ -40,7 +40,7 @@ export default defineComponent({
 	components: {ModalWindow, ConfigButton},
 	data() {
 		return {
-			modal: true
+			modal: false
 		}
 	},
 	methods: {
