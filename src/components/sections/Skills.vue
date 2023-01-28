@@ -9,7 +9,7 @@
         </template>
         <template v-slot:content>
             <ul class="skills__list">
-                <li v-for="(skill, index) in $store.state.characters[$store.state.current].skills" :key="skill.name">
+                <li v-for="(skill, index) in $store.state.characters[$store.state.current].skills" :key="$store.state.characters[$store.state.current].name + index + skill.name">
                     <Skill
 						:skill="skill"
 						@remove="remove(index)"

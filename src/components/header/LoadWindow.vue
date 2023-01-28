@@ -82,6 +82,7 @@ export default defineComponent({
 		},
 		confirmLoading() {
 			this.$store.commit('setCharacter', this.loadedChar)
+			this.$store.commit('changeCharacter', this.$store.state.characters.length - 1)
 			this.$emit('close')
 		}
 	}

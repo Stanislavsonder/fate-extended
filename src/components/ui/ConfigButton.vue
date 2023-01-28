@@ -3,13 +3,12 @@
 	:title="hint"
     class="config-button"
     :class="modifiers">
-    <component
-		:is="type"/>
+    <component :is="type"/>
 </button>
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import { defineComponent } from "vue";
 import Buttons from './icons'
 
 export default defineComponent({

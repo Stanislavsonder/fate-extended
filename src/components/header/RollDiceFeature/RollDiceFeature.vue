@@ -78,7 +78,7 @@ export default {
 			})
 		},
 		isDiceLucky(index) {
-			return Math.random() <= (this.$store.state.characters[this.$store.state.current].luck * 0.1) / (index + 1)
+			return Math.random() <= (this.$store.state.characters[this.$store.state.current].luck * 0.1) /  Math.pow(2, index)
 		},
 		luckyDiceResult() {
 			return Math.random() <= 2/3? 1 : 0

@@ -40,6 +40,7 @@ import {useAutoHeight} from "@/composables/useAutoHeight";
 import ConfigButton from "@/components/ui/ConfigButton.vue";
 import Button from "@/components/ui/Button.vue";
 
+//TODO: Add MD editor
 export default defineComponent({
     name: "TextSection",
     components: {

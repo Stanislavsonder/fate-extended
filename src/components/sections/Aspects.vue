@@ -8,7 +8,7 @@
         </template>
         <template v-slot:content >
             <ul class="aspects__content">
-                <li v-for="(aspect, index) in $store.state.characters[$store.state.current].aspects" :key="aspect.type">
+                <li v-for="(aspect, index) in $store.state.characters[$store.state.current].aspects" :key="$store.state.characters[$store.state.current].name + index + aspect.title">
                     <AspectComponent
                         :aspect="aspect"
                         @remove="remove(index)"

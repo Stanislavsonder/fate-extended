@@ -19,6 +19,9 @@ import DiceNegative from "@/components/ui/icons/DiceNegative.vue";
 import DicePositive from "@/components/ui/icons/DicePositive.vue";
 import LuckyDiceNeutral from "@/components/ui/icons/LuckyDiceNeutral.vue";
 import LuckyDicePositive from "@/components/ui/icons/LuckyDicePositive.vue";
+import List from "@/components/ui/icons/List.vue";
+import Characters from "@/components/ui/icons/Characters.vue";
+
 
 export default  {
     ArrowIcon,
@@ -28,6 +31,7 @@ export default  {
     DicePositive,
     LuckyDicePositive,
     LuckyDiceNeutral,
+    Characters,
     Load,
     Save,
     Luck,
@@ -41,5 +45,6 @@ export default  {
     Damage,
     PlusIcon,
     CancelIcon,
-    AcceptIcon
+    AcceptIcon,
+    List
 }

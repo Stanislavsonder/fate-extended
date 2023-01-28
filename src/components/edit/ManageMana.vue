@@ -77,6 +77,12 @@ export default defineComponent({
 			modifier: 0
 		}
 	},
+	watch: {
+		modal() {
+			this.value = 0
+			this.modifier = this.$store.state.characters[this.$store.state.current].mana.modifier
+		}
+	},
 	mounted() {
 		this.modifier = this.$store.state.characters[this.$store.state.current].mana.modifier
 	},

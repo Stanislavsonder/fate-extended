@@ -85,14 +85,18 @@ export default createStore<CharacterStore>({
       }
     },
     removeCharacter(state, index: number) {
-      if (index >= 0 && index < state.characters.length) {
-        if(state.characters.length === 1) {
-          state.characters[0] = copy(EMPTY_CHARACTER);
-          return
-        }
-        state.characters = state.characters.filter((c, index) => index !== index)
-        state.current =  index? index - 1 : 0;
+      if (index < 0 || index > state.characters.length) {
+        return
       }
+
+      if (state.characters.length === 1) {
+        state.characters[0] = copy(EMPTY_CHARACTER);
+        return
+      }
+
+      state.characters = state.characters
+          .filter((c, i) => i !== index)
+      state.current =  index? index - 1 : 0;
     }
   },
   actions: {

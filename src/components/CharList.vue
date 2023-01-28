@@ -5,10 +5,8 @@
         <Modules />
     </div>
     <Aspects />
-    <div class="char-sheet__half-section">
-        <Description />
-        <Inventory />
-    </div>
+	<Description />
+	<Inventory />
     <div class="char-sheet__half-section">
         <Skills />
         <Stunts />

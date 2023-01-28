@@ -77,7 +77,16 @@ export default defineComponent({
 	align-items: center;
     height: 40px;
     border-radius: 10px;
+	border: 1px solid rgba(0,0,0,0.25);
+	box-sizing: border-box;
     box-shadow: 0 1px 1px 0.5px rgba(0,0,0, 0.25);
+	cursor: pointer;
+	transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+
+	&:hover {
+		transform: scale(1.01);
+		box-shadow: 0 1px 4px 1px rgba(0,0,0, 0.25);
+	}
 
     &__level {
         position: relative;
