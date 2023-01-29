@@ -1,48 +1,47 @@
 <template>
 	<div>
 		<ConfigButton
-			@click="modal = true"
 			type="Dices"
-			variant="transparent"/>
+			variant="transparent"
+			@click="modal = true" />
 	</div>
 	<ModalWindow
 		v-model="modal"
 		:title="$t('roll-dices')">
 		<article class="roll-dices">
 			<input
+				v-model="dicesCount"
 				class="roll-dices__amount"
-				type="number"
-				v-model="dicesCount" />
+				type="number" />
 			<Button @click="rollDices">Roll Dices</Button>
 
 			<div>
 				<ul class="roll-dices__dices">
 					<li
 						v-for="(dice, index) in result"
-						:key="index"
-					>
-						<component :is="getDice(dice)" class="roll-dices__dice"/>
+						:key="index">
+						<component
+							:is="getDice(dice)"
+							class="roll-dices__dice" />
 					</li>
 				</ul>
 			</div>
 		</article>
-
-
 	</ModalWindow>
 </template>
 
 <script>
-import ConfigButton from "@/components/ui/ConfigButton.vue";
-import ModalWindow from "@/components/common/ModalWindow.vue";
-import Button from "@/components/ui/Button.vue";
-import DiceNegative from "@/components/ui/icons/DiceNegative.vue";
-import DicePositive from "@/components/ui/icons/DicePositive.vue";
-import DiceNeutral from "@/components/ui/icons/DiceNeutral.vue";
-import LuckyDiceNeutral from "@/components/ui/icons/LuckyDiceNeutral.vue";
-import LuckyDicePositive from "@/components/ui/icons/LuckyDicePositive.vue";
+import ConfigButton from '@/components/ui/ConfigButton.vue'
+import ModalWindow from '@/components/common/ModalWindow.vue'
+import Button from '@/components/ui/Button.vue'
+import DiceNegative from '@/components/ui/icons/DiceNegative.vue'
+import DicePositive from '@/components/ui/icons/DicePositive.vue'
+import DiceNeutral from '@/components/ui/icons/DiceNeutral.vue'
+import LuckyDiceNeutral from '@/components/ui/icons/LuckyDiceNeutral.vue'
+import LuckyDicePositive from '@/components/ui/icons/LuckyDicePositive.vue'
 
 export default {
-	name: "RollDiceFeature",
+	name: 'RollDiceFeature',
 	components: {
 		Button,
 		ModalWindow,
@@ -51,41 +50,42 @@ export default {
 		DiceNeutral,
 		DiceNegative,
 		LuckyDiceNeutral,
-		LuckyDicePositive
+		LuckyDicePositive,
 	},
 	data() {
 		return {
 			modal: false,
 			dicesCount: 4,
-			result: []
+			result: [],
 		}
 	},
 	methods: {
 		rollDices() {
-			const dices = Array(this.dicesCount).fill(undefined);
+			const dices = Array(this.dicesCount).fill(undefined)
 			this.result = dices.map((dice, index) => {
 				if (this.isDiceLucky(index)) {
 					return {
 						dice: 'lucky',
-						result: this.luckyDiceResult()
+						result: this.luckyDiceResult(),
 					}
 				}
 				return {
 					dice: 'default',
-					result: this.diceResult()
+					result: this.diceResult(),
 				}
-
 			})
 		},
 		isDiceLucky(index) {
-			return Math.random() <= (this.$store.state.characters[this.$store.state.current].luck * 0.1) /  Math.pow(2, index)
+			return (
+				Math.random() <= (this.$store.state.characters[this.$store.state.current].luck * 0.1) / Math.pow(2, index)
+			)
 		},
 		luckyDiceResult() {
-			return Math.random() <= 2/3? 1 : 0
+			return Math.random() <= 2 / 3 ? 1 : 0
 		},
 		diceResult() {
 			const value = Math.random()
-			return value < 1/3? -1 : value < 2/3? 0 : 1
+			return value < 1 / 3 ? -1 : value < 2 / 3 ? 0 : 1
 		},
 		getDice(result) {
 			if (result.dice === 'lucky') {
@@ -101,8 +101,8 @@ export default {
 				return 'DicePositive'
 			}
 			return 'DiceNeutral'
-		}
-	}
+		},
+	},
 }
 </script>
 

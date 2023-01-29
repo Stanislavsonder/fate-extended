@@ -1,96 +1,91 @@
-
 export enum AspectType {
-    Concept = 'concept',
-    Neutral = "neutral",
-    Problem = 'problem'
+	Concept = 'concept',
+	Neutral = 'neutral',
+	Problem = 'problem',
 }
 
 export type Aspect = {
-    title: string
-    description: string
-    type: AspectType
+	title: string
+	description: string
+	type: AspectType
 }
 
 export type Skill = {
-    name: string,
-    level: number,
-    experience: number
+	name: string
+	level: number
+	experience: number
 }
 
 export type Stunt = {
-    name: string,
-    skill: string,
-    description: string
+	name: string
+	skill: string
+	description: string
 }
 
 export type Module = {
-    a: string
+	a: string
 }
 
 enum ConsequenceSeverity {
-    Easy,
-    Medium,
-    Hard,
+	Easy,
+	Medium,
+	Hard,
 }
 
 export type Consequence = {
-    title: string
-    description: string,
-    type: ConsequenceSeverity
+	title: string
+	description: string
+	type: ConsequenceSeverity
 }
 
 export type MainParam = {
-    current: number,
-    modifier: number
-    consequences: Consequence[]
+	current: number
+	modifier: number
+	consequences: Consequence[]
 }
 export type Health = MainParam
 export type Mental = MainParam
 export type Mana = Omit<MainParam, 'consequences'>
 export type Intoxication = Omit<MainParam, 'consequences'>
 
-
 export type CharacterCoreModule = {
-    name: string
-    race: string
-    level: number
-    modules: string[]
-    aspects: Aspect[]
-    description: string
-    inventory: string
-    skills: Skill[]
-    stunts: Stunt[]
-    health: Health
-    mental: Mental
-    luck: number
+	name: string
+	race: string
+	level: number
+	modules: string[]
+	aspects: Aspect[]
+	description: string
+	inventory: string
+	skills: Skill[]
+	stunts: Stunt[]
+	health: Health
+	mental: Mental
+	luck: number
 }
 
-
 type CharacterMagicModule = {
-    mana: Mana
+	mana: Mana
 }
 
 type CharacterAlchemyModule = {
-    intoxication: Intoxication
+	intoxication: Intoxication
 }
 
-export type Character = CharacterCoreModule &
-    CharacterAlchemyModule &
-    CharacterMagicModule
+export type Character = CharacterCoreModule & CharacterAlchemyModule & CharacterMagicModule
 
 export enum ModuleStatus {
-    New,
-    Changed,
-    Removed
+	New,
+	Changed,
+	Removed,
 }
 
 export type SkillType = {
-    name: string
-    overcome: boolean,
-    advantage: boolean,
-    attack: boolean,
-    defence: boolean,
-    bonuses: string[],
-    module: string,
-    status: ModuleStatus
+	name: string
+	overcome: boolean
+	advantage: boolean
+	attack: boolean
+	defence: boolean
+	bonuses: string[]
+	module: string
+	status: ModuleStatus
 }

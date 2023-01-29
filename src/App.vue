@@ -1,35 +1,30 @@
 <template>
-	<SheetHeader/>
-	<CharList/>
+	<SheetHeader />
+	<CharList />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import CharList from "@/components/CharList.vue";
-import SheetHeader from "@/components/header/SheetHeader.vue";
-import {Character} from "@/types";
-import {validateCharacter} from "@/consts/validators";
-
-interface Data {
-	char: Character
-}
+import { defineComponent } from 'vue'
+import CharList from '@/components/CharList.vue'
+import SheetHeader from '@/components/header/SheetHeader.vue'
+import { validateCharacter } from '@/consts/validators'
 
 export default defineComponent({
 	name: 'App',
 	components: {
 		SheetHeader,
-		CharList
+		CharList,
 	},
 	watch: {
 		'$store.state.characters': {
-			handler(value){
-				window.localStorage.characters = JSON.stringify(value);
+			handler(value) {
+				window.localStorage.characters = JSON.stringify(value)
 			},
-			deep: true
+			deep: true,
 		},
 		'$i18n.locale'(value) {
-			window.localStorage.lang = value;
-		}
+			window.localStorage.lang = value
+		},
 	},
 	mounted() {
 		if (window.localStorage.lang) {
@@ -43,10 +38,8 @@ export default defineComponent({
 		if (characters.every(validateCharacter)) {
 			this.$store.commit('loadCharacters', characters)
 		}
-
-	}
-
-});
+	},
+})
 </script>
 
 <style src="./styles/reset.css"/>
@@ -54,18 +47,18 @@ export default defineComponent({
 @import 'src/styles/breakpoints';
 
 :root {
-    --inter: Inter, Avenir, Helvetica, Arial, sans-serif;
+	--inter: Inter, Avenir, Helvetica, Arial, sans-serif;
 }
 button {
-    cursor: pointer;
+	cursor: pointer;
 }
 body {
-    font-family: var(--inter);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    background-color: #fdfcfc;
+	font-family: var(--inter);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-align: center;
+	color: #2c3e50;
+	background-color: #fdfcfc;
 
 	&::-webkit-scrollbar {
 		display: none;
@@ -77,7 +70,6 @@ body {
 ::-webkit-scrollbar {
 	width: 16px;
 }
-
 
 /* Track */
 ::-webkit-scrollbar-track {

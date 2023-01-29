@@ -1,24 +1,24 @@
 <template>
-<menu
-	class="dropdown"
-	@click="log"
-	v-if="modelValue">
-123123213213
-	<button>12312321</button>
-</menu>
+	<menu
+		v-if="modelValue"
+		class="dropdown"
+		@click="log">
+		123123213213
+		<button>12312321</button>
+	</menu>
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-	name: "Dropdown",
+	name: 'Dropdown',
 	emits: ['update:modelValue'],
 	props: {
 		modelValue: {
 			type: Boolean,
-			required: true
-		}
+			required: true,
+		},
 	},
 	methods: {
 		close() {
@@ -26,15 +26,13 @@ export default defineComponent({
 		},
 		log() {
 			console.log(123)
-		}
-	}
-
+		},
+	},
 })
 </script>
 
 <style scoped lang="scss">
-	.dropdown {
-		position: absolute;
-
-	}
+.dropdown {
+	position: absolute;
+}
 </style>

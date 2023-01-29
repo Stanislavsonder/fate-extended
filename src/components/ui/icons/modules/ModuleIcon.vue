@@ -1,19 +1,20 @@
 <template>
-<component :is="type"/>
+	<component :is="type" />
 </template>
 
 <script>
 import Icons from './icons'
+
 export default {
-	name: "ModuleIcon",
+	name: 'ModuleIcon',
 	components: {
-		...Icons
+		...Icons,
 	},
 	props: {
 		type: {
 			type: String,
-			required: true
-		}
-	}
+			required: true,
+		},
+	},
 }
 </script>

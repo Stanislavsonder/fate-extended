@@ -1,74 +1,75 @@
 <template>
-<nav class="language">
-	<button class="language__current" @click="modal = !modal">
-		<LanguageFlag :lang="$i18n.locale"/>
-		<span class="language__current-name">
-			{{ languages.find(e => e.lang === $i18n.locale)?.name || ''}}
-		</span>
-	</button>
+	<nav class="language">
+		<button
+			class="language__current"
+			@click="modal = !modal">
+			<LanguageFlag :lang="$i18n.locale" />
+			<span class="language__current-name">
+				{{ languages.find(e => e.lang === $i18n.locale)?.name || '' }}
+			</span>
+		</button>
 
-	<ul
-		class="language__list"
-		v-if="modal">
-		<li
-			:key="language.lang"
-			v-for="language in languages">
-			<button
-				class="language__button"
-				@click="() => changeLanguage(language)"
-				:title="language.name"
-				>
-				<LanguageFlag :lang="language.lang"/>
-				<span class="language__list-name">
-					{{language.name}}
-				</span>
-			</button>
-		</li>
-	</ul>
-</nav>
+		<ul
+			v-if="modal"
+			class="language__list">
+			<li
+				v-for="language in languages"
+				:key="language.lang">
+				<button
+					class="language__button"
+					:title="language.name"
+					@click="() => changeLanguage(language)">
+					<LanguageFlag :lang="language.lang" />
+					<span class="language__list-name">
+						{{ language.name }}
+					</span>
+				</button>
+			</li>
+		</ul>
+	</nav>
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
-import LanguageFlag from "@/components/ui/icons/flags/LanguageFlag.vue";
+import { defineComponent } from 'vue'
+import LanguageFlag from '@/components/ui/icons/flags/LanguageFlag.vue'
 
 export default defineComponent({
-	name: "LanguageChangerFeature",
-	components: {LanguageFlag},
+	name: 'LanguageChangerFeature',
+	components: { LanguageFlag },
 	data() {
 		return {
 			modal: false,
 			languages: [
 				{
 					lang: 'en',
-					name: 'English'
+					name: 'English',
 				},
 				{
 					lang: 'ru',
-					name: 'Русский'
+					name: 'Русский',
 				},
 				{
 					lang: 'bel',
-					name: 'Беларуская'
+					name: 'Беларуская',
 				},
 				{
 					lang: 'ua',
-					name: 'Українська'
-				}
-			]
+					name: 'Українська',
+				},
+			],
 		}
 	},
 	methods: {
-		changeLanguage(language: {lang: string, name: string}) {
+		changeLanguage(language: { lang: string; name: string }) {
 			this.$i18n.locale = language.lang
 			this.modal = false
-		}
-	}
+		},
+	},
 })
 </script>
 
 <style scoped lang="scss">
-@use "src/styles/breakpoints";
+@use 'src/styles/breakpoints';
 
 .language {
 	width: 200px;
@@ -77,7 +78,7 @@ export default defineComponent({
 	margin-left: auto;
 
 	@include breakpoints.media-breakpoint-only(xs) {
-		width: auto
+		width: auto;
 	}
 
 	&__current,
@@ -94,7 +95,7 @@ export default defineComponent({
 		border-radius: 5px;
 
 		@include breakpoints.media-breakpoint-only(xs) {
-			width: auto
+			width: auto;
 		}
 
 		&:hover {
@@ -108,7 +109,6 @@ export default defineComponent({
 
 		span {
 			font-weight: bolder;
-
 		}
 	}
 
@@ -123,7 +123,6 @@ export default defineComponent({
 			display: none;
 		}
 	}
-
 
 	&__button {
 		height: 50px;

@@ -1,88 +1,89 @@
 <template>
-<div class="skill-edit">
-	<article class="skill">
-		<aside class="skill__level">
-			{{ tmpSkill.level }}
-			<button
-				@click="levelUp"
-				class="skill-edit__level-up">
-				<ArrowIcon/>
-			</button>
-			<button
-				@click="levelDown"
-				class="skill-edit__level-down">
-				<ArrowIcon/>
-			</button>
-
-		</aside>
-		<h6 class="skill__name">
-			{{ tmpSkill.name }}
-		</h6>
-		<span class="skill__experience">
-			<input
-				class="skill-edit__experience"
-				v-model="tmpSkill.experience"
-				min="0"
-				:max="cup"
-				inputmode="number"
-				type="number"/>
-			/ {{ cup }}
-		</span>
-		<progress
-			@click="experienceUpdate"
-			class="skill__progress"
-			max="100"
-			:value="experiencePercent">
-			{{ experiencePercent.toFixed() }}%
-		</progress>
-	</article>
-	<nav>
-		<Button @click="remove" secondary>
-			Remove
-		</Button>
-		<Button @click="close" secondary>
-			Discard
-		</Button>
-		<Button @click="save">
-			Save
-		</Button>
-	</nav>
-</div>
+	<div class="skill-edit">
+		<article class="skill">
+			<aside class="skill__level">
+				{{ tmpSkill.level }}
+				<button
+					class="skill-edit__level-up"
+					@click="levelUp">
+					<ArrowIcon />
+				</button>
+				<button
+					class="skill-edit__level-down"
+					@click="levelDown">
+					<ArrowIcon />
+				</button>
+			</aside>
+			<h6 class="skill__name">
+				{{ tmpSkill.name }}
+			</h6>
+			<span class="skill__experience">
+				<input
+					v-model="tmpSkill.experience"
+					class="skill-edit__experience"
+					min="0"
+					:max="cup"
+					inputmode="number"
+					type="number" />
+				/ {{ cup }}
+			</span>
+			<progress
+				class="skill__progress"
+				max="100"
+				:value="experiencePercent"
+				@click="experienceUpdate">
+				{{ experiencePercent.toFixed() }}%
+			</progress>
+		</article>
+		<nav>
+			<Button
+				secondary
+				@click="remove">
+				Remove
+			</Button>
+			<Button
+				secondary
+				@click="close">
+				Discard
+			</Button>
+			<Button @click="save"> Save </Button>
+		</nav>
+	</div>
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType} from "vue";
-import {Skill} from "@/types";
-import {SKILL_LEVEL_CUP} from "@/consts/const";
-import Button from "@/components/ui/Button.vue";
-import ArrowIcon from "@/components/ui/icons/ArrowIcon.vue";
+import { defineComponent, PropType } from 'vue'
+import { Skill } from '@/types'
+import { SKILL_LEVEL_CUP } from '@/consts/const'
+import Button from '@/components/ui/Button.vue'
+import ArrowIcon from '@/components/ui/icons/ArrowIcon.vue'
 
 export default defineComponent({
-    name: "SkillEdit",
-	emits: ['update', 'remove', 'close'],
+	name: 'SkillEdit',
 	components: {
 		ArrowIcon,
-		Button
+		Button,
 	},
+	emits: ['update', 'remove', 'close'],
 	props: {
 		skill: {
 			type: Object as PropType<Skill>,
-			required: true
-		}
+			required: true,
+		},
 	},
 	data() {
 		return {
-			tmpSkill: JSON.parse(JSON.stringify(this.skill))
+			tmpSkill: JSON.parse(JSON.stringify(this.skill)),
 		}
 	},
 	computed: {
 		experiencePercent() {
-			const percent = this.tmpSkill.experience / this.cup * 100;
-			return percent > 100? 100 : percent;
+			const percent = (this.tmpSkill.experience / this.cup) * 100
+			return percent > 100 ? 100 : percent
 		},
 		cup() {
 			return SKILL_LEVEL_CUP[this.tmpSkill.level - 1]
-		}
+		},
 	},
 	methods: {
 		close() {
@@ -98,7 +99,7 @@ export default defineComponent({
 		},
 		experienceUpdate(event: any) {
 			const percent = event.offsetX / event.target.offsetWidth
-			this.tmpSkill.experience = Math.min(this.cup, Math.max(0, Math.ceil(this.cup*percent)))
+			this.tmpSkill.experience = Math.min(this.cup, Math.max(0, Math.ceil(this.cup * percent)))
 		},
 		levelUp() {
 			this.tmpSkill.level = Math.min(Number(this.tmpSkill.level) + 1, SKILL_LEVEL_CUP.length)
@@ -107,8 +108,8 @@ export default defineComponent({
 		levelDown() {
 			this.tmpSkill.level = Math.max(Number(this.tmpSkill.level) - 1, 1)
 			this.tmpSkill.experience = 0
-		}
-	}
+		},
+	},
 })
 </script>
 
@@ -133,7 +134,6 @@ export default defineComponent({
 		-moz-appearance: textfield;
 	}
 
-
 	&__level-up,
 	&__level-down {
 		position: absolute;
@@ -157,7 +157,6 @@ export default defineComponent({
 	&__level-down {
 		transform: translateY(110%);
 	}
-
 
 	.skill {
 		margin: 36px 20px;

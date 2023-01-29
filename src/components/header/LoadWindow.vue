@@ -1,24 +1,22 @@
 <template>
 	<div class="load-window">
 		<label class="load-window__label">
-			<span>
-				Please, load character file:
-			</span>
-			<UploadIcon class="load-window__upload"/>
+			<span> Please, load character file: </span>
+			<UploadIcon class="load-window__upload" />
 			<input
-				class="load-window__input"
-				type="file"
 				accept=".fate"
+				class="load-window__input"
 				multiple
-				@change="load">
+				type="file"
+				@change="load" />
 		</label>
 		<div v-if="charValidator">
-			<h3 v-for="(character, index) in loadedCharacters" :key="character.name + index">
-				<strong>
-					{{ character.name }},
-				</strong>
+			<h3
+				v-for="(character, index) in loadedCharacters"
+				:key="character.name + index">
+				<strong> {{ character.name }}, </strong>
 				{{ character.race }}
-				({{ character.level}} level)
+				({{ character.level }} level)
 			</h3>
 		</div>
 		<Button
@@ -27,17 +25,21 @@
 			@click="confirmLoading">
 			Confirm
 		</Button>
-		<p v-for="error in errors" :key="error">{{ error }}</p>
+		<p
+			v-for="error in errors"
+			:key="error">
+			{{ error }}
+		</p>
 	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import {validateCharacter} from "@/consts/validators";
-import Button from "@/components/ui/Button.vue";
-import UploadIcon from "@/components/ui/icons/UploadIcon.vue";
-import {MODULES_LIST} from "@/consts/const";
-import {Character} from "@/types";
+import { defineComponent } from 'vue'
+import { validateCharacter } from '@/consts/validators'
+import Button from '@/components/ui/Button.vue'
+import UploadIcon from '@/components/ui/icons/UploadIcon.vue'
+import { MODULES_LIST } from '@/consts/const'
+import { Character } from '@/types'
 
 interface Data {
 	loadedCharacters: Character[]
@@ -46,18 +48,18 @@ interface Data {
 
 export default defineComponent({
 	MODULES_LIST: MODULES_LIST,
-	name: "LoadWindow",
-	components: {UploadIcon, Button},
+	name: 'LoadWindow',
+	components: { UploadIcon, Button },
 	emits: ['close'],
 	data(): Data {
 		return {
 			loadedCharacters: [],
-			errors: []
+			errors: [],
 		}
 	},
 	methods: {
 		charValidator(char: unknown): boolean {
-			return validateCharacter(char);
+			return validateCharacter(char)
 		},
 		MODULES_LIST() {
 			return MODULES_LIST
@@ -65,7 +67,7 @@ export default defineComponent({
 		load(e: any) {
 			if (!e.target.files.length) {
 				this.loadedCharacters = []
-				return;
+				return
 			}
 
 			console.log(e.target.files)
@@ -73,21 +75,18 @@ export default defineComponent({
 
 			files.forEach((file, index) => {
 				const reader = new FileReader()
-				reader.readAsText(file, 'UTF-8');
-				reader.onload = (event) => {
+				reader.readAsText(file, 'UTF-8')
+				reader.onload = event => {
 					if (typeof event?.target?.result === 'string') {
 						const char = JSON.parse(event.target.result)
 						if (this.charValidator(char)) {
 							this.loadedCharacters.push(char as Character)
-						}
-						else {
+						} else {
 							this.errors.push(`Unable to load '${char.name || index + 'nd'}' character.`)
 						}
-
 					}
 				}
 			})
-
 		},
 		confirmLoading() {
 			this.loadedCharacters.forEach(character => {
@@ -97,8 +96,8 @@ export default defineComponent({
 			this.loadedCharacters = []
 			this.$store.commit('changeCharacter', this.$store.state.characters.length - 1)
 			this.$emit('close')
-		}
-	}
+		},
+	},
 })
 </script>
 
@@ -134,7 +133,7 @@ strong {
 		position: absolute;
 		top: 50%;
 		margin: 10px 0;
-		transforM: scale(2.5);
+		transform: scale(2.5);
 		opacity: 0.5;
 	}
 
@@ -157,6 +156,5 @@ strong {
 			height: 30px;
 		}
 	}
-
 }
 </style>

@@ -1,45 +1,41 @@
 <template>
 	<ConfigButton
-		@click="modal = true"
 		type="EditIcon"
 		hint="Edit"
-		variant="transparent"/>
+		variant="transparent"
+		@click="modal = true" />
 	<ModalWindow
 		v-model="modal"
 		title="Edit character info">
 		<article class="character-info-edit">
 			<div class="character-info-edit__name-section">
 				<label>
-					<span>
-						Character name:
-					</span>
-					<input v-model="name">
+					<input
+						v-model="name"
+						placeholder="Character name" />
 				</label>
 				<label>
-					<span>
-						Race:
-					</span>
-					<input v-model="race">
+					<input
+						v-model="race"
+						placeholder="Race" />
 				</label>
 			</div>
 			<div class="character-info-edit__luck-section">
 				<label>
-					<span>
-						Luck:
-					</span>
+					<span> Luck: </span>
 					<input
-						class=""
 						v-model="luck"
+						class=""
 						type="number"
 						inputmode="number"
 						:min="0"
-						:max="4">
+						:max="4" />
 				</label>
 			</div>
 			<nav>
 				<Button
-					@click="close"
-					secondary>
+					secondary
+					@click="close">
 					Discard
 				</Button>
 				<Button
@@ -48,26 +44,25 @@
 					Save
 				</Button>
 			</nav>
-
 		</article>
 	</ModalWindow>
 </template>
 
 <script lang="ts">
-import ConfigButton from "@/components/ui/ConfigButton.vue";
-import ModalWindow from "@/components/common/ModalWindow.vue";
-import {defineComponent} from "vue";
-import Button from "@/components/ui/Button.vue";
+import ConfigButton from '@/components/ui/ConfigButton.vue'
+import ModalWindow from '@/components/common/ModalWindow.vue'
+import { defineComponent } from 'vue'
+import Button from '@/components/ui/Button.vue'
 
 export default defineComponent({
-	name: "EditCharacterInfo",
-	components: {Button, ModalWindow, ConfigButton},
+	name: 'EditCharacterInfo',
+	components: { Button, ModalWindow, ConfigButton },
 	data() {
 		return {
 			modal: false,
 			name: '',
 			race: '',
-			luck: 0
+			luck: 0,
 		}
 	},
 	computed: {
@@ -75,7 +70,7 @@ export default defineComponent({
 			return !!(this.name && this.race)
 		},
 	},
-	watch:{
+	watch: {
 		modal(value) {
 			if (!value) {
 				return
@@ -83,11 +78,11 @@ export default defineComponent({
 			this.luck = this.$store.state.characters[this.$store.state.current].luck
 			this.name = this.$store.state.characters[this.$store.state.current].name
 			this.race = this.$store.state.characters[this.$store.state.current].race
-		}
+		},
 	},
 	methods: {
 		close() {
-			this.modal = false;
+			this.modal = false
 			this.name = ''
 			this.race = ''
 			this.luck = 0
@@ -96,9 +91,9 @@ export default defineComponent({
 			this.$store.commit('updateName', this.name)
 			this.$store.commit('updateRace', this.race)
 			this.$store.commit('updateLuck', this.luck)
-			this.modal = false;
-		}
-	}
+			this.modal = false
+		},
+	},
 })
 </script>
 
@@ -172,8 +167,5 @@ export default defineComponent({
 			-moz-appearance: textfield;
 		}
 	}
-
-
-
 }
 </style>

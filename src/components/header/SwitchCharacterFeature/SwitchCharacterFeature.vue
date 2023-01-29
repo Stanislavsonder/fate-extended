@@ -1,46 +1,44 @@
 <template>
-	<nav>
-		<ConfigButton
-			type="Characters"
-			@click="modal = true"
-			variant="transparent"/>
-	</nav>
-	<ModalWindow
-		title="Switch character"
-		v-model="modal">
-		<div class="switch-character">
-			<ul class="switch-character__list">
-				<li
-					class="switch-character__list-item"
-					v-for="(character, index) in $store.state.characters"
-					:key="character.name">
-					<button
-						class="switch-character__button"
-						@click="() => setCharacter(index)">
-						{{ character.name || 'unnamed character' }},
-						({{ character.level }})
-					</button>
-					<button
-						class="switch-character__remove"
-						@click="() => removeCharacter(index)"/>
-				</li>
-			</ul>
-		</div>
+	<nav class="characters-tabs">
+		<ul class="characters-tabs__list">
+			<li
+				v-for="(character, index) in $store.state.characters"
+				:key="character.name"
+				class="characters-tabs__tab"
+				:class="{ 'characters-tabs__tab--current': index === $store.state.current }">
+				<button
+					class="characters-tabs__button"
+					@click="() => setCharacter(index)">
+					<span>
+						{{ shortenName(character.name) || 'New Character' }}
+					</span>
 
-	</ModalWindow>
+					<button
+						class="characters-tabs__remove"
+						@click="() => removeCharacter(index)">
+						x
+					</button>
+				</button>
+			</li>
+			<li class="characters-tabs__tab">
+				<button
+					class="characters-tabs__button characters-tabs__button--new"
+					@click="newCharacter">
+					+
+				</button>
+			</li>
+		</ul>
+	</nav>
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
-import ConfigButton from "@/components/ui/ConfigButton.vue";
-import ModalWindow from "@/components/common/ModalWindow.vue";
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-	name: "SwitchCharacterFeature",
-	components: {ModalWindow, ConfigButton},
+	name: 'SwitchCharacterFeature',
 	data() {
 		return {
-			modal: false
+			modal: false,
 		}
 	},
 	methods: {
@@ -50,79 +48,107 @@ export default defineComponent({
 		},
 		removeCharacter(index: number) {
 			this.$store.commit('removeCharacter', index)
-		}
-	}
+		},
+		newCharacter() {
+			this.$store.commit('addNewCharacter')
+		},
+		shortenName(name: string) {
+			return name
+		},
+	},
 })
 </script>
 
 <style scoped lang="scss">
-.switch-character {
-	padding: 16px;
+.characters-tabs {
+	height: 30px;
+	margin-bottom: 26px;
 
 	&__list {
 		display: flex;
-		flex-direction: column;
-		gap: 8px;
+		flex: 1 1;
+		color: white;
+		border-radius: 0 0 10px 10px;
 	}
 
-	&__list-item {
+	&__tab {
 		position: relative;
-		width: 100%;
-		height: 50px;
+		flex: 1 1;
+		background-color: #2d2d2d;
+		height: 30px;
+		max-width: 30ch;
+		box-sizing: border-box;
+
+		&:not(:first-child) {
+			border-left: 2px solid #181818;
+		}
+		&:not(:last-child) {
+			border-right: 2px solid #181818;
+		}
+
+		&:first-child {
+			border-radius: 0 0 0 5px;
+		}
+
+		&:last-child {
+			border-radius: 0 0 5px 0;
+		}
+		transition: background-color 0.15s ease-out;
+
+		&--current {
+			background-color: #181818;
+
+			button:first-child {
+				cursor: auto;
+				font-weight: bold;
+			}
+		}
+
+		&:hover {
+			background-color: #181818;
+		}
 	}
 
 	&__button {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 2px;
 		width: 100%;
 		height: 100%;
-		background-color: #181818;
-		color: white;
-		border-radius: 50px;
+		background-color: transparent;
 		border: none;
-		font-weight: bold;
-		font-size: 20px;
-		transition: background-color 0.15s ease-out;
+		color: white;
+		padding: 5px 10px;
 
-		&:hover {
-			background-color: #2f2f2f;
+		span {
+			width: calc(100% - 16px);
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		&--new {
+			justify-content: center;
 		}
 	}
 
 	&__remove {
 		position: absolute;
-		right: 16px;
-		top: 50%;
-		width: 36px;
-		height: 36px;
-		transform: translateY(-50%);
-		background-color: #f87070;
+		display: grid;
+		place-content: center;
+		right: 4px;
 		border: none;
+		background-color: white;
 		border-radius: 100%;
-		color: white;
 		transition: background-color 0.15s ease-out;
 
+		width: 16px;
+		height: 16px;
+
 		&:hover {
-			background-color: #d25050;
-		}
-
-		&:after,
-		&:before {
-			content: '';
-			position: absolute;
-			width: 3px;
-			border-radius: 5px;
-			height: 60%;
-			background-color: white;
-			left: 50%;
-			top: 50%;
-		}
-		&:after {
-			transform: translate3d(-50%, -50%, 0) rotate(45deg);
-		}
-
-		&:before {
-			transform: translate3d(-50%, -50%, 0) rotate(-45deg);
+			background-color: #cecece;
 		}
 	}
 }
-
 </style>

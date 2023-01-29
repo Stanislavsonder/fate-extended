@@ -1,19 +1,21 @@
 <template>
-	<Card :title="$t('character')" class="character">
-		<template v-slot:buttons>
-			<ManageMana/>
-			<ManageMental/>
-			<ManageHealth/>
-			<EditCharacterInfo/>
+	<Card
+		:title="$t('character')"
+		class="character">
+		<template #buttons>
+			<ManageMana />
+			<ManageMental />
+			<ManageHealth />
+			<EditCharacterInfo />
 		</template>
 
-		<template v-slot:content>
+		<template #content>
 			<div class="character__content">
 				<div class="character__person">
 					<img
 						class="character__image"
 						src="../../assets/CharacterPlaceholder.png"
-						alt="Character Placeholder">
+						alt="Character Placeholder" />
 					<span class="character__level">
 						{{ $store.state.characters[$store.state.current].level }}
 					</span>
@@ -31,21 +33,21 @@
 						</h3>
 					</div>
 					<div class="character__core-bars">
-						<HealthBar/>
-						<MentalBar/>
+						<HealthBar />
+						<MentalBar />
 					</div>
 					<div class="character__additional-bars">
-						<ManaBar :mana="$store.state.characters[$store.state.current].mana"/>
+						<ManaBar :mana="$store.state.characters[$store.state.current].mana" />
 						<IntoxicationBar
 							v-if="false"
-							:intoxication="$store.state.characters[$store.state.current].intoxication"/>
+							:intoxication="$store.state.characters[$store.state.current].intoxication" />
 					</div>
 				</div>
 				<div class="character__luck">
 					<span class="character__luck-value">
 						{{ $store.state.characters[$store.state.current].luck }}
 					</span>
-					<Luck class="character__luck-icon"/>
+					<Luck class="character__luck-icon" />
 				</div>
 			</div>
 		</template>
@@ -53,33 +55,37 @@
 </template>
 
 <script lang="ts">
-import Card from "@/components/common/Card.vue";
-import HealthBar from "@/components/sheet-elements/bars/HealthBar.vue";
-import MentalBar from "@/components/sheet-elements/bars/MentalBar.vue";
-import ManaBar from "@/components/sheet-elements/bars/ManaBar.vue";
-import IntoxicationBar from "@/components/sheet-elements/bars/IntoxicationBar.vue";
-import {defineComponent} from "vue";
-import EditCharacterInfo from "@/components/edit/EditCharacterInfo.vue";
-import ManageHealth from "@/components/edit/ManageHealth.vue";
-import ManageMental from "@/components/edit/ManageMental.vue";
-import ManageMana from "@/components/edit/ManageMana.vue";
-import Luck from "@/components/ui/icons/Luck.vue";
+import Card from '@/components/common/Card.vue'
+import HealthBar from '@/components/sheet-elements/bars/HealthBar.vue'
+import MentalBar from '@/components/sheet-elements/bars/MentalBar.vue'
+import ManaBar from '@/components/sheet-elements/bars/ManaBar.vue'
+import IntoxicationBar from '@/components/sheet-elements/bars/IntoxicationBar.vue'
+import { defineComponent } from 'vue'
+import EditCharacterInfo from '@/components/edit/EditCharacterInfo.vue'
+import ManageHealth from '@/components/edit/ManageHealth.vue'
+import ManageMental from '@/components/edit/ManageMental.vue'
+import ManageMana from '@/components/edit/ManageMana.vue'
+import Luck from '@/components/ui/icons/Luck.vue'
 
 export default defineComponent({
-	name: "Character",
+	name: 'Character',
 	components: {
 		Luck,
 		ManageMana,
 		ManageMental,
 		ManageHealth,
 		EditCharacterInfo,
-		IntoxicationBar, ManaBar, MentalBar, HealthBar, Card
+		IntoxicationBar,
+		ManaBar,
+		MentalBar,
+		HealthBar,
+		Card,
 	},
 })
 </script>
 
 <style scoped lang="scss">
-@use "src/styles/breakpoints";
+@use 'src/styles/breakpoints';
 
 .character {
 	position: relative;
@@ -99,13 +105,11 @@ export default defineComponent({
 			gap: 16px;
 			padding-bottom: 60px;
 		}
-
 	}
 
 	&__person {
 		position: relative;
 		height: 183px;
-
 	}
 
 	&__info {
@@ -115,6 +119,16 @@ export default defineComponent({
 		@include breakpoints.media-breakpoint-down(xs) {
 			flex-direction: column;
 			gap: 6px;
+		}
+
+		h2,
+		h3 {
+			display: flex;
+			align-items: center;
+
+			@include breakpoints.media-breakpoint-down(xs) {
+				justify-content: center;
+			}
 		}
 
 		h2 {
@@ -190,7 +204,6 @@ export default defineComponent({
 			right: 50%;
 			transform: translateX(50%);
 		}
-
 	}
 	&__luck-value {
 		position: absolute;
@@ -206,7 +219,6 @@ export default defineComponent({
 		left: 50%;
 		top: 50%;
 		transform: translateX(-50%) translateY(-50%);
-
 	}
 
 	&__luck-icon {

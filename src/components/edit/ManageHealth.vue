@@ -1,52 +1,46 @@
 <template>
 	<ConfigButton
-		@click="modal = true"
 		type="HealthIcon"
 		hint="Manage HP"
-		variant="transparent"/>
+		variant="transparent"
+		@click="modal = true" />
 	<ModalWindow
 		v-model="modal"
 		title="Manage Heath Points">
 		<article class="character-health-manage">
 			<section class="character-health-manage__section">
-				<h3>
-					Heal or Damage:
-				</h3>
+				<h3>Heal or Damage:</h3>
 				<label>
 					<input
 						v-model="value"
 						type="number"
 						min="0"
-						max="999">
+						max="999" />
 				</label>
 				<nav class="character-health-manage__hp-buttons">
 					<button
-						@click="heal"
-						class="character-health-manage__hp-button">
-						<Heal/>
+						class="character-health-manage__hp-button"
+						@click="heal">
+						<Heal />
 					</button>
 					<button
-						@click="damage"
-						class="character-health-manage__hp-button">
-						<Damage/>
+						class="character-health-manage__hp-button"
+						@click="damage">
+						<Damage />
 					</button>
 				</nav>
 			</section>
 			<section class="character-health-manage__section">
-				<h3>
-					Change max HP modifier:
-				</h3>
+				<h3>Change max HP modifier:</h3>
 				<label>
 					<input
 						v-model="modifier"
 						type="number"
 						min="-999"
-						max="999">
+						max="999" />
 				</label>
 				<nav class="character-health-manage__hp-buttons">
-					<Button @click="changeModifier">
-						Apply
-					</Button>
+					<Button @click="changeModifier"> Apply </Button>
 				</nav>
 			</section>
 		</article>
@@ -54,15 +48,15 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
-import ModalWindow from "@/components/common/ModalWindow.vue";
-import ConfigButton from "@/components/ui/ConfigButton.vue";
-import Heal from "@/components/ui/icons/Heal.vue";
-import Damage from "@/components/ui/icons/Damage.vue";
-import Button from "@/components/ui/Button.vue";
+import { defineComponent } from 'vue'
+import ModalWindow from '@/components/common/ModalWindow.vue'
+import ConfigButton from '@/components/ui/ConfigButton.vue'
+import Heal from '@/components/ui/icons/Heal.vue'
+import Damage from '@/components/ui/icons/Damage.vue'
+import Button from '@/components/ui/Button.vue'
 
 export default defineComponent({
-	name: "ManageHealth",
+	name: 'ManageHealth',
 	components: {
 		Button,
 		Damage,
@@ -74,14 +68,14 @@ export default defineComponent({
 		return {
 			modal: false,
 			value: 0,
-			modifier: 0
+			modifier: 0,
 		}
 	},
 	watch: {
 		modal() {
 			this.value = 0
 			this.modifier = this.$store.state.characters[this.$store.state.current].health.modifier
-		}
+		},
 	},
 	mounted() {
 		this.modifier = this.$store.state.characters[this.$store.state.current].health.modifier
@@ -89,12 +83,16 @@ export default defineComponent({
 	methods: {
 		heal() {
 			this.$store.state.characters[this.$store.state.current].health.current = Math.min(
-				this.$store.state.characters[this.$store.state.current].health.current + this.value, this.$store.getters.maxHealth)
+				this.$store.state.characters[this.$store.state.current].health.current + this.value,
+				this.$store.getters.maxHealth
+			)
 			this.close()
 		},
 		damage() {
 			this.$store.state.characters[this.$store.state.current].health.current = Math.max(
-				this.$store.state.characters[this.$store.state.current].health.current - this.value, 0)
+				this.$store.state.characters[this.$store.state.current].health.current - this.value,
+				0
+			)
 			this.close()
 		},
 		changeModifier() {
@@ -104,8 +102,8 @@ export default defineComponent({
 		close() {
 			this.value = 0
 			this.modal = false
-		}
-	}
+		},
+	},
 })
 </script>
 

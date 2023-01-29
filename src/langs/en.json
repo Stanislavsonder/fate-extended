@@ -1,9 +1,9 @@
 {
-  "character": "Character",
-  "aspects": "Aspects",
-  "origin-and-appearance": "Origin & Appearance",
-  "equipment-and-inventory": "Equipment & Inventory",
-  "skills": "Skills",
-  "stunts": "Stunts",
-  "roll-dices": "Roll dices"
+	"character": "Character",
+	"aspects": "Aspects",
+	"origin-and-appearance": "Origin & Appearance",
+	"equipment-and-inventory": "Equipment & Inventory",
+	"skills": "Skills",
+	"stunts": "Stunts",
+	"roll-dices": "Roll dices"
 }
