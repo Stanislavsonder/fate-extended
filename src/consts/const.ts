@@ -1,5 +1,5 @@
 import { Character, ModuleStatus, SkillType } from '@/types'
-
+// TODO: Clean up consts / types / helpers
 export const MODULES_LIST = [
 	{
 		title: 'core',

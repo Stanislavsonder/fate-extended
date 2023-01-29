@@ -39,6 +39,7 @@ import DicePositive from '@/components/ui/icons/DicePositive.vue'
 import DiceNeutral from '@/components/ui/icons/DiceNeutral.vue'
 import LuckyDiceNeutral from '@/components/ui/icons/LuckyDiceNeutral.vue'
 import LuckyDicePositive from '@/components/ui/icons/LuckyDicePositive.vue'
+// TODO: Optimize for tablet & mobile usage
 
 export default {
 	name: 'RollDiceFeature',

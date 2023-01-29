@@ -41,6 +41,7 @@ import UploadIcon from '@/components/ui/icons/UploadIcon.vue'
 import { MODULES_LIST } from '@/consts/const'
 import { Character } from '@/types'
 
+// TODO: Add file drop support
 interface Data {
 	loadedCharacters: Character[]
 	errors: string[]
@@ -70,7 +71,6 @@ export default defineComponent({
 				return
 			}
 
-			console.log(e.target.files)
 			const files = [...e.target.files] as File[]
 
 			files.forEach((file, index) => {

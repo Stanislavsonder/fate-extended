@@ -40,6 +40,7 @@
 </template>
 
 <script>
+// TODO: Remove component and replace by Icon
 export default {
 	name: 'Dice',
 	props: {

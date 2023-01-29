@@ -8,7 +8,8 @@ import { defineComponent } from 'vue'
 import CharList from '@/components/CharList.vue'
 import SheetHeader from '@/components/header/SheetHeader.vue'
 import { validateCharacter } from '@/consts/validators'
-
+// TODO: Apply Feature-Sliced Design to the project
+// TODO: Localize app
 export default defineComponent({
 	name: 'App',
 	components: {

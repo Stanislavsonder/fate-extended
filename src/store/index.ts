@@ -6,7 +6,7 @@ interface CharacterStore {
 	current: number
 	characters: Character[]
 }
-
+// TODO: Decompose store
 export default createStore<CharacterStore>({
 	state: {
 		current: 0,
