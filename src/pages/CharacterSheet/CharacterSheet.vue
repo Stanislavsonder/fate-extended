@@ -23,14 +23,9 @@ import Inventory from '@/components/sections/Inventory.vue'
 import Skills from '@/components/sections/Skills.vue'
 import Stunts from '@/components/sections/Stunts.vue'
 import { defineComponent } from 'vue'
-import { Character as Char } from '@/types'
-
-interface Data {
-	character: Char
-}
 
 export default defineComponent({
-	name: 'CharList',
+	name: 'CharacterSheet',
 	components: {
 		Stunts,
 		Skills,
@@ -45,13 +40,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@use 'src/styles/breakpoints';
-
 .char-sheet {
 	&__main-section {
 		display: flex;
 
-		@include breakpoints.media-breakpoint-down(sm) {
+		@include media-down(tablet) {
 			flex-direction: column-reverse;
 		}
 	}
@@ -60,7 +53,7 @@ export default defineComponent({
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 
-		@include breakpoints.media-breakpoint-down(sm) {
+		@include media-down(tablet) {
 			grid-template-columns: auto;
 		}
 	}

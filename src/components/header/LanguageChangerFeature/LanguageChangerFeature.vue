@@ -69,15 +69,13 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-@use 'src/styles/breakpoints';
-
 .language {
 	width: 200px;
 	box-sizing: border-box;
 	padding-left: 6px;
 	margin-left: auto;
 
-	@include breakpoints.media-breakpoint-only(xs) {
+	@include media-only(mobile) {
 		width: auto;
 	}
 
@@ -94,7 +92,7 @@ export default defineComponent({
 		gap: 8px;
 		border-radius: 5px;
 
-		@include breakpoints.media-breakpoint-only(xs) {
+		@include media-only(mobile) {
 			width: auto;
 		}
 
@@ -113,13 +111,13 @@ export default defineComponent({
 	}
 
 	&__current-name {
-		@include breakpoints.media-breakpoint-only(xs) {
+		@include media-only(mobile) {
 			display: none;
 		}
 	}
 
 	&__list-name {
-		@include breakpoints.media-breakpoint-only(xs) {
+		@include media-only(mobile) {
 			display: none;
 		}
 	}
@@ -137,7 +135,7 @@ export default defineComponent({
 		border-radius: 0 0 8px 8px;
 		width: 200px;
 
-		@include breakpoints.media-breakpoint-only(xs) {
+		@include media-only(mobile) {
 			width: auto;
 			padding: 6px 18px;
 		}

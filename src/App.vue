@@ -1,11 +1,11 @@
 <template>
 	<SheetHeader />
-	<CharList />
+	<CharacterSheet />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import CharList from '@/components/CharList.vue'
+import CharacterSheet from '@/pages/CharacterSheet/CharacterSheet.vue'
 import SheetHeader from '@/components/header/SheetHeader.vue'
 import { validateCharacter } from '@/consts/validators'
 // TODO: Apply Feature-Sliced Design to the project
@@ -14,7 +14,7 @@ export default defineComponent({
 	name: 'App',
 	components: {
 		SheetHeader,
-		CharList,
+		CharacterSheet,
 	},
 	watch: {
 		'$store.state.characters': {
@@ -43,13 +43,7 @@ export default defineComponent({
 })
 </script>
 
-<style src="./styles/reset.css"/>
 <style lang="scss">
-@import 'src/styles/breakpoints';
-
-:root {
-	--inter: Inter, Avenir, Helvetica, Arial, sans-serif;
-}
 button {
 	cursor: pointer;
 }
@@ -58,8 +52,8 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
-	color: #2c3e50;
-	background-color: #fdfcfc;
+	color: var(--text);
+	background-color: var(--background);
 
 	&::-webkit-scrollbar {
 		display: none;

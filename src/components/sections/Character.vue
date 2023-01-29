@@ -85,13 +85,11 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-@use 'src/styles/breakpoints';
-
 .character {
 	position: relative;
 	width: 100%;
 
-	@include breakpoints.media-breakpoint-down(sm) {
+	@include media-down(tablet) {
 		width: auto;
 	}
 
@@ -100,7 +98,7 @@ export default defineComponent({
 		width: 100%;
 		gap: 50px;
 
-		@include breakpoints.media-breakpoint-down(xs) {
+		@include media-only(mobile) {
 			flex-direction: column;
 			gap: 16px;
 			padding-bottom: 60px;
@@ -116,7 +114,7 @@ export default defineComponent({
 		display: flex;
 		justify-content: space-between;
 
-		@include breakpoints.media-breakpoint-down(xs) {
+		@include media-only(mobile) {
 			flex-direction: column;
 			gap: 6px;
 		}
@@ -126,7 +124,7 @@ export default defineComponent({
 			display: flex;
 			align-items: center;
 
-			@include breakpoints.media-breakpoint-down(xs) {
+			@include media-only(mobile) {
 				justify-content: center;
 			}
 		}
@@ -165,7 +163,7 @@ export default defineComponent({
 		border: 1px solid #181818;
 		box-sizing: border-box;
 
-		@include breakpoints.media-breakpoint-down(xs) {
+		@include media-only(mobile) {
 			right: 50%;
 			transform: translateX(50%);
 			border-radius: 14px 14px 0 0;
@@ -200,7 +198,7 @@ export default defineComponent({
 		width: 48px;
 		height: 48px;
 
-		@include breakpoints.media-breakpoint-down(xs) {
+		@include media-only(mobile) {
 			right: 50%;
 			transform: translateX(50%);
 		}

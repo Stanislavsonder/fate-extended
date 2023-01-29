@@ -31,13 +31,13 @@ import StuntAddAndEdit from '@/components/edit/StuntAddAndEdit.vue'
 export default defineComponent({
 	name: 'Stunt',
 	components: { StuntAddAndEdit, ModalWindow },
+	emits: ['update', 'remove'],
 	props: {
 		stunt: {
 			type: Object as PropType<Stunt>,
 			required: true,
 		},
 	},
-	emits: ['update', 'remove'],
 	data() {
 		return {
 			modal: false,

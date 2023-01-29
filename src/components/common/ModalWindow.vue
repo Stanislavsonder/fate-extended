@@ -56,8 +56,6 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-@use 'src/styles/breakpoints';
-
 .modal-window {
 	position: fixed;
 	top: 0;
@@ -87,7 +85,7 @@ export default defineComponent({
 		box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.25);
 		transform: translateX(-50%);
 
-		@include breakpoints.media-breakpoint-down(sm) {
+		@include media-down(tablet) {
 			width: calc(100vw - 10px);
 			top: 50px;
 		}
@@ -102,7 +100,7 @@ export default defineComponent({
 		border-radius: 100%;
 		transition: background-color 0.15s ease-out;
 
-		@include breakpoints.media-breakpoint-down(sm) {
+		@include media-down(tablet) {
 			width: 48px;
 			height: 48px;
 		}

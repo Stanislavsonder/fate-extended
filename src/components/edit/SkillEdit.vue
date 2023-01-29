@@ -97,8 +97,8 @@ export default defineComponent({
 			this.$emit('update', this.tmpSkill)
 			this.close()
 		},
-		experienceUpdate(event: any) {
-			const percent = event.offsetX / event.target.offsetWidth
+		experienceUpdate(event: MouseEvent) {
+			const percent = event.offsetX / (event.target as HTMLElement).offsetWidth
 			this.tmpSkill.experience = Math.min(this.cup, Math.max(0, Math.ceil(this.cup * percent)))
 		},
 		levelUp() {
