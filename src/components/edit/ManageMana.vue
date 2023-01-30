@@ -1,15 +1,15 @@
 <template>
 	<ConfigButton
 		type="ManaIcon"
-		hint="Manage Mana"
+		:hint="$t('manage-mana')"
 		variant="transparent"
 		@click="modal = true" />
 	<ModalWindow
 		v-model="modal"
-		title="Manage Mana Points">
+		:title="$t('manage-mana')">
 		<article class="character-health-manage">
 			<section class="character-health-manage__section">
-				<h3>Restore or spent mana:</h3>
+				<h3>{{ $t('restore-or-spend-mana') }}:</h3>
 				<label>
 					<input
 						v-model="value"
@@ -19,11 +19,13 @@
 				</label>
 				<nav class="character-health-manage__hp-buttons">
 					<button
+						:title="$t('restore')"
 						class="character-health-manage__hp-button"
 						@click="heal">
 						<Heal />
 					</button>
 					<button
+						:title="$t('spend')"
 						class="character-health-manage__hp-button"
 						@click="damage">
 						<Damage />
@@ -31,7 +33,7 @@
 				</nav>
 			</section>
 			<section class="character-health-manage__section">
-				<h3>Change max Mana modifier:</h3>
+				<h3>{{ $t('change-max-mana-modifier') }}:</h3>
 				<label>
 					<input
 						v-model="modifier"
@@ -40,7 +42,11 @@
 						max="999" />
 				</label>
 				<nav class="character-health-manage__hp-buttons">
-					<Button @click="changeModifier"> Apply </Button>
+					<Button
+						:title="$t('ui-apply')"
+						@click="changeModifier">
+						{{ $t('ui-apply') }}
+					</Button>
 				</nav>
 			</section>
 		</article>

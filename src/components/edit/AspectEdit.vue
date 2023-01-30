@@ -4,20 +4,21 @@
 			<textarea
 				ref="title"
 				v-model="data.title"
-				placeholder="Aspect name"
+				:placeholder="$t('aspect__name')"
 				class="aspect-edit__title" />
 		</h2>
 		<h3>
 			<textarea
 				ref="description"
 				v-model="data.description"
-				placeholder="Aspect description"
+				:placeholder="$t('aspect__description')"
 				class="aspect-edit__description" />
 		</h3>
-		<p>Aspect type: {{ capitalize(data.type) }}</p>
+		<p>{{ $t('aspect__type') }}: {{ $t(`aspect__${data.type}`) }}</p>
 		<ul>
 			<li>
 				<button
+					:title="$t('aspect__concept')"
 					:class="{ active: data.type === AspectType.Concept }"
 					@click="data.type = AspectType.Concept">
 					<Dice plus />
@@ -25,6 +26,7 @@
 			</li>
 			<li>
 				<button
+					:title="$t('aspect__problem')"
 					:class="{ active: data.type === AspectType.Problem }"
 					@click="data.type = AspectType.Problem">
 					<Dice minus />
@@ -32,6 +34,7 @@
 			</li>
 			<li>
 				<button
+					:title="$t('aspect__neutral')"
 					:class="{ active: data.type === AspectType.Neutral }"
 					@click="data.type = AspectType.Neutral">
 					<Dice />
@@ -41,16 +44,22 @@
 		<nav>
 			<Button
 				v-if="mode === 'edit'"
+				:title="$t('ui-remove')"
 				secondary
 				@click="remove">
-				Remove
+				{{ $t('ui-remove') }}
 			</Button>
 			<Button
 				secondary
+				:title="$t('ui-discard')"
 				@click="close">
-				Discard
+				{{ $t('ui-discard') }}
 			</Button>
-			<Button @click="save">Save</Button>
+			<Button
+				:title="$t('ui-save')"
+				@click="save">
+				{{ $t('ui-save') }}
+			</Button>
 		</nav>
 	</article>
 </template>

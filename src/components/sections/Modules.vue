@@ -3,7 +3,7 @@
 		<img
 			class="modules__fate-logo"
 			src="../../assets/Logo.png"
-			alt="Fate Extended Logo" />
+			:alt="$t('fate-extended-logo')" />
 		<ul
 			v-if="modules.length"
 			class="modules__list">

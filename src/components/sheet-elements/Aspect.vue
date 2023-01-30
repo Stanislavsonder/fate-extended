@@ -15,7 +15,7 @@
 	</article>
 	<ModalWindow
 		v-model="editMode"
-		title="Edit aspect">
+		:title="$t('edit-aspect')">
 		<AspectEdit
 			mode="edit"
 			:aspect="aspect"

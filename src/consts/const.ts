@@ -121,7 +121,7 @@ export const SKILLS_CORE: SkillType[] = [
 		module: 'core',
 	},
 	{
-		name: 'mechanics',
+		name: 'craft',
 		overcome: true,
 		advantage: true,
 		attack: false,

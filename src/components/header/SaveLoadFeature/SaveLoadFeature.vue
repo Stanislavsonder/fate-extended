@@ -1,22 +1,24 @@
 <template>
 	<nav>
 		<ConfigButton
-			title="Save character into the file"
+			:hint="$t('save-characters-file')"
 			type="Save"
 			variant="transparent"
 			@click="save" />
 		<ConfigButton
-			title="Load character from the file"
+			:hint="$t('load-characters-file')"
 			type="Load"
 			variant="transparent"
 			@click="openLoadModal" />
 		<ConfigButton
-			title="Restore character sheet"
+			:hint="$t('restore-character-sheet')"
 			type="Restore"
 			:variant="['transparent', 'danger']"
 			@click="clear" />
 	</nav>
-	<ModalWindow v-model="modal">
+	<ModalWindow
+		v-model="modal"
+		:title="$t('load-characters-file')">
 		<LoadWindow
 			@close="modal = false"
 			@loaded="load" />
@@ -26,7 +28,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import ModalWindow from '@/components/common/ModalWindow.vue'
-import LoadWindow from '@/components/header/LoadWindow.vue'
+import LoadWindow from '@/components/header/SaveLoadFeature/LoadWindow.vue'
 import { Character } from '@/types'
 import ConfigButton from '@/components/ui/ConfigButton.vue'
 
@@ -49,7 +51,8 @@ export default defineComponent({
 			})
 			const link = document.createElement('a')
 			link.href = URL.createObjectURL(file)
-			link.download = (this.$store.state.characters[this.$store.state.current].name || 'Unnamed Character') + '.fate'
+			link.download =
+				(this.$store.state.characters[this.$store.state.current].name || this.$t('unnamed-character')) + '.fate'
 			link.click()
 			URL.revokeObjectURL(link.href)
 		},

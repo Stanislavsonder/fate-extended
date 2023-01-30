@@ -6,8 +6,10 @@
 				:key="skill.name"
 				class="add-skill__skill"
 				@click="add(skill.name)">
-				<button class="add-skill__button">
-					{{ skill.name }}
+				<button
+					:title="$t('ui-add') + ' ' + $t(`skill__${skill.name}`)"
+					class="add-skill__button">
+					{{ skill.localizedName }}
 				</button>
 			</li>
 		</ul>
@@ -34,9 +36,14 @@ export default defineComponent({
 	},
 	data(): Data {
 		return {
-			skills: SKILLS.filter(skill => !this.existedSkills?.find(s => s.name === skill.name)).sort((a, b) =>
-				a.name.localeCompare(b.name)
-			),
+			skills: SKILLS.filter(skill => !this.existedSkills?.find(s => s.name === skill.name))
+				.map(e => {
+					return {
+						...e,
+						localizedName: this.$t(`skill__${e.name}`),
+					}
+				})
+				.sort((a, b) => a.localizedName.localeCompare(b.localizedName)),
 		}
 	},
 	methods: {

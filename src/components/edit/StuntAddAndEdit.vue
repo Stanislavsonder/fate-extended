@@ -4,25 +4,26 @@
 			<h2>
 				<input
 					v-model="tmpStunt.name"
-					placeholder="Stunt name"
+					:placeholder="$t('stunt__name')"
 					class="add-stunt__name"
 					type="text" />
 			</h2>
 			<h3 class="add-stunt__skill">
 				<select
 					v-model="tmpStunt.skill"
+					:title="$t('skill')"
 					class="add-stunt__select">
 					<option
 						selected
 						disabled
 						:value="undefined">
-						Select skill
+						{{ $t('select__skill') }}
 					</option>
 					<option
 						v-for="skill in skills"
-						:key="skill"
-						:value="skill">
-						{{ skill }}
+						:key="skill.name"
+						:value="skill.name">
+						{{ skill.localizedName }}
 					</option>
 				</select>
 			</h3>
@@ -31,7 +32,7 @@
 			<textarea
 				ref="textarea"
 				v-model="tmpStunt.description"
-				placeholder="Stunt description"
+				:placeholder="$t('stunt__description')"
 				class="add-stunt__textarea" />
 		</div>
 	</article>
@@ -39,19 +40,22 @@
 		<Button
 			v-if="mode === 'edit'"
 			secondary
-			@click="remove"
-			>Remove</Button
-		>
+			:title="$t('ui-remove')"
+			@click="remove">
+			{{ $t('ui-remove') }}
+		</Button>
 		<Button
 			secondary
-			@click="close"
-			>Discard</Button
-		>
+			:title="$t('ui-discard')"
+			@click="close">
+			{{ $t('ui-discard') }}
+		</Button>
 		<Button
+			:title="$t('ui-save')"
 			:disabled="!isValid"
-			@click="update"
-			>Save</Button
-		>
+			@click="update">
+			{{ $t('ui-save') }}
+		</Button>
 	</nav>
 </template>
 
@@ -60,11 +64,11 @@ import { defineComponent, PropType } from 'vue'
 import { SKILLS } from '@/consts/const'
 import { useAutoHeight } from '@/composables/useAutoHeight'
 import Button from '@/components/ui/Button.vue'
-import { Stunt } from '@/types'
+import { SkillType, Stunt } from '@/types'
 
 interface Data {
 	tmpStunt: Stunt
-	skills: string[]
+	skills: SkillType[]
 }
 
 export default defineComponent({
@@ -87,7 +91,12 @@ export default defineComponent({
 	data(): Data {
 		return {
 			tmpStunt: JSON.parse(JSON.stringify(this.stunt)),
-			skills: SKILLS.map(e => e.name).sort(),
+			skills: SKILLS.map(e => {
+				return {
+					...e,
+					localizedName: this.$t(`skill__${e.name}`),
+				}
+			}).sort((a, b) => a.localizedName.localeCompare(b.localizedName)),
 		}
 	},
 	computed: {

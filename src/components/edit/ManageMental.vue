@@ -1,15 +1,15 @@
 <template>
 	<ConfigButton
 		type="MindIcon"
-		hint="Manage Mental"
+		:hint="$t('manage-mental-state')"
 		variant="transparent"
 		@click="modal = true" />
 	<ModalWindow
 		v-model="modal"
-		title="Manage Mental Points">
+		:title="$t('manage-mental-state')">
 		<article class="character-health-manage">
 			<section class="character-health-manage__section">
-				<h3>Heal or Damage:</h3>
+				<h3>{{ $t('to-heal-or-to-hit') }}:</h3>
 				<label>
 					<input
 						v-model="value"
@@ -19,11 +19,13 @@
 				</label>
 				<nav class="character-health-manage__hp-buttons">
 					<button
+						:title="$t('to-heal')"
 						class="character-health-manage__hp-button"
 						@click="heal">
 						<Heal />
 					</button>
 					<button
+						:title="$t('to-hit')"
 						class="character-health-manage__hp-button"
 						@click="damage">
 						<Damage />
@@ -31,7 +33,7 @@
 				</nav>
 			</section>
 			<section class="character-health-manage__section">
-				<h3>Change max Mental modifier:</h3>
+				<h3>{{ $t('change-max-mental-modifier') }}:</h3>
 				<label>
 					<input
 						v-model="modifier"
@@ -40,7 +42,11 @@
 						max="999" />
 				</label>
 				<nav class="character-health-manage__hp-buttons">
-					<Button @click="changeModifier"> Apply </Button>
+					<Button
+						:title="$t('ui-apply')"
+						@click="changeModifier">
+						{{ $t('ui-apply') }}
+					</Button>
 				</nav>
 			</section>
 		</article>

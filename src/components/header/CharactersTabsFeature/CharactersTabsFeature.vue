@@ -10,10 +10,11 @@
 					class="characters-tabs__button"
 					@click="() => setCharacter(index)">
 					<span>
-						{{ shortenName(character.name) || 'New Character' }}
+						{{ shortenName(character.name) || $t('new-character') }}
 					</span>
 
 					<button
+						:title="$t('ui-close')"
 						class="characters-tabs__remove"
 						@click="() => removeCharacter(index)">
 						x
@@ -22,6 +23,7 @@
 			</li>
 			<li class="characters-tabs__tab">
 				<button
+					:title="$t('new-character')"
 					class="characters-tabs__button characters-tabs__button--new"
 					@click="newCharacter">
 					+
@@ -35,7 +37,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-	name: 'SwitchCharacterFeature',
+	name: 'CharactersTabsFeature',
 	data() {
 		return {
 			modal: false,

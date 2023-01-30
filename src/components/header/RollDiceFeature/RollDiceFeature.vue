@@ -1,20 +1,24 @@
 <template>
 	<div>
 		<ConfigButton
+			:hint="$t('dice-roll')"
 			type="Dices"
 			variant="transparent"
 			@click="modal = true" />
 	</div>
 	<ModalWindow
 		v-model="modal"
-		:title="$t('roll-dices')">
+		:title="$t('dice-roll')">
 		<article class="roll-dices">
 			<input
 				v-model="dicesCount"
 				class="roll-dices__amount"
 				type="number" />
-			<Button @click="rollDices">Roll Dices</Button>
-
+			<Button
+				:title="$t('roll-the-dice')"
+				@click="rollDices">
+				{{ $t('roll-the-dice') }}
+			</Button>
 			<div>
 				<ul class="roll-dices__dices">
 					<li

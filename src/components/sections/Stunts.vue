@@ -2,7 +2,7 @@
 	<Card :title="$t('stunts')">
 		<template #buttons>
 			<ConfigButton
-				hint="Add new Skill"
+				:hint="$t('add-new-stunt')"
 				type="PlusIcon"
 				variant="transparent"
 				@click="modal = true" />
@@ -22,7 +22,7 @@
 	</Card>
 	<ModalWindow
 		v-model="modal"
-		title="Add new stunt">
+		:title="$t('add-new-stunt')">
 		<StuntAddAndEdit
 			:stunt="{ name: '', description: '', skill: undefined }"
 			mode="new"

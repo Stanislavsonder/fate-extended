@@ -11,6 +11,7 @@
 				<header class="modal-window__header">
 					<h2 class="modal-window__title">{{ title }}</h2>
 					<button
+						:title="$t('ui-close')"
 						class="modal-window__close"
 						@click="close" />
 				</header>

@@ -6,7 +6,7 @@
 			{{ skill.level }}
 		</aside>
 		<h6 class="skill__name">
-			{{ skill.name }}
+			{{ $t(`skill__${skill.name}`) }}
 		</h6>
 		<span class="skill__experience">
 			{{ skill.experience }} /
@@ -22,7 +22,7 @@
 
 	<ModalWindow
 		v-model="editMode"
-		title="Edit aspect">
+		:title="$t('edit-skill')">
 		<SkillEdit
 			:skill="skill"
 			@remove="remove"

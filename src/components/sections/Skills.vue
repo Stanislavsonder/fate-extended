@@ -4,7 +4,7 @@
 		class="skills">
 		<template #buttons>
 			<ConfigButton
-				hint="Add new Skill"
+				:hint="$t('add-new-skill')"
 				variant="transparent"
 				type="PlusIcon"
 				@click="add" />
@@ -24,7 +24,7 @@
 	</Card>
 	<ModalWindow
 		v-model="addModal"
-		title="Add new skill">
+		:title="$t('add-new-skill')">
 		<AddSkill
 			:existed-skills="$store.state.characters[$store.state.current].skills"
 			@close="addModal = false"

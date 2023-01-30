@@ -4,7 +4,7 @@
 			<span class="main-bar__icon">
 				<PotionIcon />
 			</span>
-			<h6>{{ intoxication.current }} / {{ intoxication.max }}</h6>
+			<h6>{{ intoxication.current }} /</h6>
 		</div>
 		<div
 			:style="gradient"

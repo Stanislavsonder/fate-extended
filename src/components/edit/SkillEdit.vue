@@ -15,7 +15,7 @@
 				</button>
 			</aside>
 			<h6 class="skill__name">
-				{{ tmpSkill.name }}
+				{{ $t(`skill__${tmpSkill.name}`) }}
 			</h6>
 			<span class="skill__experience">
 				<input
@@ -39,14 +39,16 @@
 			<Button
 				secondary
 				@click="remove">
-				Remove
+				{{ $t('ui-remove') }}
 			</Button>
 			<Button
 				secondary
 				@click="close">
-				Discard
+				{{ $t('ui-discard') }}
 			</Button>
-			<Button @click="save"> Save </Button>
+			<Button @click="save">
+				{{ $t('ui-save') }}
+			</Button>
 		</nav>
 	</div>
 </template>

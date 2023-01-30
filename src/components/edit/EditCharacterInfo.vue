@@ -1,28 +1,28 @@
 <template>
 	<ConfigButton
 		type="EditIcon"
-		hint="Edit"
+		:hint="$t('edit')"
 		variant="transparent"
 		@click="modal = true" />
 	<ModalWindow
 		v-model="modal"
-		title="Edit character info">
+		:title="$t('edit-character-info')">
 		<article class="character-info-edit">
 			<div class="character-info-edit__name-section">
 				<label>
 					<input
 						v-model="name"
-						placeholder="Character name" />
+						:placeholder="$t('character__name')" />
 				</label>
 				<label>
 					<input
 						v-model="race"
-						placeholder="Race" />
+						:placeholder="$t('race')" />
 				</label>
 			</div>
 			<div class="character-info-edit__luck-section">
 				<label>
-					<span> Luck: </span>
+					<span> {{ $t('luck') }}: </span>
 					<input
 						v-model="luck"
 						class=""
@@ -34,14 +34,16 @@
 			</div>
 			<nav>
 				<Button
+					:title="$t('ui-discard')"
 					secondary
 					@click="close">
-					Discard
+					{{ $t('ui-discard') }}
 				</Button>
 				<Button
+					:title="$t('ui-save')"
 					:disabled="!isValidData"
 					@click="save">
-					Save
+					{{ $t('ui-save') }}
 				</Button>
 			</nav>
 		</article>

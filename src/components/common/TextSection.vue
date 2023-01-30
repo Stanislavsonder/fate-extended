@@ -11,21 +11,23 @@
 		</template>
 		<template #content>
 			<p v-if="!editMode">
-				{{ modelValue || 'Click "Edit" to add text' }}
+				{{ modelValue || $t('click-edit-to-add-text') }}
 			</p>
 			<div v-show="editMode">
 				<textarea
 					ref="textarea"
 					v-model="tmpValue"
-					placeholder="Click here to write text"
+					:placeholder="$t('click-here-to-write-text')"
 					class="text-section__textarea" />
 				<nav class="text-section__buttons">
 					<Button
 						secondary
 						@click="editMode = false">
-						Discard
+						{{ $t('ui-discard') }}
 					</Button>
-					<Button @click="save"> Save </Button>
+					<Button @click="save">
+						{{ $t('ui-save') }}
+					</Button>
 				</nav>
 			</div>
 		</template>

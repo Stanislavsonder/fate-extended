@@ -4,14 +4,16 @@
 		class="aspects">
 		<template #buttons>
 			<ConfigButton
-				hint="Add new Aspect"
+				:hint="$t('add-new-aspect')"
 				type="PlusIcon"
 				variant="transparent"
 				@click="modal = true" />
 		</template>
 		<template #content>
 			<ul class="aspects__content">
-				<li v-if="!$store.state.characters[$store.state.current].aspects.length">Click '+' to add new aspect</li>
+				<li v-if="!$store.state.characters[$store.state.current].aspects.length">
+					{{ $t('click-plus-to-add-aspect') }}
+				</li>
 				<li
 					v-for="(aspect, index) in $store.state.characters[$store.state.current].aspects"
 					:key="$store.state.characters[$store.state.current].name + index + aspect.title">
@@ -25,7 +27,7 @@
 	</Card>
 	<ModalWindow
 		v-model="modal"
-		title="Create new aspect">
+		:title="$t('create-new-aspect')">
 		<AspectEdit
 			mode="new"
 			:aspect="{ title: '', description: '', type: AspectType.Neutral }"

@@ -15,7 +15,7 @@
 					<img
 						class="character__image"
 						src="../../assets/CharacterPlaceholder.png"
-						alt="Character Placeholder" />
+						:alt="$t('character-image')" />
 					<span class="character__level">
 						{{ $store.state.characters[$store.state.current].level }}
 					</span>
@@ -23,12 +23,12 @@
 				<div class="character__bars">
 					<div class="character__info">
 						<h2>
-							{{ $store.state.characters[$store.state.current].name || 'New Character' }}
+							{{ $store.state.characters[$store.state.current].name || $t('new-character') }}
 						</h2>
 						<h3>
 							{{
 								$store.state.characters[$store.state.current].race ||
-								"Click 'Edit' button above to change race and name"
+								$t('click-edit-button-above-to-change-race-and-name')
 							}}
 						</h3>
 					</div>

@@ -1,7 +1,7 @@
 <template>
 	<div class="load-window">
 		<label class="load-window__label">
-			<span> Please, load character file: </span>
+			<span>{{ $t('please-select-character-file') }}: </span>
 			<UploadIcon class="load-window__upload" />
 			<input
 				accept=".fate"
@@ -16,14 +16,15 @@
 				:key="character.name + index">
 				<strong> {{ character.name }}, </strong>
 				{{ character.race }}
-				({{ character.level }} level)
+				{{ ` (${character.level} ${$t('level').toLocaleLowerCase()})` }}
 			</h3>
 		</div>
 		<Button
 			class="load-window__button"
+			:title="$t('ui-confirm')"
 			:disabled="!charValidator"
 			@click="confirmLoading">
-			Confirm
+			{{ $t('ui-confirm') }}
 		</Button>
 		<p
 			v-for="error in errors"

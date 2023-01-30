@@ -3,8 +3,12 @@
 		class="stunt"
 		@click="modal = true">
 		<header class="stunt__header">
-			<h5 class="stunt__name">{{ stunt.name }}</h5>
-			<h6 class="stunt__skill">{{ stunt.skill }}</h6>
+			<h5 class="stunt__name">
+				{{ stunt.name }}
+			</h5>
+			<h6 class="stunt__skill">
+				{{ $t(`skill__${stunt.skill}`) }}
+			</h6>
 		</header>
 		<p class="stunt__description">
 			{{ stunt.description }}
@@ -12,7 +16,7 @@
 	</article>
 	<ModalWindow
 		v-model="modal"
-		title="Edit stunt">
+		:title="$t('edit-stunt')">
 		<StuntAddAndEdit
 			:stunt="stunt"
 			mode="edit"
