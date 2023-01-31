@@ -1,5 +1,5 @@
 import { Character, CharacterCoreModule, Module, Skill } from '@/types'
-import { copy } from '@/consts/const'
+import { copy } from '@/shared/helpers/helpers'
 
 export function joinSkills(modules: Module[]): Skill[] {
 	if (!modules.length) {

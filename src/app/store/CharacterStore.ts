@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { Aspect, Character, SkillProgress, Stunt } from '@/types'
 import { computed, ref } from 'vue'
-import { copy } from '@/consts/const'
+import { copy } from '@/shared/helpers/helpers'
 import rules from '@/shared/constants/rules'
 
 export const useCharactersStore = defineStore('character', () => {

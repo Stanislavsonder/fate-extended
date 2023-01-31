@@ -18,6 +18,9 @@
 			:value="experiencePercent">
 			{{ experiencePercent.toFixed() }}%
 		</progress>
+		<span class="skill__dice-roll">
+			<RollSkillDice :skill="skill" />
+		</span>
 	</article>
 
 	<ModalWindow
@@ -37,10 +40,11 @@ import { SkillProgress } from '@/types'
 import rules from '@/shared/constants/rules'
 import ModalWindow from '@/components/common/ModalWindow.vue'
 import SkillEdit from '@/components/edit/SkillEdit.vue'
+import RollSkillDice from '@/features/RollSkillDice/RollSkillDice.vue'
 
 export default defineComponent({
 	name: 'Skill',
-	components: { SkillEdit, ModalWindow },
+	components: { RollSkillDice, SkillEdit, ModalWindow },
 	emits: ['update', 'remove'],
 	rules: rules,
 	props: {
@@ -89,6 +93,12 @@ export default defineComponent({
 			transform: scale(1.01);
 			box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.25);
 		}
+	}
+	&__dice-roll {
+		display: grid;
+		place-content: center;
+		width: 36px;
+		height: 36px;
 	}
 
 	&__level {

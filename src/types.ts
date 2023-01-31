@@ -101,3 +101,10 @@ export type Skill = {
 	module: string
 	status: ModuleStatus
 }
+
+export enum RollType {
+	Overcome = 'overcome',
+	Advantage = 'advantage',
+	Attack = 'attack',
+	Defence = 'defence',
+}

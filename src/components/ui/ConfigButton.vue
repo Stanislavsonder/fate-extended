@@ -56,7 +56,7 @@ export default defineComponent({
 	transition: background-color 0.15s ease-out;
 
 	&:hover {
-		background-color: rgba(255, 255, 255, 0.3);
+		background-color: var(--hover-white);
 	}
 
 	& > svg {
@@ -66,6 +66,10 @@ export default defineComponent({
 
 	&--transparent {
 		background-color: transparent;
+
+		&:hover {
+			background-color: var(--hover-black);
+		}
 
 		svg,
 		path,

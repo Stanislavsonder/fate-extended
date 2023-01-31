@@ -85,5 +85,7 @@
   "character-image": "Зображення персонажа",
   "fate-extended-logo": "Логотип \"Fate Extended\"",
   "edit-aspect": "Редагувати аспект",
-  "skill__magic": "Чари"
+  "skill__magic": "Чари",
+
+  "roll": "Бросок на"
 }

@@ -37,7 +37,7 @@
 <script lang="ts" setup>
 // TODO: Add file drop support
 import { defineEmits, ref } from 'vue'
-import { validateCharacter } from '@/consts/validators'
+import { validateCharacter } from '@/shared/helpers/validators'
 import Button from '@/components/ui/Button.vue'
 import UploadIcon from '@/components/ui/icons/UploadIcon.vue'
 import { Character } from '@/types'

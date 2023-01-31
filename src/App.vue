@@ -9,7 +9,7 @@ import { onMounted, watch } from 'vue'
 import CharacterSheet from '@/pages/CharacterSheet/CharacterSheet.vue'
 import SheetHeader from '@/components/header/SheetHeader.vue'
 
-import { validateCharacter } from '@/consts/validators'
+import { validateCharacter } from '@/shared/helpers/validators'
 import { useCharactersStore } from '@/app/store/CharacterStore'
 import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
