@@ -12,8 +12,8 @@
 		<template #content>
 			<ul class="skills__list">
 				<li
-					v-for="(skill, index) in $store.state.characters[$store.state.current].skills"
-					:key="$store.state.characters[$store.state.current].name + index + skill.name">
+					v-for="(skill, index) in characters[current].skills"
+					:key="characters[current].name + index + skill.name">
 					<Skill
 						:skill="skill"
 						@remove="remove(index)"
@@ -26,7 +26,7 @@
 		v-model="addModal"
 		:title="$t('add-new-skill')">
 		<AddSkill
-			:existed-skills="$store.state.characters[$store.state.current].skills"
+			:existed-skills="characters[current].skills"
 			@close="addModal = false"
 			@add="addSkill" />
 	</ModalWindow>
@@ -35,11 +35,13 @@
 <script lang="ts">
 import Card from '@/components/common/Card.vue'
 import Skill from '@/components/sheet-elements/Skill.vue'
-import { Skill as SkillType } from '@/types'
+import { SkillProgress as SkillType } from '@/types'
 import { defineComponent } from 'vue'
 import ConfigButton from '@/components/ui/ConfigButton.vue'
 import ModalWindow from '@/components/common/ModalWindow.vue'
 import AddSkill from '@/components/edit/AddSkill.vue'
+import { useCharactersStore } from '@/app/store/CharacterStore'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
 	name: 'Skills',
@@ -49,6 +51,19 @@ export default defineComponent({
 		ConfigButton,
 		Skill,
 		Card,
+	},
+	setup() {
+		const store = useCharactersStore()
+
+		const { characters, current } = storeToRefs(store)
+
+		const { updateSkills } = store
+
+		return {
+			characters,
+			current,
+			updateSkills,
+		}
 	},
 	data() {
 		return {
@@ -60,23 +75,18 @@ export default defineComponent({
 			this.addModal = true
 		},
 		addSkill(skill: SkillType) {
-			this.$store.commit('updateSkills', [...this.$store.state.characters[this.$store.state.current].skills, skill])
+			this.updateSkills([...this.characters[this.current].skills, skill])
 		},
 		update(skill: SkillType, index: number) {
-			const newSkills = [...this.$store.state.characters[this.$store.state.current].skills]
+			const newSkills = [...this.characters[this.current].skills]
 			newSkills.splice(index, 1, skill)
 			newSkills.sort((a, b) => {
 				return b.level - a.level ? b.level - a.level : b.experience - a.experience
 			})
-			this.$store.commit('updateSkills', newSkills)
+			this.updateSkills(newSkills)
 		},
 		remove(index: number) {
-			this.$store.commit(
-				'updateSkills',
-				this.$store.state.characters[this.$store.state.current].skills.filter(
-					(e: SkillType, i: number) => i !== index
-				)
-			)
+			this.updateSkills(this.characters[this.current].skills.filter((e: SkillType, i: number) => i !== index))
 		},
 	},
 })

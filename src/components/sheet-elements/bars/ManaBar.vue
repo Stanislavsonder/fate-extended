@@ -1,12 +1,12 @@
 <template>
 	<div
-		v-if="$store.getters.maxMana"
+		v-if="maxMana"
 		class="main-bar">
 		<div class="main-bar__numbers">
 			<span class="main-bar__icon">
 				<ManaIcon />
 			</span>
-			<h6>{{ $store.state.characters[$store.state.current].mana.current }} / {{ $store.getters.maxMana }}</h6>
+			<h6>{{ characters[current].mana.current }} / {{ maxMana }}</h6>
 		</div>
 		<div
 			:style="{ background: bg }"
@@ -28,15 +28,26 @@
 <script lang="ts">
 import ManaIcon from '@/components/ui/icons/ManaIcon.vue'
 import { defineComponent } from 'vue'
+import { useCharactersStore } from '@/app/store/CharacterStore'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
 	name: 'ManaBar',
 	components: { ManaIcon },
+	setup() {
+		const store = useCharactersStore()
+
+		const { characters, current, maxMana } = storeToRefs(store)
+
+		return {
+			characters,
+			current,
+			maxMana,
+		}
+	},
 	computed: {
 		percent(): number {
-			return (
-				(this.$store.state.characters[this.$store.state.current].mana.current / this.$store.getters.maxMana) * 100
-			)
+			return (this.characters[this.current].mana.current / this.maxMana) * 100
 		},
 		bg(): string {
 			return `linear-gradient(90deg, #181818 0%, #181818 ${this.percent}%, transparent ${this.percent}%)`

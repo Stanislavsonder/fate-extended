@@ -11,7 +11,7 @@
 		:title="$t('dice-roll')">
 		<article class="roll-dices">
 			<input
-				v-model="dicesCount"
+				v-model="diceCount"
 				class="roll-dices__amount"
 				type="number" />
 			<Button
@@ -34,7 +34,8 @@
 	</ModalWindow>
 </template>
 
-<script>
+<script setup lang="ts">
+// TODO: Optimize for tablet & mobile usage
 import ConfigButton from '@/components/ui/ConfigButton.vue'
 import ModalWindow from '@/components/common/ModalWindow.vue'
 import Button from '@/components/ui/Button.vue'
@@ -43,71 +44,64 @@ import DicePositive from '@/components/ui/icons/DicePositive.vue'
 import DiceNeutral from '@/components/ui/icons/DiceNeutral.vue'
 import LuckyDiceNeutral from '@/components/ui/icons/LuckyDiceNeutral.vue'
 import LuckyDicePositive from '@/components/ui/icons/LuckyDicePositive.vue'
-// TODO: Optimize for tablet & mobile usage
+import { ref } from 'vue'
+import { useCharactersStore } from '@/app/store/CharacterStore'
 
-export default {
-	name: 'RollDiceFeature',
-	components: {
-		Button,
-		ModalWindow,
-		ConfigButton,
-		DicePositive,
-		DiceNeutral,
-		DiceNegative,
-		LuckyDiceNeutral,
-		LuckyDicePositive,
-	},
-	data() {
-		return {
-			modal: false,
-			dicesCount: 4,
-			result: [],
+type DiceResult = {
+	dice: 'lucky' | 'default'
+	result: -1 | 0 | 1
+}
+
+const store = useCharactersStore()
+
+const dices = { DiceNeutral, DiceNegative, DicePositive, LuckyDicePositive, LuckyDiceNeutral }
+const modal = ref(false)
+const diceCount = ref(4)
+const result = ref<DiceResult[]>([])
+
+const rollDices = () => {
+	const dices = Array(diceCount.value).fill(undefined)
+	result.value = dices.map((dice, index) => {
+		if (isDiceLucky(index)) {
+			return {
+				dice: 'lucky',
+				result: luckyDiceResult(),
+			}
 		}
-	},
-	methods: {
-		rollDices() {
-			const dices = Array(this.dicesCount).fill(undefined)
-			this.result = dices.map((dice, index) => {
-				if (this.isDiceLucky(index)) {
-					return {
-						dice: 'lucky',
-						result: this.luckyDiceResult(),
-					}
-				}
-				return {
-					dice: 'default',
-					result: this.diceResult(),
-				}
-			})
-		},
-		isDiceLucky(index) {
-			return (
-				Math.random() <= (this.$store.state.characters[this.$store.state.current].luck * 0.1) / Math.pow(2, index)
-			)
-		},
-		luckyDiceResult() {
-			return Math.random() <= 2 / 3 ? 1 : 0
-		},
-		diceResult() {
-			const value = Math.random()
-			return value < 1 / 3 ? -1 : value < 2 / 3 ? 0 : 1
-		},
-		getDice(result) {
-			if (result.dice === 'lucky') {
-				if (result.result) {
-					return 'LuckyDicePositive'
-				}
-				return 'LuckyDiceNeutral'
-			}
-			if (result.result === -1) {
-				return 'DiceNegative'
-			}
-			if (result.result) {
-				return 'DicePositive'
-			}
-			return 'DiceNeutral'
-		},
-	},
+		return {
+			dice: 'default',
+			result: diceResult(),
+		}
+	})
+}
+
+const isDiceLucky = (index: number) => {
+	return Math.random() <= (store.characters[store.current].luck * 0.1) / Math.pow(2, index)
+}
+
+const luckyDiceResult = () => {
+	return Math.random() <= 2 / 3 ? 1 : 0
+}
+
+const diceResult = () => {
+	const value = Math.random()
+	return value < 1 / 3 ? -1 : value < 2 / 3 ? 0 : 1
+}
+
+const getDice = (result: DiceResult) => {
+	if (result.dice === 'lucky') {
+		if (result.result) {
+			return dices['LuckyDicePositive']
+		}
+		return dices['LuckyDiceNeutral']
+	}
+	if (result.result === -1) {
+		return dices['DiceNegative']
+	}
+	if (result.result) {
+		return dices['DicePositive']
+	}
+	return dices['DiceNeutral']
 }
 </script>
 

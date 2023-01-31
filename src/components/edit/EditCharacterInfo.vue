@@ -34,10 +34,10 @@
 			</div>
 			<nav>
 				<Button
-					:title="$t('ui-discard')"
+					:title="$t('ui-cancel')"
 					secondary
 					@click="close">
-					{{ $t('ui-discard') }}
+					{{ $t('ui-cancel') }}
 				</Button>
 				<Button
 					:title="$t('ui-save')"
@@ -55,10 +55,26 @@ import ConfigButton from '@/components/ui/ConfigButton.vue'
 import ModalWindow from '@/components/common/ModalWindow.vue'
 import { defineComponent } from 'vue'
 import Button from '@/components/ui/Button.vue'
+import { useCharactersStore } from '@/app/store/CharacterStore'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
 	name: 'EditCharacterInfo',
 	components: { Button, ModalWindow, ConfigButton },
+	setup() {
+		const store = useCharactersStore()
+
+		const { characters, current } = storeToRefs(store)
+		const { updateName, updateRace, updateLuck } = store
+
+		return {
+			characters,
+			current,
+			updateName,
+			updateRace,
+			updateLuck,
+		}
+	},
 	data() {
 		return {
 			modal: false,
@@ -77,9 +93,9 @@ export default defineComponent({
 			if (!value) {
 				return
 			}
-			this.luck = this.$store.state.characters[this.$store.state.current].luck
-			this.name = this.$store.state.characters[this.$store.state.current].name
-			this.race = this.$store.state.characters[this.$store.state.current].race
+			this.luck = this.characters[this.current].luck
+			this.name = this.characters[this.current].name
+			this.race = this.characters[this.current].race
 		},
 	},
 	methods: {
@@ -90,9 +106,9 @@ export default defineComponent({
 			this.luck = 0
 		},
 		save() {
-			this.$store.commit('updateName', this.name)
-			this.$store.commit('updateRace', this.race)
-			this.$store.commit('updateLuck', this.luck)
+			this.updateName(this.name)
+			this.updateRace(this.race)
+			this.updateLuck(this.luck)
 			this.modal = false
 		},
 	},

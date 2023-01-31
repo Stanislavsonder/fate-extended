@@ -53,13 +53,15 @@
 	</ModalWindow>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from 'vue'
 import ModalWindow from '@/components/common/ModalWindow.vue'
 import ConfigButton from '@/components/ui/ConfigButton.vue'
 import Heal from '@/components/ui/icons/Heal.vue'
 import Damage from '@/components/ui/icons/Damage.vue'
 import Button from '@/components/ui/Button.vue'
+import { useCharactersStore } from '@/app/store/CharacterStore'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
 	name: 'ManageHealth',
@@ -69,6 +71,21 @@ export default defineComponent({
 		Heal,
 		ConfigButton,
 		ModalWindow,
+	},
+	setup() {
+		const store = useCharactersStore()
+
+		const { characters, current, maxHealth } = storeToRefs(store)
+		const { updateName, updateRace, updateLuck } = store
+
+		return {
+			characters,
+			current,
+			maxHealth,
+			updateName,
+			updateRace,
+			updateLuck,
+		}
 	},
 	data() {
 		return {
@@ -80,29 +97,29 @@ export default defineComponent({
 	watch: {
 		modal() {
 			this.value = 0
-			this.modifier = this.$store.state.characters[this.$store.state.current].health.modifier
+			this.modifier = this.characters[this.current].health.modifier
 		},
 	},
 	mounted() {
-		this.modifier = this.$store.state.characters[this.$store.state.current].health.modifier
+		this.modifier = this.characters[this.current].health.modifier
 	},
 	methods: {
 		heal() {
-			this.$store.state.characters[this.$store.state.current].health.current = Math.min(
-				this.$store.state.characters[this.$store.state.current].health.current + this.value,
-				this.$store.getters.maxHealth
+			this.characters[this.current].health.current = Math.min(
+				this.characters[this.current].health.current + this.value,
+				this.maxHealth
 			)
 			this.close()
 		},
 		damage() {
-			this.$store.state.characters[this.$store.state.current].health.current = Math.max(
-				this.$store.state.characters[this.$store.state.current].health.current - this.value,
+			this.characters[this.current].health.current = Math.max(
+				this.characters[this.current].health.current - this.value,
 				0
 			)
 			this.close()
 		},
 		changeModifier() {
-			this.$store.state.characters[this.$store.state.current].health.modifier = this.modifier
+			this.characters[this.current].health.modifier = this.modifier
 			this.close()
 		},
 		close() {

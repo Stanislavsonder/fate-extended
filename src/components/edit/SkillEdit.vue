@@ -44,7 +44,7 @@
 			<Button
 				secondary
 				@click="close">
-				{{ $t('ui-discard') }}
+				{{ $t('ui-cancel') }}
 			</Button>
 			<Button @click="save">
 				{{ $t('ui-save') }}
@@ -55,13 +55,14 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { Skill } from '@/types'
-import { SKILL_LEVEL_CUP } from '@/consts/const'
+import { SkillProgress } from '@/types'
+import rules from '@/shared/constants/rules'
 import Button from '@/components/ui/Button.vue'
 import ArrowIcon from '@/components/ui/icons/ArrowIcon.vue'
 
 export default defineComponent({
 	name: 'SkillEdit',
+	levelCups: rules.LEVEL_CUPS,
 	components: {
 		ArrowIcon,
 		Button,
@@ -69,7 +70,7 @@ export default defineComponent({
 	emits: ['update', 'remove', 'close'],
 	props: {
 		skill: {
-			type: Object as PropType<Skill>,
+			type: Object as PropType<SkillProgress>,
 			required: true,
 		},
 	},
@@ -84,7 +85,7 @@ export default defineComponent({
 			return percent > 100 ? 100 : percent
 		},
 		cup() {
-			return SKILL_LEVEL_CUP[this.tmpSkill.level - 1]
+			return this.$options.levelCups[this.tmpSkill.level - 1]
 		},
 	},
 	methods: {
@@ -104,7 +105,7 @@ export default defineComponent({
 			this.tmpSkill.experience = Math.min(this.cup, Math.max(0, Math.ceil(this.cup * percent)))
 		},
 		levelUp() {
-			this.tmpSkill.level = Math.min(Number(this.tmpSkill.level) + 1, SKILL_LEVEL_CUP.length)
+			this.tmpSkill.level = Math.min(Number(this.tmpSkill.level) + 1, this.$options.levelCups.length)
 			this.tmpSkill.experience = 0
 		},
 		levelDown() {

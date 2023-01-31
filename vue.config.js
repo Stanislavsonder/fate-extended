@@ -7,6 +7,8 @@ module.exports = defineConfig({
 		themeColor: '#181818',
 		msTileColor: '#FFFFFF',
 		appleMobileWebAppCapable: 'yes',
+		skipWaiting: true,
+		clientsClaim: true,
 	},
 	chainWebpack: config => {
 		config.entry('app').clear()

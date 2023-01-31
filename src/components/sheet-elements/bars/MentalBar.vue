@@ -1,23 +1,20 @@
 <template>
 	<MainBar
-		:max="$store.getters.maxMental"
-		:current="$store.state.characters[$store.state.current].mental.current">
+		:max="maxMental"
+		:current="characters[current].mental.current">
 		<template #icon>
 			<MindIcon />
 		</template>
 	</MainBar>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import MainBar from '@/components/sheet-elements/bars/MainBar.vue'
 import MindIcon from '@/components/ui/icons/MindIcon.vue'
-import { defineComponent } from 'vue'
+import { useCharactersStore } from '@/app/store/CharacterStore'
+import { storeToRefs } from 'pinia'
 
-export default defineComponent({
-	name: 'MentalBar',
-	components: {
-		MindIcon,
-		MainBar,
-	},
-})
+const store = useCharactersStore()
+
+const { characters, current, maxMental } = storeToRefs(store)
 </script>

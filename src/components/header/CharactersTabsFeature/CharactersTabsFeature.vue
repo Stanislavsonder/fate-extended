@@ -2,13 +2,13 @@
 	<nav class="characters-tabs">
 		<ul class="characters-tabs__list">
 			<li
-				v-for="(character, index) in $store.state.characters"
+				v-for="(character, index) in characters"
 				:key="character.name"
 				class="characters-tabs__tab"
-				:class="{ 'characters-tabs__tab--current': index === $store.state.current }">
+				:class="{ 'characters-tabs__tab--current': index === current }">
 				<button
 					class="characters-tabs__button"
-					@click="() => setCharacter(index)">
+					@click="() => changeCharacter(index)">
 					<span>
 						{{ shortenName(character.name) || $t('new-character') }}
 					</span>
@@ -25,7 +25,7 @@
 				<button
 					:title="$t('new-character')"
 					class="characters-tabs__button characters-tabs__button--new"
-					@click="newCharacter">
+					@click="addNewCharacter">
 					+
 				</button>
 			</li>
@@ -35,25 +35,26 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useCharactersStore } from '@/app/store/CharacterStore'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
 	name: 'CharactersTabsFeature',
-	data() {
+	setup() {
+		const store = useCharactersStore()
+
+		const { characters, current } = storeToRefs(store)
+		const { changeCharacter, removeCharacter, addNewCharacter } = store
+
 		return {
-			modal: false,
+			characters,
+			current,
+			changeCharacter,
+			removeCharacter,
+			addNewCharacter,
 		}
 	},
 	methods: {
-		setCharacter(index: number) {
-			this.$store.commit('changeCharacter', index)
-			this.modal = false
-		},
-		removeCharacter(index: number) {
-			this.$store.commit('removeCharacter', index)
-		},
-		newCharacter() {
-			this.$store.commit('addNewCharacter')
-		},
 		shortenName(name: string) {
 			return name
 		},

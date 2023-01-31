@@ -10,7 +10,7 @@
 		<template #content>
 			<ul>
 				<li
-					v-for="(stunt, index) in $store.state.characters[$store.state.current].stunts"
+					v-for="(stunt, index) in characters[current].stunts"
 					:key="stunt.name">
 					<Stunt
 						:stunt="stunt"
@@ -39,10 +39,25 @@ import Stunt from '@/components/sheet-elements/Stunt.vue'
 import ConfigButton from '@/components/ui/ConfigButton.vue'
 import ModalWindow from '@/components/common/ModalWindow.vue'
 import StuntAddAndEdit from '@/components/edit/StuntAddAndEdit.vue'
+import { useCharactersStore } from '@/app/store/CharacterStore'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
 	name: 'Stunts',
 	components: { StuntAddAndEdit, ModalWindow, ConfigButton, Stunt, Card },
+	setup() {
+		const store = useCharactersStore()
+
+		const { characters, current } = storeToRefs(store)
+
+		const { updateStunts } = store
+
+		return {
+			characters,
+			current,
+			updateStunts,
+		}
+	},
 	data() {
 		return {
 			modal: false,
@@ -50,18 +65,15 @@ export default defineComponent({
 	},
 	methods: {
 		add(stunt: StuntType) {
-			this.$store.commit('updateStunts', [...this.$store.state.characters[this.$store.state.current].stunts, stunt])
+			this.updateStunts([...this.characters[this.current].stunts, stunt])
 		},
 		update(stunt: StuntType, id: number) {
-			const newStunts = [...this.$store.state.characters[this.$store.state.current].stunts]
+			const newStunts = [...this.characters[this.current].stunts]
 			newStunts.splice(id, 1, stunt)
-			this.$store.commit('updateStunts', newStunts)
+			this.updateStunts(newStunts)
 		},
 		remove(id: number) {
-			this.$store.commit(
-				'updateStunts',
-				this.$store.state.characters[this.$store.state.current].stunts.filter((e: StuntType, i: number) => i !== id)
-			)
+			this.updateStunts(this.characters[this.current].stunts.filter((e: StuntType, i: number) => i !== id))
 		},
 	},
 })

@@ -51,9 +51,9 @@
 			</Button>
 			<Button
 				secondary
-				:title="$t('ui-discard')"
+				:title="$t('ui-cancel')"
 				@click="close">
-				{{ $t('ui-discard') }}
+				{{ $t('ui-cancel') }}
 			</Button>
 			<Button
 				:title="$t('ui-save')"

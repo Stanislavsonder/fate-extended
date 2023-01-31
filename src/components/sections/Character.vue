@@ -17,19 +17,16 @@
 						src="../../assets/CharacterPlaceholder.png"
 						:alt="$t('character-image')" />
 					<span class="character__level">
-						{{ $store.state.characters[$store.state.current].level }}
+						{{ characters[current].level }}
 					</span>
 				</div>
 				<div class="character__bars">
 					<div class="character__info">
 						<h2>
-							{{ $store.state.characters[$store.state.current].name || $t('new-character') }}
+							{{ characters[current].name || $t('new-character') }}
 						</h2>
 						<h3>
-							{{
-								$store.state.characters[$store.state.current].race ||
-								$t('click-edit-button-above-to-change-race-and-name')
-							}}
+							{{ characters[current].race || $t('click-edit-button-above-to-change-race-and-name') }}
 						</h3>
 					</div>
 					<div class="character__core-bars">
@@ -37,15 +34,15 @@
 						<MentalBar />
 					</div>
 					<div class="character__additional-bars">
-						<ManaBar :mana="$store.state.characters[$store.state.current].mana" />
+						<ManaBar :mana="characters[current].mana" />
 						<IntoxicationBar
 							v-if="false"
-							:intoxication="$store.state.characters[$store.state.current].intoxication" />
+							:intoxication="characters[current].intoxication" />
 					</div>
 				</div>
 				<div class="character__luck">
 					<span class="character__luck-value">
-						{{ $store.state.characters[$store.state.current].luck }}
+						{{ characters[current].luck }}
 					</span>
 					<Luck class="character__luck-icon" />
 				</div>
@@ -66,6 +63,8 @@ import ManageHealth from '@/components/edit/ManageHealth.vue'
 import ManageMental from '@/components/edit/ManageMental.vue'
 import ManageMana from '@/components/edit/ManageMana.vue'
 import Luck from '@/components/ui/icons/Luck.vue'
+import { useCharactersStore } from '@/app/store/CharacterStore'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
 	name: 'Character',
@@ -80,6 +79,16 @@ export default defineComponent({
 		MentalBar,
 		HealthBar,
 		Card,
+	},
+	setup() {
+		const store = useCharactersStore()
+
+		const { characters, current } = storeToRefs(store)
+
+		return {
+			characters,
+			current,
+		}
 	},
 })
 </script>
@@ -132,10 +141,12 @@ export default defineComponent({
 		h2 {
 			font-size: 24px;
 			font-weight: bold;
+			text-align: left;
 		}
 
 		h3 {
 			font-weight: 500;
+			text-align: right;
 		}
 	}
 

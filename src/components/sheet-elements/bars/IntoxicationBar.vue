@@ -20,6 +20,8 @@
 import PotionIcon from '@/components/ui/icons/PotionIcon.vue'
 import { defineComponent, PropType } from 'vue'
 import { Intoxication } from '@/types'
+import { useCharactersStore } from '@/app/store/CharacterStore'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
 	name: 'IntoxicationBar',
@@ -30,9 +32,18 @@ export default defineComponent({
 			required: true,
 		},
 	},
+	setup() {
+		const store = useCharactersStore()
+
+		const { maxIntoxication } = storeToRefs(store)
+
+		return {
+			maxIntoxication,
+		}
+	},
 	computed: {
 		percent() {
-			return (this.intoxication.current / this.$store.getters.maxIntoxication) * 100
+			return (this.intoxication.current / this.maxIntoxication) * 100
 		},
 		gradient() {
 			return {

@@ -10,7 +10,7 @@
 				type="file"
 				@change="load" />
 		</label>
-		<div v-if="charValidator">
+		<div v-if="isValidCharacters">
 			<h3
 				v-for="(character, index) in loadedCharacters"
 				:key="character.name + index">
@@ -22,7 +22,7 @@
 		<Button
 			class="load-window__button"
 			:title="$t('ui-confirm')"
-			:disabled="!charValidator"
+			:disabled="errors.length || (errors.length && loadedCharacters.length)"
 			@click="confirmLoading">
 			{{ $t('ui-confirm') }}
 		</Button>
@@ -34,72 +34,62 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
+// TODO: Add file drop support
+import { defineEmits, ref } from 'vue'
 import { validateCharacter } from '@/consts/validators'
 import Button from '@/components/ui/Button.vue'
 import UploadIcon from '@/components/ui/icons/UploadIcon.vue'
-import { MODULES_LIST } from '@/consts/const'
 import { Character } from '@/types'
+import { useCharactersStore } from '@/app/store/CharacterStore'
+import { storeToRefs } from 'pinia'
 
-// TODO: Add file drop support
-interface Data {
-	loadedCharacters: Character[]
-	errors: string[]
+const emit = defineEmits(['close'])
+
+const store = useCharactersStore()
+
+const { characters } = storeToRefs(store)
+const { changeCharacter, setCharacter } = store
+const loadedCharacters = ref<Character[]>([])
+const errors = ref<string[]>([])
+const isValidCharacters = ref(true)
+
+const load = (e: any) => {
+	if (!e.target.files.length) {
+		loadedCharacters.value = []
+		return
+	}
+	isValidCharacters.value = true
+
+	const files = [...e.target.files] as File[]
+
+	files.forEach((file, index) => {
+		const reader = new FileReader()
+		reader.readAsText(file, 'UTF-8')
+		reader.onload = event => {
+			if (typeof event?.target?.result === 'string') {
+				const character = JSON.parse(event.target.result)
+				if (validateCharacter(character)) {
+					loadedCharacters.value.push(character as Character)
+				} else {
+					isValidCharacters.value = false
+					errors.value.push(`Unable to load '${character.name || index + 'nd'}' character.`)
+				}
+			}
+		}
+		reader.onerror = () => (isValidCharacters.value = false)
+	})
 }
 
-export default defineComponent({
-	MODULES_LIST: MODULES_LIST,
-	name: 'LoadWindow',
-	components: { UploadIcon, Button },
-	emits: ['close'],
-	data(): Data {
-		return {
-			loadedCharacters: [],
-			errors: [],
-		}
-	},
-	methods: {
-		charValidator(char: unknown): boolean {
-			return validateCharacter(char)
-		},
-		MODULES_LIST() {
-			return MODULES_LIST
-		},
-		load(e: any) {
-			if (!e.target.files.length) {
-				this.loadedCharacters = []
-				return
-			}
-
-			const files = [...e.target.files] as File[]
-
-			files.forEach((file, index) => {
-				const reader = new FileReader()
-				reader.readAsText(file, 'UTF-8')
-				reader.onload = event => {
-					if (typeof event?.target?.result === 'string') {
-						const char = JSON.parse(event.target.result)
-						if (this.charValidator(char)) {
-							this.loadedCharacters.push(char as Character)
-						} else {
-							this.errors.push(`Unable to load '${char.name || index + 'nd'}' character.`)
-						}
-					}
-				}
-			})
-		},
-		confirmLoading() {
-			this.loadedCharacters.forEach(character => {
-				this.$store.commit('setCharacter', character)
-			})
-			this.errors = []
-			this.loadedCharacters = []
-			this.$store.commit('changeCharacter', this.$store.state.characters.length - 1)
-			this.$emit('close')
-		},
-	},
-})
+const confirmLoading = () => {
+	loadedCharacters.value.forEach(character => {
+		setCharacter(character)
+	})
+	errors.value = []
+	loadedCharacters.value = []
+	changeCharacter(characters.value.length - 1)
+	emit('close')
+}
 </script>
 
 <style scoped lang="scss">

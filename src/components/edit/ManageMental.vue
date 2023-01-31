@@ -60,6 +60,8 @@ import ConfigButton from '@/components/ui/ConfigButton.vue'
 import Heal from '@/components/ui/icons/Heal.vue'
 import Damage from '@/components/ui/icons/Damage.vue'
 import Button from '@/components/ui/Button.vue'
+import { useCharactersStore } from '@/app/store/CharacterStore'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
 	name: 'ManageMental',
@@ -69,6 +71,21 @@ export default defineComponent({
 		Heal,
 		ConfigButton,
 		ModalWindow,
+	},
+	setup() {
+		const store = useCharactersStore()
+
+		const { characters, current, maxMental } = storeToRefs(store)
+		const { updateName, updateRace, updateLuck } = store
+
+		return {
+			characters,
+			current,
+			maxMental,
+			updateName,
+			updateRace,
+			updateLuck,
+		}
 	},
 	data() {
 		return {
@@ -80,29 +97,29 @@ export default defineComponent({
 	watch: {
 		modal() {
 			this.value = 0
-			this.modifier = this.$store.state.characters[this.$store.state.current].mental.modifier
+			this.modifier = this.characters[this.current].mental.modifier
 		},
 	},
 	mounted() {
-		this.modifier = this.$store.state.characters[this.$store.state.current].mental.modifier
+		this.modifier = this.characters[this.current].mental.modifier
 	},
 	methods: {
 		heal() {
-			this.$store.state.characters[this.$store.state.current].mental.current = Math.min(
-				this.$store.state.characters[this.$store.state.current].mental.current + this.value,
-				this.$store.getters.maxMental
+			this.characters[this.current].mental.current = Math.min(
+				this.characters[this.current].mental.current + this.value,
+				this.maxMental
 			)
 			this.close()
 		},
 		damage() {
-			this.$store.state.characters[this.$store.state.current].mental.current = Math.max(
-				this.$store.state.characters[this.$store.state.current].mental.current - this.value,
+			this.characters[this.current].mental.current = Math.max(
+				this.characters[this.current].mental.current - this.value,
 				0
 			)
 			this.close()
 		},
 		changeModifier() {
-			this.$store.state.characters[this.$store.state.current].mental.modifier = this.modifier
+			this.characters[this.current].mental.modifier = this.modifier
 			this.close()
 		},
 		close() {

@@ -4,13 +4,29 @@ export enum AspectType {
 	Problem = 'problem',
 }
 
+type CharacterModule = CharacterCoreModule | CharacterMagicModule | CharacterAlchemyModule
+
+export type Module = {
+	meta: ModuleMeta
+	skills?: Skill[]
+	character?: CharacterModule
+	other?: any
+	experienceLevelCup?: number[]
+}
+
+export type ModuleMeta = {
+	code: string
+	name: string
+	icon: string
+}
+
 export type Aspect = {
 	title: string
 	description: string
 	type: AspectType
 }
 
-export type Skill = {
+export type SkillProgress = {
 	name: string
 	level: number
 	experience: number
@@ -20,10 +36,6 @@ export type Stunt = {
 	name: string
 	skill: string
 	description: string
-}
-
-export type Module = {
-	a: string
 }
 
 enum ConsequenceSeverity {
@@ -56,18 +68,18 @@ export type CharacterCoreModule = {
 	aspects: Aspect[]
 	description: string
 	inventory: string
-	skills: Skill[]
+	skills: SkillProgress[]
 	stunts: Stunt[]
 	health: Health
 	mental: Mental
 	luck: number
 }
 
-type CharacterMagicModule = {
+export type CharacterMagicModule = {
 	mana: Mana
 }
 
-type CharacterAlchemyModule = {
+export type CharacterAlchemyModule = {
 	intoxication: Intoxication
 }
 
@@ -79,7 +91,7 @@ export enum ModuleStatus {
 	Removed,
 }
 
-export type SkillType = {
+export type Skill = {
 	name: string
 	overcome: boolean
 	advantage: boolean

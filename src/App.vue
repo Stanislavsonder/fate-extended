@@ -3,43 +3,46 @@
 	<CharacterSheet />
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
+import { onMounted, watch } from 'vue'
+
 import CharacterSheet from '@/pages/CharacterSheet/CharacterSheet.vue'
 import SheetHeader from '@/components/header/SheetHeader.vue'
-import { validateCharacter } from '@/consts/validators'
-// TODO: Apply Feature-Sliced Design to the project
-// TODO: Localize app
-export default defineComponent({
-	name: 'App',
-	components: {
-		SheetHeader,
-		CharacterSheet,
-	},
-	watch: {
-		'$store.state.characters': {
-			handler(value) {
-				window.localStorage.characters = JSON.stringify(value)
-			},
-			deep: true,
-		},
-		'$i18n.locale'(value) {
-			window.localStorage.lang = value
-		},
-	},
-	mounted() {
-		if (window.localStorage.lang) {
-			this.$i18n.locale = window.localStorage.lang
-		}
-		if (!window.localStorage.characters) {
-			return
-		}
 
-		const characters = JSON.parse(window.localStorage.characters)
-		if (characters.every(validateCharacter)) {
-			this.$store.commit('loadCharacters', characters)
-		}
+import { validateCharacter } from '@/consts/validators'
+import { useCharactersStore } from '@/app/store/CharacterStore'
+import { useI18n } from 'vue-i18n'
+import { storeToRefs } from 'pinia'
+
+// TODO: Apply Feature-Sliced Design to the project
+
+const store = useCharactersStore()
+const i18 = useI18n()
+
+const { characters } = storeToRefs(store)
+
+watch(i18.locale, language => {
+	window.localStorage.language = language
+})
+
+watch(
+	characters,
+	characters => {
+		window.localStorage.characters = JSON.stringify(characters)
 	},
+	{
+		deep: true,
+	}
+)
+onMounted(() => {
+	i18.locale.value = window.localStorage.language || 'en'
+
+	if (window.localStorage.characters) {
+		const parsedCharacters = JSON.parse(window.localStorage.characters)
+		if (Array.isArray(parsedCharacters) && parsedCharacters.every(validateCharacter)) {
+			store.loadCharacters(parsedCharacters)
+		}
+	}
 })
 </script>
 

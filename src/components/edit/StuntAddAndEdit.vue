@@ -17,7 +17,7 @@
 						selected
 						disabled
 						:value="undefined">
-						{{ $t('select__skill') }}
+						{{ $t('select-skill') }}
 					</option>
 					<option
 						v-for="skill in skills"
@@ -46,9 +46,9 @@
 		</Button>
 		<Button
 			secondary
-			:title="$t('ui-discard')"
+			:title="$t('ui-cancel')"
 			@click="close">
-			{{ $t('ui-discard') }}
+			{{ $t('ui-cancel') }}
 		</Button>
 		<Button
 			:title="$t('ui-save')"
@@ -61,14 +61,14 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { SKILLS } from '@/consts/const'
 import { useAutoHeight } from '@/composables/useAutoHeight'
 import Button from '@/components/ui/Button.vue'
-import { SkillType, Stunt } from '@/types'
+import { Skill, Stunt } from '@/types'
+import rules from '@/shared/constants/rules'
 
 interface Data {
 	tmpStunt: Stunt
-	skills: SkillType[]
+	skills: Skill[]
 }
 
 export default defineComponent({
@@ -91,7 +91,7 @@ export default defineComponent({
 	data(): Data {
 		return {
 			tmpStunt: JSON.parse(JSON.stringify(this.stunt)),
-			skills: SKILLS.map(e => {
+			skills: rules.SKILLS.map(e => {
 				return {
 					...e,
 					localizedName: this.$t(`skill__${e.name}`),

@@ -10,7 +10,7 @@
 		</h6>
 		<span class="skill__experience">
 			{{ skill.experience }} /
-			{{ $options.SKILL_LEVEL_CUP[skill.level - 1] }}
+			{{ $options.rules.LEVEL_CUPS[skill.level - 1] }}
 		</span>
 		<progress
 			class="skill__progress"
@@ -33,19 +33,19 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { Skill } from '@/types'
-import { SKILL_LEVEL_CUP } from '@/consts/const'
+import { SkillProgress } from '@/types'
+import rules from '@/shared/constants/rules'
 import ModalWindow from '@/components/common/ModalWindow.vue'
 import SkillEdit from '@/components/edit/SkillEdit.vue'
 
 export default defineComponent({
 	name: 'Skill',
 	components: { SkillEdit, ModalWindow },
-	SKILL_LEVEL_CUP,
 	emits: ['update', 'remove'],
+	rules: rules,
 	props: {
 		skill: {
-			type: Object as PropType<Skill>,
+			type: Object as PropType<SkillProgress>,
 			required: true,
 		},
 	},
@@ -56,12 +56,12 @@ export default defineComponent({
 	},
 	computed: {
 		experiencePercent() {
-			const percent = (this.skill.experience / this.$options.SKILL_LEVEL_CUP[this.skill.level - 1]) * 100
+			const percent = (this.skill.experience / this.$options.rules.LEVEL_CUPS[this.skill.level - 1]) * 100
 			return percent > 100 ? 100 : percent
 		},
 	},
 	methods: {
-		update(skill: Skill) {
+		update(skill: SkillProgress) {
 			this.$emit('update', skill)
 		},
 		remove() {

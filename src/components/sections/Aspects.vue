@@ -11,12 +11,12 @@
 		</template>
 		<template #content>
 			<ul class="aspects__content">
-				<li v-if="!$store.state.characters[$store.state.current].aspects.length">
+				<li v-if="!characters[current].aspects.length">
 					{{ $t('click-plus-to-add-aspect') }}
 				</li>
 				<li
-					v-for="(aspect, index) in $store.state.characters[$store.state.current].aspects"
-					:key="$store.state.characters[$store.state.current].name + index + aspect.title">
+					v-for="(aspect, index) in characters[current].aspects"
+					:key="characters[current].name + index + aspect.title">
 					<AspectComponent
 						:aspect="aspect"
 						@remove="remove(index)"
@@ -44,10 +44,24 @@ import { Aspect, AspectType } from '@/types'
 import ModalWindow from '@/components/common/ModalWindow.vue'
 import ConfigButton from '@/components/ui/ConfigButton.vue'
 import AspectEdit from '@/components/edit/AspectEdit.vue'
+import { useCharactersStore } from '@/app/store/CharacterStore'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
 	name: 'Aspects',
 	components: { AspectEdit, ConfigButton, ModalWindow, AspectComponent, Card },
+	setup() {
+		const store = useCharactersStore()
+
+		const { characters, current } = storeToRefs(store)
+		const { updateAspects } = store
+
+		return {
+			characters,
+			current,
+			updateAspects,
+		}
+	},
 	data() {
 		return {
 			modal: false,
@@ -60,21 +74,15 @@ export default defineComponent({
 	},
 	methods: {
 		update(aspect: Aspect, id: number) {
-			const newAspects = [...this.$store.state.characters[this.$store.state.current].aspects]
+			const newAspects = [...this.characters[this.current].aspects]
 			newAspects.splice(id, 1, aspect)
-			this.$store.commit('updateAspects', newAspects)
+			this.updateAspects(newAspects)
 		},
 		remove(id: number) {
-			this.$store.commit(
-				'updateAspects',
-				this.$store.state.characters[this.$store.state.current].aspects.filter((e: Aspect, i: number) => i !== id)
-			)
+			this.updateAspects(this.characters[this.current].aspects.filter((e: Aspect, i: number) => i !== id))
 		},
 		add(aspect: Aspect) {
-			this.$store.commit('updateAspects', [
-				...this.$store.state.characters[this.$store.state.current].aspects,
-				aspect,
-			])
+			this.updateAspects([...this.characters[this.current].aspects, aspect])
 		},
 	},
 })

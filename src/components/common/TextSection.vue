@@ -23,7 +23,7 @@
 					<Button
 						secondary
 						@click="editMode = false">
-						{{ $t('ui-discard') }}
+						{{ $t('ui-cancel') }}
 					</Button>
 					<Button @click="save">
 						{{ $t('ui-save') }}

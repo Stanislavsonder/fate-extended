@@ -19,9 +19,7 @@
 	<ModalWindow
 		v-model="modal"
 		:title="$t('load-characters-file')">
-		<LoadWindow
-			@close="modal = false"
-			@loaded="load" />
+		<LoadWindow @close="modal = false" />
 	</ModalWindow>
 </template>
 
@@ -29,8 +27,9 @@
 import { defineComponent } from 'vue'
 import ModalWindow from '@/components/common/ModalWindow.vue'
 import LoadWindow from '@/components/header/SaveLoadFeature/LoadWindow.vue'
-import { Character } from '@/types'
 import ConfigButton from '@/components/ui/ConfigButton.vue'
+import { useCharactersStore } from '@/app/store/CharacterStore'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
 	name: 'SaveLoadFeature',
@@ -39,6 +38,18 @@ export default defineComponent({
 		LoadWindow,
 		ModalWindow,
 	},
+	setup() {
+		const store = useCharactersStore()
+
+		const { characters, current } = storeToRefs(store)
+		const { clearCharacter } = store
+
+		return {
+			characters,
+			current,
+			clearCharacter,
+		}
+	},
 	data() {
 		return {
 			modal: false,
@@ -46,24 +57,20 @@ export default defineComponent({
 	},
 	methods: {
 		save() {
-			const file = new Blob([JSON.stringify(this.$store.state.characters[this.$store.state.current])], {
+			const file = new Blob([JSON.stringify(this.characters[this.current])], {
 				type: 'text/plain',
 			})
 			const link = document.createElement('a')
 			link.href = URL.createObjectURL(file)
-			link.download =
-				(this.$store.state.characters[this.$store.state.current].name || this.$t('unnamed-character')) + '.fate'
+			link.download = (this.characters[this.current].name || this.$t('unnamed-character')) + '.fate'
 			link.click()
 			URL.revokeObjectURL(link.href)
 		},
 		openLoadModal() {
 			this.modal = true
 		},
-		load(character: Character) {
-			this.$store.state.this.$emit('load', character)
-		},
 		clear() {
-			this.$store.commit('clearCharacter')
+			this.clearCharacter()
 		},
 	},
 })

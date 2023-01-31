@@ -18,11 +18,11 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { SKILLS } from '@/consts/const'
-import { Skill, SkillType } from '@/types'
+import { Skill, SkillProgress } from '@/types'
+import rules from '@/shared/constants/rules'
 
 interface Data {
-	skills: SkillType[]
+	skills: Skill[]
 }
 
 export default defineComponent({
@@ -30,13 +30,13 @@ export default defineComponent({
 	emits: ['add', 'close'],
 	props: {
 		existedSkills: {
-			type: Array as PropType<Skill[]>,
+			type: Array as PropType<SkillProgress[]>,
 			default: () => [],
 		},
 	},
 	data(): Data {
 		return {
-			skills: SKILLS.filter(skill => !this.existedSkills?.find(s => s.name === skill.name))
+			skills: rules.SKILLS.filter(skill => !this.existedSkills?.find(s => s.name === skill.name))
 				.map(e => {
 					return {
 						...e,

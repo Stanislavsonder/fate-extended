@@ -1,4 +1,4 @@
-import { Aspect, Character, Consequence, MainParam, Skill, Stunt } from '@/types'
+import { Aspect, Character, Consequence, MainParam, SkillProgress, Stunt } from '@/types'
 
 export const validateCharacter = (data: unknown): boolean => {
 	if (!(data instanceof Object)) {
@@ -30,7 +30,7 @@ export const validateSkill = (data: unknown): boolean => {
 	if (!(data instanceof Object)) {
 		return false
 	}
-	const skill = data as Skill
+	const skill = data as SkillProgress
 	if (typeof skill.name === 'string' && typeof skill.level === 'number' && typeof skill.experience === 'number') {
 		return true
 	}
