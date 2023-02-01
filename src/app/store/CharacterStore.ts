@@ -101,6 +101,29 @@ export const useCharactersStore = defineStore('character', () => {
 		}
 	}
 
+	function addSkillExperience(skill: string, experience: number) {
+		characters.value[current.value].skills = characters.value[current.value].skills.map(e => {
+			if (e.name !== skill) {
+				return e
+			}
+			const diff = e.experience + experience
+			if (diff < 0 && e.level === 1) {
+				e.experience = 0
+			} else if (diff < 0) {
+				e.level--
+				e.experience = rules.LEVEL_CUPS[e.level - 1] + diff
+			} else if (diff >= rules.LEVEL_CUPS[e.level - 1] && e.level === rules.LEVEL_CUPS.length) {
+				e.experience = rules.LEVEL_CUPS[e.level - 1]
+			} else if (diff >= rules.LEVEL_CUPS[e.level - 1]) {
+				e.experience = diff - rules.LEVEL_CUPS[e.level - 1]
+				e.level++
+			} else {
+				e.experience += experience
+			}
+			return e
+		})
+	}
+
 	function removeCharacter(index: number) {
 		if (index < 0 || index > characters.value.length) {
 			return
@@ -136,5 +159,6 @@ export const useCharactersStore = defineStore('character', () => {
 		addNewCharacter,
 		changeCharacter,
 		removeCharacter,
+		addSkillExperience,
 	}
 })

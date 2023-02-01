@@ -21,10 +21,12 @@ import LuckyDiceNeutral from '@/components/ui/icons/LuckyDiceNeutral.vue'
 import LuckyDicePositive from '@/components/ui/icons/LuckyDicePositive.vue'
 import List from '@/components/ui/icons/List.vue'
 import Characters from '@/components/ui/icons/Characters.vue'
+import Caret from '@/components/ui/icons/Caret.vue'
 
 export default {
 	ArrowIcon,
 	Dices,
+	Caret,
 	DiceNegative,
 	DiceNeutral,
 	DicePositive,

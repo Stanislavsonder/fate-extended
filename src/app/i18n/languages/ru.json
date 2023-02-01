@@ -86,6 +86,18 @@
   "fate-extended-logo": "Логотип \"Fate Extended\"",
   "edit-aspect": "Редактировать аспект",
   "skill__magic": "Магия",
-
-  "roll": "Бросок"
+  "roll": "Бросок",
+  "roll-type": "Тип броска",
+  "roll-type__overcome": "Преодоление",
+  "roll-type__advantage": "Преимущество",
+  "roll-type__attack": "Атака",
+  "roll-type__defence": "Защита",
+  "roll-result__critical-fail": "Критический провал",
+  "roll-result__fail": "Провал",
+  "roll-result__stalemate": "Патовая ситуация",
+  "roll-result__success": "Успех!",
+  "roll-result__success-with-style": "Успех Со Стилем!",
+  "difficulty": "Сложность",
+  "exp": "оп.",
+  "auto-increase-xp": "Автоматически увеличивать опыт"
 }

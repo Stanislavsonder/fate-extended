@@ -5,11 +5,12 @@ import ModalWindow from '@/components/common/ModalWindow.vue'
 import { RollType, SkillProgress } from '@/types'
 import { useI18n } from 'vue-i18n'
 import Button from '@/components/ui/Button.vue'
-import { DiceResult, diceRoll } from '@/shared/helpers/roll'
+import { calculateExperienceForTheRoll, DiceResult, diceRoll, getResultWord } from '@/shared/helpers/roll'
 import { useCharactersStore } from '@/app/store/CharacterStore'
 import RollResult from '@/shared/ui/RollResult/RollResult.vue'
 import rules from '@/shared/constants/rules'
 import { useElementHover } from '@vueuse/core'
+import Caret from '@/components/ui/icons/Caret.vue'
 
 const i18 = useI18n()
 const props = defineProps({
@@ -29,6 +30,7 @@ const difficulty = ref(0)
 const resultValue = ref(0)
 const experienceGained = ref(0)
 const bonus = ref(0)
+const isRollIsCounts = ref(true)
 
 const rollType = ref<RollType>(RollType.Overcome)
 const rollTypes = [RollType.Overcome, RollType.Advantage, RollType.Attack, RollType.Defence]
@@ -37,6 +39,10 @@ const isDifficultyHovered = useElementHover(difficultyBlock)
 const roll = () => {
 	result.value = diceRoll(4, luck)
 	resultValue.value = calculateResult()
+	experienceGained.value = calculateExperienceForTheRoll(resultValue.value, difficulty.value, rollType.value)
+	if (isRollIsCounts.value) {
+		store.addSkillExperience(props.skill.name, experienceGained.value)
+	}
 }
 
 const signed = (number: number, isZero = false): string => {
@@ -78,7 +84,6 @@ const calculateResult = () => {
 		:title="title">
 		<div class="skill-dice-roll">
 			<div>
-				<h6>Тип броска:</h6>
 				<nav>
 					<ul class="skill-dice-roll__roll-type-list">
 						<li
@@ -87,7 +92,7 @@ const calculateResult = () => {
 							<Button
 								:secondary="rollType !== type"
 								@click="rollType = type">
-								{{ type }}
+								{{ $t(`roll-type__${type}`) }}
 							</Button>
 						</li>
 					</ul>
@@ -100,24 +105,38 @@ const calculateResult = () => {
 					class="skill-dice-roll__difficulty">
 					<button
 						v-if="isDifficultyHovered"
-						class="skill-dice-roll__difficulty-button skill-dice-roll__difficulty-button--left"
+						class="skill-dice-roll__difficulty-button skill-dice-roll__difficulty-button--down"
 						@click="difficulty--">
-						{{ '<' }}
+						<Caret />
 					</button>
 					<button
 						v-if="isDifficultyHovered"
-						class="skill-dice-roll__difficulty-button skill-dice-roll__difficulty-button--right"
+						class="skill-dice-roll__difficulty-button skill-dice-roll__difficulty-button--up"
 						@click="difficulty++">
-						{{ '>' }}
+						<Caret />
 					</button>
 					<span class="skill-dice-roll__difficulty-value"> {{ difficulty }} </span>
-					<span class="skill-dice-roll__difficulty-text"> Difficulty </span>
+					<span class="skill-dice-roll__difficulty-text"> {{ $t('difficulty') }} </span>
 				</div>
 				<div class="skill-dice-roll-skill">
 					<div class="skill-dice-roll-skill__circle">
-						<span class="skill-dice-roll-skill__exp-gained"> {{ signed(experienceGained) }} опыта </span>
+						<span
+							v-show="result.length"
+							class="skill-dice-roll-skill__exp-gained">
+							{{ signed(experienceGained) }} {{ $t('exp') }}
+						</span>
 						<span class="skill-dice-roll-skill__bonus">
 							{{ signed(bonus) }}
+							<button
+								class="skill-dice-roll-skill__bonus-button skill-dice-roll-skill__bonus-button--up"
+								@click="bonus++">
+								<Caret />
+							</button>
+							<button
+								class="skill-dice-roll-skill__bonus-button skill-dice-roll-skill__bonus-button--down"
+								@click="bonus--">
+								<Caret />
+							</button>
 						</span>
 						<div
 							class="skill-dice-roll-skill__circle-bg"
@@ -132,13 +151,27 @@ const calculateResult = () => {
 						:result="result"
 						:size="40" />
 				</div>
-				<div class="skill-dice-roll-result">
-					<p class="skill-dice-roll-result__word">Success!</p>
-					<p class="skill-dice-roll-result__value">{{ signed(resultValue, true) }}</p>
+				<div
+					v-show="result.length"
+					class="skill-dice-roll-result"
+					:class="`skill-dice-roll-result--${getResultWord(resultValue)}`">
+					<p class="skill-dice-roll-result__word">
+						{{ $t(`roll-result__${getResultWord(resultValue)}`) }}
+					</p>
+					<p class="skill-dice-roll-result__value">
+						{{ signed(resultValue, true) }}
+					</p>
 				</div>
+				<label class="skill-dice-roll__is-count">
+					<input
+						v-model="isRollIsCounts"
+						class="skill-dice-roll__is-count-input"
+						type="checkbox" />
+					<span>{{ $t('auto-increase-xp') }}</span>
+				</label>
 			</div>
 			<div>
-				<Button @click="roll"> Roll </Button>
+				<Button @click="roll"> {{ $t('roll-the-dice') }}</Button>
 			</div>
 		</div>
 	</ModalWindow>
@@ -148,6 +181,13 @@ const calculateResult = () => {
 <style scoped lang="scss">
 .skill-dice-roll {
 	padding: 16px;
+
+	&__is-count {
+		position: absolute;
+		left: 10px;
+		bottom: 10px;
+		cursor: pointer;
+	}
 
 	&__wrapper {
 		position: relative;
@@ -161,9 +201,16 @@ const calculateResult = () => {
 		box-sizing: border-box;
 	}
 
+	&__title {
+		font-weight: bold;
+		font-size: 24px;
+		margin-bottom: 16px;
+	}
+
 	&__roll-type-list {
 		display: flex;
 		justify-content: center;
+		margin-bottom: 24px;
 	}
 
 	&__roll-result {
@@ -193,27 +240,41 @@ const calculateResult = () => {
 
 	&__difficulty-button {
 		position: absolute;
-		width: 24px;
-		height: 24px;
+		display: grid;
+		place-content: center;
+		width: 36px;
+		height: 36px;
 		border: none;
-		border-radius: 100%;
-		background: var(--white);
+		border-radius: 0px;
+		background: var(--primary);
+		color: var(--white);
+		left: 2px;
+
+		svg {
+			width: 100%;
+			fill: white;
+		}
 
 		&:hover {
 			filter: brightness(0.8);
 		}
 
-		&--right {
-			right: 2px;
+		&--up {
+			top: 0;
+			transform: translateX(-100%) rotate(180deg);
 		}
 
-		&--left {
-			left: 2px;
+		&--down {
+			transform: translateX(-100%);
 		}
 	}
 }
 
 .skill-dice-roll-skill {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
 	&__circle {
 		position: relative;
 		z-index: 2;
@@ -226,8 +287,9 @@ const calculateResult = () => {
 		align-items: center;
 		flex-direction: column;
 		gap: 8px;
-		margin-bottom: 8px;
+		margin-bottom: 16px;
 	}
+
 	&__circle-bg {
 		position: absolute;
 		z-index: -1;
@@ -253,11 +315,14 @@ const calculateResult = () => {
 		font-size: 36px;
 		font-weight: bolder;
 	}
+
 	&__experience {
-		font-size: 14px;
+		font-size: 12px;
 	}
+
 	&__name {
 		font-weight: bold;
+		font-size: 24px;
 	}
 
 	&__exp-gained {
@@ -267,9 +332,40 @@ const calculateResult = () => {
 
 	&__bonus {
 		position: absolute;
+		display: grid;
+		width: 75px;
+		height: 36px;
 		font-size: 26px;
 		font-weight: bold;
-		right: -50%;
+		right: -75%;
+	}
+
+	&__bonus-button {
+		position: absolute;
+		display: grid;
+		place-content: center;
+		background: transparent;
+		border-radius: 100%;
+		border: none;
+		width: 36px;
+		height: 36px;
+		right: 10px;
+
+		&:hover {
+			background: rgba(0, 0, 0, 0.1);
+		}
+
+		svg {
+			width: 100%;
+		}
+
+		&--up {
+			top: 0;
+			transform: translateY(-100%) rotate(180deg);
+		}
+		&--down {
+			transform: translateY(75%);
+		}
 	}
 }
 
@@ -282,19 +378,22 @@ const calculateResult = () => {
 	&__word {
 		font-size: 24px;
 		font-weight: bold;
+	}
 
-		&--success {
-			color: green;
-		}
-		&--succes-with-style {
-			color: gold;
-		}
-		&--fail {
-			color: orange;
-		}
-		&--critical-fail {
-			color: darkred;
-		}
+	&--success {
+		color: green;
+	}
+
+	&--success-with-style {
+		color: gold;
+	}
+
+	&--fail {
+		color: orange;
+	}
+
+	&--critical-fail {
+		color: darkred;
 	}
 }
 </style>

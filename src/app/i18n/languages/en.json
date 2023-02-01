@@ -86,6 +86,18 @@
   "fate-extended-logo": "\"Fate Extended\" logo",
   "edit-aspect": "Edit aspect",
   "skill__magic": "Magic",
-
-  "roll": "Roll"
+  "roll": "Roll",
+  "roll-type": "Roll type",
+  "roll-type__overcome": "Overcome",
+  "roll-type__advantage": "Advantage",
+  "roll-type__attack": "Attack",
+  "roll-type__defence": "Defence",
+  "roll-result__critical-fail": "Critical Fail",
+  "roll-result__fail": "Fail",
+  "roll-result__stalemate": "Stalemate",
+  "roll-result__success": "Success!",
+  "roll-result__success-with-style": "Success With Style!",
+  "difficulty": "Difficulty",
+  "exp": "exp.",
+  "auto-increase-xp": "Auto increase xp."
 }
