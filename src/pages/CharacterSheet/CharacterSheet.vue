@@ -1,39 +1,44 @@
 <template>
+	<SheetHeader />
 	<main class="char-sheet">
 		<div class="char-sheet__main-section">
-			<Character />
-			<Modules />
+			<CharacterInfoSection />
+			<MetaInfoSection />
 		</div>
-		<Aspects />
-		<Description />
-		<Inventory />
+		<AspectSection />
+		<DescriptionSection />
+		<InventorySection />
 		<div class="char-sheet__half-section">
-			<Skills />
-			<Stunts />
+			<SkillsSection />
+			<StuntsSection />
 		</div>
 	</main>
 </template>
 
 <script lang="ts">
-import Character from '@/components/sections/Character.vue'
-import Aspects from '@/components/sections/Aspects.vue'
-import Modules from '@/components/sections/Modules.vue'
-import Description from '@/components/sections/Description.vue'
-import Inventory from '@/components/sections/Inventory.vue'
-import Skills from '@/components/sections/Skills.vue'
-import Stunts from '@/components/sections/Stunts.vue'
 import { defineComponent } from 'vue'
+import {
+	AspectSection,
+	CharacterInfoSection,
+	DescriptionSection,
+	InventorySection,
+	MetaInfoSection,
+	SheetHeader,
+	SkillsSection,
+	StuntsSection,
+} from '@/widgets'
 
 export default defineComponent({
 	name: 'CharacterSheet',
 	components: {
-		Stunts,
-		Skills,
-		Inventory,
-		Description,
-		Modules,
-		Aspects,
-		Character,
+		SheetHeader,
+		CharacterInfoSection,
+		MetaInfoSection,
+		DescriptionSection,
+		InventorySection,
+		StuntsSection,
+		SkillsSection,
+		AspectSection,
 	},
 	emits: ['char-updated'],
 })

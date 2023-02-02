@@ -9,11 +9,11 @@
 </template>
 
 <script lang="ts" setup>
-import DiceNeutral from '@/components/ui/icons/DiceNeutral.vue'
-import DiceNegative from '@/components/ui/icons/DiceNegative.vue'
-import DicePositive from '@/components/ui/icons/DicePositive.vue'
-import LuckyDicePositive from '@/components/ui/icons/LuckyDicePositive.vue'
-import LuckyDiceNeutral from '@/components/ui/icons/LuckyDiceNeutral.vue'
+import DiceNeutral from '@/shared/ui/Icon/svg/DiceNeutral.vue'
+import DiceNegative from '@/shared/ui/Icon/svg/DiceNegative.vue'
+import DicePositive from '@/shared/ui/Icon/svg/DicePositive.vue'
+import LuckyDicePositive from '@/shared/ui/Icon/svg/LuckyDicePositive.vue'
+import LuckyDiceNeutral from '@/shared/ui/Icon/svg/LuckyDiceNeutral.vue'
 import { DiceResult } from '@/shared/helpers/roll'
 import { defineProps, PropType } from 'vue'
 

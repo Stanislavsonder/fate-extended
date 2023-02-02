@@ -1,5 +1,4 @@
 <template>
-	<SheetHeader />
 	<CharacterSheet />
 </template>
 
@@ -7,7 +6,6 @@
 import { onMounted, watch } from 'vue'
 
 import CharacterSheet from '@/pages/CharacterSheet/CharacterSheet.vue'
-import SheetHeader from '@/components/header/SheetHeader.vue'
 
 import { validateCharacter } from '@/shared/helpers/validators'
 import { useCharactersStore } from '@/app/store/CharacterStore'
@@ -76,7 +74,7 @@ body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	background: #181818;
+	background: var(--primary);
 	border-radius: 10px;
 }
 

@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import ConfigButton from '@/components/ui/ConfigButton.vue'
+import { Button, Icon, IconButton, ModalWindow } from '@/shared/ui'
 import { computed, defineProps, PropType, ref } from 'vue'
-import ModalWindow from '@/components/common/ModalWindow.vue'
 import { RollType, SkillProgress } from '@/types'
 import { useI18n } from 'vue-i18n'
-import Button from '@/components/ui/Button.vue'
 import { calculateExperienceForTheRoll, DiceResult, diceRoll, getResultWord } from '@/shared/helpers/roll'
 import { useCharactersStore } from '@/app/store/CharacterStore'
 import RollResult from '@/shared/ui/RollResult/RollResult.vue'
 import rules from '@/shared/constants/rules'
 import { useElementHover } from '@vueuse/core'
-import Caret from '@/components/ui/icons/Caret.vue'
 
 const i18 = useI18n()
 const props = defineProps({
@@ -74,7 +71,7 @@ const calculateResult = () => {
 
 
 <template>
-	<ConfigButton
+	<IconButton
 		:hint="$t('dice-roll')"
 		type="Dices"
 		variant=""
@@ -107,13 +104,13 @@ const calculateResult = () => {
 						v-if="isDifficultyHovered"
 						class="skill-dice-roll__difficulty-button skill-dice-roll__difficulty-button--down"
 						@click="difficulty--">
-						<Caret />
+						<Icon name="Caret" />
 					</button>
 					<button
 						v-if="isDifficultyHovered"
 						class="skill-dice-roll__difficulty-button skill-dice-roll__difficulty-button--up"
 						@click="difficulty++">
-						<Caret />
+						<Icon name="Caret" />
 					</button>
 					<span class="skill-dice-roll__difficulty-value"> {{ difficulty }} </span>
 					<span class="skill-dice-roll__difficulty-text"> {{ $t('difficulty') }} </span>
@@ -130,12 +127,12 @@ const calculateResult = () => {
 							<button
 								class="skill-dice-roll-skill__bonus-button skill-dice-roll-skill__bonus-button--up"
 								@click="bonus++">
-								<Caret />
+								<Icon name="Caret" />
 							</button>
 							<button
 								class="skill-dice-roll-skill__bonus-button skill-dice-roll-skill__bonus-button--down"
 								@click="bonus--">
-								<Caret />
+								<Icon name="Caret" />
 							</button>
 						</span>
 						<div
@@ -245,7 +242,7 @@ const calculateResult = () => {
 		width: 36px;
 		height: 36px;
 		border: none;
-		border-radius: 0px;
+		border-radius: 0;
 		background: var(--primary);
 		color: var(--white);
 		left: 2px;
