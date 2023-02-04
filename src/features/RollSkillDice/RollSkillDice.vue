@@ -51,6 +51,7 @@ watch(rollType, clear)
 
 const roll = () => {
 	result.value = diceRoll(4, luck)
+
 	calculateResult()
 	if (isRollIsCounts.value && !isFight.value) {
 		experienceGained.value = calculateExperienceForTheRoll(resultValue.value, difficulty.value, rollType.value)
@@ -85,13 +86,11 @@ const gradient = computed(() => {
 })
 
 const calculateResult = () => {
-	if (isFight.value) {
-		isFightRollDone.value = true
-		return
-	}
-
 	const diceResult = result.value.reduce((acc, cur) => acc + cur.result, 0)
 	resultValue.value = diceResult - difficulty.value + bonus.value + props.skill.level
+	if (isFight.value) {
+		isFightRollDone.value = true
+	}
 }
 
 const fight = () => {
@@ -103,6 +102,7 @@ const fight = () => {
 	experienceGained.value = calculateExperienceForTheRoll(resultValue.value, difficulty.value, rollType.value)
 	store.addSkillExperience(props.skill.name, experienceGained.value)
 	isFightRollDone.value = false
+	difficulty.value = 0
 }
 </script>
 
@@ -244,8 +244,9 @@ const fight = () => {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: space-around;
+		gap: 12px;
 		border: 2px solid var(--primary);
+		min-height: 325px;
 		border-radius: 16px;
 		padding: 16px;
 		box-sizing: border-box;
