@@ -60,7 +60,6 @@ export function getResultWord(result: number): RollResult {
 }
 
 export function calculateExperienceForTheRoll(result: number, difficulty: number, rollType: RollType): number {
-	console.log(result, difficulty, rollType)
 	if (rollType === RollType.Attack || rollType === RollType.Defence) {
 		return result >= 4 ? result : result >= 2 ? 3 : result >= -1 ? 1 : result >= -3 ? 0 : -5
 	}
@@ -71,10 +70,10 @@ export function calculateExperienceForTheRoll(result: number, difficulty: number
 		return 0
 	}
 	if (result <= 1) {
-		return Math.max(0, difficulty + rollType === RollType.Overcome ? 2 : 1)
+		return Math.max(0, difficulty + (rollType === RollType.Overcome ? 2 : 1))
 	}
 	if (result <= 3) {
-		return Math.max(0, difficulty + rollType === RollType.Overcome ? 6 : 4)
+		return Math.max(0, difficulty + (rollType === RollType.Overcome ? 6 : 4))
 	}
 	if (rollType === RollType.Advantage) {
 		return Math.max(1, difficulty + 8) * 2

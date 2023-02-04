@@ -9,6 +9,10 @@ module.exports = defineConfig({
 		appleMobileWebAppCapable: 'yes',
 		skipWaiting: true,
 		clientsClaim: true,
+		workboxPluginMode: 'InjectManifest',
+		workboxOptions: {
+			swSrc: './src/app/serviceWorkers/service-worker.js',
+		},
 	},
 	chainWebpack: config => {
 		config.entry('app').clear()

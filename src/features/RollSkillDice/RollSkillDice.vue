@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Button, Icon, IconButton, ModalWindow } from '@/shared/ui'
-import { computed, defineProps, PropType, ref } from 'vue'
+import { computed, defineProps, PropType, ref, watch } from 'vue'
 import { RollType, SkillProgress } from '@/types'
 import { useI18n } from 'vue-i18n'
 import { calculateExperienceForTheRoll, DiceResult, diceRoll, getResultWord } from '@/shared/helpers/roll'
@@ -9,18 +9,18 @@ import RollResult from '@/shared/ui/RollResult/RollResult.vue'
 import rules from '@/shared/constants/rules'
 import { useElementHover } from '@vueuse/core'
 
-const i18 = useI18n()
+const i18n = useI18n()
 const props = defineProps({
 	skill: {
 		type: Object as PropType<SkillProgress>,
 		required: true,
 	},
 })
+
 const store = useCharactersStore()
 const luck = store.characters[store.current].luck
 
-const difficultyBlock = ref()
-const title = `${i18.t('roll')}: ${i18.t(`skill__${props.skill.name}`)}`
+const title = `${i18n.t('roll')}: ${i18n.t(`skill__${props.skill.name}`)}`
 const modal = ref(false)
 const result = ref<DiceResult[]>([])
 const difficulty = ref(0)
@@ -28,16 +28,32 @@ const resultValue = ref(0)
 const experienceGained = ref(0)
 const bonus = ref(0)
 const isRollIsCounts = ref(true)
+const isFightRollDone = ref(false)
 
 const rollType = ref<RollType>(RollType.Overcome)
 const rollTypes = [RollType.Overcome, RollType.Advantage, RollType.Attack, RollType.Defence]
+
+const difficultyBlock = ref()
 const isDifficultyHovered = useElementHover(difficultyBlock)
+
+const clear = () => {
+	result.value = []
+	difficulty.value = 0
+	resultValue.value = 0
+	bonus.value = 0
+	experienceGained.value = 0
+	isRollIsCounts.value = true
+	isFightRollDone.value = false
+}
+
+watch(modal, clear)
+watch(rollType, clear)
 
 const roll = () => {
 	result.value = diceRoll(4, luck)
-	resultValue.value = calculateResult()
-	experienceGained.value = calculateExperienceForTheRoll(resultValue.value, difficulty.value, rollType.value)
-	if (isRollIsCounts.value) {
+	calculateResult()
+	if (isRollIsCounts.value && !isFight.value) {
+		experienceGained.value = calculateExperienceForTheRoll(resultValue.value, difficulty.value, rollType.value)
 		store.addSkillExperience(props.skill.name, experienceGained.value)
 	}
 }
@@ -48,8 +64,15 @@ const signed = (number: number, isZero = false): string => {
 	}).format(number)
 }
 
-const isDifficultCounted = computed(() => {
-	return rollType.value !== RollType.Attack && rollType.value !== RollType.Defence
+const isFight = computed(() => {
+	return rollType.value === RollType.Attack || rollType.value === RollType.Defence
+})
+
+watch(rollType, value => {
+	isFightRollDone.value = false
+	if (value === RollType.Attack || value === RollType.Defence) {
+		isRollIsCounts.value = false
+	}
 })
 
 const experience = computed(() => {
@@ -62,10 +85,24 @@ const gradient = computed(() => {
 })
 
 const calculateResult = () => {
-	const diceResult = result.value.reduce((acc, cur) => acc + cur.result, 0)
-	const difficult = isDifficultCounted.value ? difficulty.value : 0
+	if (isFight.value) {
+		isFightRollDone.value = true
+		return
+	}
 
-	return diceResult - difficult + bonus.value + props.skill.level
+	const diceResult = result.value.reduce((acc, cur) => acc + cur.result, 0)
+	resultValue.value = diceResult - difficulty.value + bonus.value + props.skill.level
+}
+
+const fight = () => {
+	if (rollType.value !== RollType.Attack && rollType.value !== RollType.Defence) {
+		return
+	}
+	const diceResult = result.value.reduce((acc, cur) => acc + cur.result, 0)
+	resultValue.value = diceResult - difficulty.value + bonus.value + props.skill.level
+	experienceGained.value = calculateExperienceForTheRoll(resultValue.value, difficulty.value, rollType.value)
+	store.addSkillExperience(props.skill.name, experienceGained.value)
+	isFightRollDone.value = false
 }
 </script>
 
@@ -97,7 +134,7 @@ const calculateResult = () => {
 			</div>
 			<div class="skill-dice-roll__wrapper">
 				<div
-					v-show="isDifficultCounted"
+					v-show="!isFight || isFightRollDone"
 					ref="difficultyBlock"
 					class="skill-dice-roll__difficulty">
 					<button
@@ -118,7 +155,7 @@ const calculateResult = () => {
 				<div class="skill-dice-roll-skill">
 					<div class="skill-dice-roll-skill__circle">
 						<span
-							v-show="result.length"
+							v-show="(result.length && !isFight) || (result.length && isFight && !isFightRollDone)"
 							class="skill-dice-roll-skill__exp-gained">
 							{{ signed(experienceGained) }} {{ $t('exp') }}
 						</span>
@@ -147,9 +184,14 @@ const calculateResult = () => {
 					<RollResult
 						:result="result"
 						:size="40" />
+					<span
+						v-if="isFight && isFightRollDone"
+						class="skill-dice-roll__roll-result-value">
+						{{ signed(resultValue, true) }}
+					</span>
 				</div>
 				<div
-					v-show="result.length"
+					v-show="(result.length && !isFight) || (result.length && isFight && !isFightRollDone)"
 					class="skill-dice-roll-result"
 					:class="`skill-dice-roll-result--${getResultWord(resultValue)}`">
 					<p class="skill-dice-roll-result__word">
@@ -159,7 +201,9 @@ const calculateResult = () => {
 						{{ signed(resultValue, true) }}
 					</p>
 				</div>
-				<label class="skill-dice-roll__is-count">
+				<label
+					v-if="rollType !== RollType.Defence && rollType !== RollType.Attack"
+					class="skill-dice-roll__is-count">
 					<input
 						v-model="isRollIsCounts"
 						class="skill-dice-roll__is-count-input"
@@ -168,7 +212,16 @@ const calculateResult = () => {
 				</label>
 			</div>
 			<div>
-				<Button @click="roll"> {{ $t('roll-the-dice') }}</Button>
+				<Button
+					v-if="!isFight || !isFightRollDone"
+					@click="roll">
+					{{ $t('roll-the-dice') }}
+				</Button>
+				<Button
+					v-if="isFightRollDone"
+					@click="fight">
+					{{ $t('fight') }}
+				</Button>
 			</div>
 		</div>
 	</ModalWindow>
@@ -211,7 +264,17 @@ const calculateResult = () => {
 	}
 
 	&__roll-result {
+		position: relative;
 		padding: 16px;
+	}
+
+	&__roll-result-value {
+		position: absolute;
+		right: -20px;
+		top: 50%;
+		transform: translateY(-50%);
+		font-size: 26px;
+		font-weight: bold;
 	}
 
 	&__difficulty {
