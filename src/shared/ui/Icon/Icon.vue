@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import Icons from './svg'
+import Icons from "./svg";
 
 export default {
-	name: 'Icon',
+	name: "Icon",
 	components: { ...Icons },
 	props: {
 		name: {
@@ -14,5 +14,5 @@ export default {
 			required: true,
 		},
 	},
-}
+};
 </script>

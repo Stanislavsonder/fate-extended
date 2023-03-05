@@ -4,20 +4,18 @@
 			:hint="$t('dice-roll')"
 			type="Dices"
 			variant="transparent"
-			@click="modal = true" />
+			@click="modal = true"
+		/>
 	</div>
-	<ModalWindow
-		v-model="modal"
-		:title="$t('dice-roll')">
+	<ModalWindow v-model="modal" :title="$t('dice-roll')">
 		<article class="roll-dices">
 			<input
 				v-model="diceCount"
 				class="roll-dices__amount"
-				type="number" />
-			<Button
-				:title="$t('roll-the-dice')"
-				@click="roll">
-				{{ $t('roll-the-dice') }}
+				type="number"
+			/>
+			<Button :title="$t('roll-the-dice')" @click="roll">
+				{{ $t("roll-the-dice") }}
 			</Button>
 			<RollResult :result="result" />
 		</article>
@@ -26,26 +24,29 @@
 
 <script setup lang="ts">
 // TODO: Optimize for tablet & mobile usage
-import { Button, IconButton, ModalWindow } from '@/shared/ui'
-import { ref } from 'vue'
-import { useCharactersStore } from '@/app/store/CharacterStore'
-import { diceRoll } from '@/shared/helpers/roll'
-import RollResult from '@/shared/ui/RollResult/RollResult.vue'
+import { Button, IconButton, ModalWindow } from "@/shared/ui";
+import { ref } from "vue";
+import { useCharactersStore } from "@/app/store/CharacterStore";
+import { diceRoll } from "@/shared/helpers/roll";
+import RollResult from "@/shared/ui/RollResult/RollResult.vue";
 
 type DiceResult = {
-	dice: 'lucky' | 'default'
-	result: -1 | 0 | 1
-}
+	dice: "lucky" | "default";
+	result: -1 | 0 | 1;
+};
 
-const store = useCharactersStore()
+const store = useCharactersStore();
 
-const modal = ref(false)
-const diceCount = ref(4)
-const result = ref<DiceResult[]>([])
+const modal = ref(false);
+const diceCount = ref(4);
+const result = ref<DiceResult[]>([]);
 
 const roll = () => {
-	result.value = diceRoll(diceCount.value, store.characters[store.current].luck)
-}
+	result.value = diceRoll(
+		diceCount.value,
+		store.characters[store.current].luck
+	);
+};
 </script>
 
 <style scoped lang="scss">

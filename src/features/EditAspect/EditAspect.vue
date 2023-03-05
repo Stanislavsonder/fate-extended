@@ -5,22 +5,25 @@
 				ref="title"
 				v-model="data.title"
 				:placeholder="$t('aspect__name')"
-				class="aspect-edit__title" />
+				class="aspect-edit__title"
+			/>
 		</h2>
 		<h3>
 			<textarea
 				ref="description"
 				v-model="data.description"
 				:placeholder="$t('aspect__description')"
-				class="aspect-edit__description" />
+				class="aspect-edit__description"
+			/>
 		</h3>
-		<p>{{ $t('aspect__type') }}: {{ $t(`aspect__${data.type}`) }}</p>
+		<p>{{ $t("aspect__type") }}: {{ $t(`aspect__${data.type}`) }}</p>
 		<ul>
 			<li>
 				<button
 					:title="$t('aspect__concept')"
 					:class="{ active: data.type === AspectType.Concept }"
-					@click="data.type = AspectType.Concept">
+					@click="data.type = AspectType.Concept"
+				>
 					<Icon name="DicePositive" />
 				</button>
 			</li>
@@ -28,7 +31,8 @@
 				<button
 					:title="$t('aspect__neutral')"
 					:class="{ active: data.type === AspectType.Neutral }"
-					@click="data.type = AspectType.Neutral">
+					@click="data.type = AspectType.Neutral"
+				>
 					<Icon name="DiceNeutral" />
 				</button>
 			</li>
@@ -36,7 +40,8 @@
 				<button
 					:title="$t('aspect__problem')"
 					:class="{ active: data.type === AspectType.Problem }"
-					@click="data.type = AspectType.Problem">
+					@click="data.type = AspectType.Problem"
+				>
 					<Icon name="DiceNegative" />
 				</button>
 			</li>
@@ -46,38 +51,34 @@
 				v-if="mode === 'edit'"
 				:title="$t('ui-remove')"
 				secondary
-				@click="remove">
-				{{ $t('ui-remove') }}
+				@click="remove"
+			>
+				{{ $t("ui-remove") }}
 			</Button>
-			<Button
-				secondary
-				:title="$t('ui-cancel')"
-				@click="close">
-				{{ $t('ui-cancel') }}
+			<Button secondary :title="$t('ui-cancel')" @click="close">
+				{{ $t("ui-cancel") }}
 			</Button>
-			<Button
-				:title="$t('ui-save')"
-				@click="save">
-				{{ $t('ui-save') }}
+			<Button :title="$t('ui-save')" @click="save">
+				{{ $t("ui-save") }}
 			</Button>
 		</nav>
 	</article>
 </template>
 
 <script lang="ts">
-import { capitalize, defineComponent, PropType } from 'vue'
-import { Aspect, AspectType } from '@/types'
-import { Button, Icon } from '@/shared/ui'
-import { useAutoHeight } from '@/shared/composables/useAutoHeight'
+import { capitalize, defineComponent, PropType } from "vue";
+import { Aspect, AspectType } from "@/types";
+import { Button, Icon } from "@/shared/ui";
+import { useAutoHeight } from "@/shared/composables/useAutoHeight";
 
 interface Data {
-	data: Aspect
+	data: Aspect;
 }
 
 export default defineComponent({
-	name: 'EditAspect',
+	name: "EditAspect",
 	components: { Icon, Button },
-	emits: ['close', 'update', 'remove'],
+	emits: ["close", "update", "remove"],
 	props: {
 		aspect: {
 			type: Object as PropType<Aspect>,
@@ -89,36 +90,36 @@ export default defineComponent({
 		},
 	},
 	setup() {
-		return useAutoHeight()
+		return useAutoHeight();
 	},
 	data(): Data {
 		return {
 			data: JSON.parse(JSON.stringify(this.aspect)),
-		}
+		};
 	},
 	computed: {
 		AspectType() {
-			return AspectType
+			return AspectType;
 		},
 	},
 	mounted() {
-		this.autoUpdateHeight(this.$refs.title as HTMLTextAreaElement)
-		this.autoUpdateHeight(this.$refs.description as HTMLTextAreaElement)
+		this.autoUpdateHeight(this.$refs.title as HTMLTextAreaElement);
+		this.autoUpdateHeight(this.$refs.description as HTMLTextAreaElement);
 	},
 	methods: {
 		capitalize,
 		remove() {
-			this.$emit('remove')
+			this.$emit("remove");
 		},
 		close() {
-			this.$emit('close')
+			this.$emit("close");
 		},
 		save() {
-			this.$emit('update', this.data)
-			this.$emit('close')
+			this.$emit("update", this.data);
+			this.$emit("close");
 		},
 	},
-})
+});
 </script>
 
 <style scoped lang="scss">

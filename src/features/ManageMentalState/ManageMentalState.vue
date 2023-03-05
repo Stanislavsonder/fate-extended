@@ -3,49 +3,45 @@
 		type="MindIcon"
 		:hint="$t('manage-mental-state')"
 		variant="transparent"
-		@click="modal = true" />
-	<ModalWindow
-		v-model="modal"
-		:title="$t('manage-mental-state')">
+		@click="modal = true"
+	/>
+	<ModalWindow v-model="modal" :title="$t('manage-mental-state')">
 		<article class="character-health-manage">
 			<section class="character-health-manage__section">
-				<h3>{{ $t('to-heal-or-to-hit') }}:</h3>
+				<h3>{{ $t("to-heal-or-to-hit") }}:</h3>
 				<label>
-					<input
-						v-model="value"
-						type="number"
-						min="0"
-						max="999" />
+					<input v-model="value" type="number" min="0" max="999" />
 				</label>
 				<nav class="character-health-manage__hp-buttons">
 					<button
 						:title="$t('to-heal')"
 						class="character-health-manage__hp-button"
-						@click="heal">
+						@click="heal"
+					>
 						<Icon name="Heal" />
 					</button>
 					<button
 						:title="$t('to-hit')"
 						class="character-health-manage__hp-button"
-						@click="damage">
+						@click="damage"
+					>
 						<Icon name="Damage" />
 					</button>
 				</nav>
 			</section>
 			<section class="character-health-manage__section">
-				<h3>{{ $t('change-max-mental-modifier') }}:</h3>
+				<h3>{{ $t("change-max-mental-modifier") }}:</h3>
 				<label>
 					<input
 						v-model="modifier"
 						type="number"
 						min="-999"
-						max="999" />
+						max="999"
+					/>
 				</label>
 				<nav class="character-health-manage__hp-buttons">
-					<Button
-						:title="$t('ui-apply')"
-						@click="changeModifier">
-						{{ $t('ui-apply') }}
+					<Button :title="$t('ui-apply')" @click="changeModifier">
+						{{ $t("ui-apply") }}
 					</Button>
 				</nav>
 			</section>
@@ -54,13 +50,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { useCharactersStore } from '@/app/store/CharacterStore'
-import { storeToRefs } from 'pinia'
-import { Button, Icon, IconButton, ModalWindow } from '@/shared/ui'
+import { defineComponent } from "vue";
+import { useCharactersStore } from "@/app/store/CharacterStore";
+import { storeToRefs } from "pinia";
+import { Button, Icon, IconButton, ModalWindow } from "@/shared/ui";
 
 export default defineComponent({
-	name: 'ManageMentalState',
+	name: "ManageMentalState",
 	components: {
 		IconButton,
 		Button,
@@ -68,10 +64,10 @@ export default defineComponent({
 		ModalWindow,
 	},
 	setup() {
-		const store = useCharactersStore()
+		const store = useCharactersStore();
 
-		const { characters, current, maxMental } = storeToRefs(store)
-		const { updateName, updateRace, updateLuck } = store
+		const { characters, current, maxMental } = storeToRefs(store);
+		const { updateName, updateRace, updateLuck } = store;
 
 		return {
 			characters,
@@ -80,49 +76,49 @@ export default defineComponent({
 			updateName,
 			updateRace,
 			updateLuck,
-		}
+		};
 	},
 	data() {
 		return {
 			modal: false,
 			value: 0,
 			modifier: 0,
-		}
+		};
 	},
 	watch: {
 		modal() {
-			this.value = 0
-			this.modifier = this.characters[this.current].mental.modifier
+			this.value = 0;
+			this.modifier = this.characters[this.current].mental.modifier;
 		},
 	},
 	mounted() {
-		this.modifier = this.characters[this.current].mental.modifier
+		this.modifier = this.characters[this.current].mental.modifier;
 	},
 	methods: {
 		heal() {
 			this.characters[this.current].mental.current = Math.min(
 				this.characters[this.current].mental.current + this.value,
 				this.maxMental
-			)
-			this.close()
+			);
+			this.close();
 		},
 		damage() {
 			this.characters[this.current].mental.current = Math.max(
 				this.characters[this.current].mental.current - this.value,
 				0
-			)
-			this.close()
+			);
+			this.close();
 		},
 		changeModifier() {
-			this.characters[this.current].mental.modifier = this.modifier
-			this.close()
+			this.characters[this.current].mental.modifier = this.modifier;
+			this.close();
 		},
 		close() {
-			this.value = 0
-			this.modal = false
+			this.value = 0;
+			this.modal = false;
 		},
 	},
-})
+});
 </script>
 
 <style scoped lang="scss">

@@ -3,17 +3,17 @@
 		<div
 			v-if="modelValue"
 			class="modal-window"
-			:class="`modal-window--${type}`">
-			<div
-				class="modal-window__bg"
-				@click="close" />
+			:class="`modal-window--${type}`"
+		>
+			<div class="modal-window__bg" @click="close" />
 			<div class="modal-window__main">
 				<header class="modal-window__header">
 					<h2 class="modal-window__title">{{ title }}</h2>
 					<button
 						:title="$t('ui-close')"
 						class="modal-window__close"
-						@click="close" />
+						@click="close"
+					/>
 				</header>
 				<main class="modal-window__content">
 					<slot />
@@ -24,11 +24,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
 export default defineComponent({
-	name: 'ModalWindow',
-	emits: ['update:modelValue'],
+	name: "ModalWindow",
+	emits: ["update:modelValue"],
 	props: {
 		modelValue: {
 			type: Boolean,
@@ -36,24 +36,24 @@ export default defineComponent({
 		},
 		title: {
 			type: String,
-			default: '',
+			default: "",
 		},
 		type: {
 			type: String,
-			default: 'default',
+			default: "default",
 		},
 	},
 	watch: {
 		modelValue(value) {
-			document.body.style.overflowY = value ? 'hidden' : 'auto'
+			document.body.style.overflowY = value ? "hidden" : "auto";
 		},
 	},
 	methods: {
 		close() {
-			this.$emit('update:modelValue', false)
+			this.$emit("update:modelValue", false);
 		},
 	},
-})
+});
 </script>
 
 <style scoped lang="scss">
@@ -112,7 +112,7 @@ export default defineComponent({
 
 		&:after,
 		&:before {
-			content: '';
+			content: "";
 			position: absolute;
 			width: 3px;
 			border-radius: 5px;

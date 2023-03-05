@@ -11,14 +11,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { CharactersTabs, LanguageChanger, RollDice, SaveLoad } from '@/features'
+import { defineComponent } from "vue";
+import {
+	CharactersTabs,
+	LanguageChanger,
+	RollDice,
+	SaveLoad,
+} from "@/features";
 
 export default defineComponent({
-	name: 'SheetHeader',
+	name: "SheetHeader",
 	components: { CharactersTabs, RollDice, LanguageChanger, SaveLoad },
-	emits: ['character-loaded', 'clear'],
-})
+	emits: ["character-loaded", "clear"],
+});
 </script>
 
 <style lang="scss" scoped>

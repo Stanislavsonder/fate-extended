@@ -4,9 +4,7 @@
 			<h2 class="card__title">
 				{{ title }}
 			</h2>
-			<nav
-				v-if="$slots.buttons"
-				class="card__buttons">
+			<nav v-if="$slots.buttons" class="card__buttons">
 				<slot name="buttons" />
 			</nav>
 		</header>
@@ -18,14 +16,14 @@
 
 <script>
 export default {
-	name: 'Card',
+	name: "Card",
 	props: {
 		title: {
 			type: String,
 			required: true,
 		},
 	},
-}
+};
 </script>
 
 <style scoped lang="scss">

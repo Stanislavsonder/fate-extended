@@ -1,7 +1,5 @@
 <template>
-	<Card
-		:title="$t('character')"
-		class="character">
+	<Card :title="$t('character')" class="character">
 		<template #buttons>
 			<ManageMana />
 			<ManageMentalState />
@@ -15,7 +13,8 @@
 					<img
 						class="character__image"
 						src="./assets/CharacterPlaceholder.png"
-						:alt="$t('character-image')" />
+						:alt="$t('character-image')"
+					/>
 					<span class="character__level">
 						{{ characters[current].level }}
 					</span>
@@ -23,10 +22,17 @@
 				<div class="character__bars">
 					<div class="character__info">
 						<h2>
-							{{ characters[current].name || $t('new-character') }}
+							{{
+								characters[current].name || $t("new-character")
+							}}
 						</h2>
 						<h3>
-							{{ characters[current].race || $t('click-edit-button-above-to-change-race-and-name') }}
+							{{
+								characters[current].race ||
+								$t(
+									"click-edit-button-above-to-change-race-and-name"
+								)
+							}}
 						</h3>
 					</div>
 					<div class="character__core-bars">
@@ -37,16 +43,15 @@
 						<ManaBar :mana="characters[current].mana" />
 						<IntoxicationBar
 							v-if="false"
-							:intoxication="characters[current].intoxication" />
+							:intoxication="characters[current].intoxication"
+						/>
 					</div>
 				</div>
 				<div class="character__luck">
 					<span class="character__luck-value">
 						{{ characters[current].luck }}
 					</span>
-					<Icon
-						name="Luck"
-						class="character__luck-icon" />
+					<Icon name="Luck" class="character__luck-icon" />
 				</div>
 			</div>
 		</template>
@@ -54,7 +59,7 @@
 </template>
 
 <script lang="ts">
-import { Card, Icon } from '@/shared/ui/'
+import { Card, Icon } from "@/shared/ui/";
 import {
 	EditCharacterInfo,
 	HealthBar,
@@ -64,13 +69,13 @@ import {
 	ManageMana,
 	ManageMentalState,
 	MentalStateBar,
-} from '@/features'
-import { defineComponent } from 'vue'
-import { useCharactersStore } from '@/app/store/CharacterStore'
-import { storeToRefs } from 'pinia'
+} from "@/features";
+import { defineComponent } from "vue";
+import { useCharactersStore } from "@/app/store/CharacterStore";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
-	name: 'CharacterInfoSection',
+	name: "CharacterInfoSection",
 	components: {
 		Icon,
 		MentalStateBar,
@@ -84,16 +89,16 @@ export default defineComponent({
 		Card,
 	},
 	setup() {
-		const store = useCharactersStore()
+		const store = useCharactersStore();
 
-		const { characters, current } = storeToRefs(store)
+		const { characters, current } = storeToRefs(store);
 
 		return {
 			characters,
 			current,
-		}
+		};
 	},
-})
+});
 </script>
 
 <style scoped lang="scss">

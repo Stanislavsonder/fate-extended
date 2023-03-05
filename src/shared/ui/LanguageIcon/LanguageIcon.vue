@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import Flags from './svg'
+import Flags from "./svg";
 
 export default {
-	name: 'LanguageIcon',
+	name: "LanguageIcon",
 	components: {
 		...Flags,
 	},
@@ -16,5 +16,5 @@ export default {
 			required: true,
 		},
 	},
-}
+};
 </script>

@@ -1,34 +1,37 @@
 <template>
 	<div class="load-window">
 		<label class="load-window__label">
-			<span>{{ $t('please-select-character-file') }}: </span>
+			<span>{{ $t("please-select-character-file") }}: </span>
 			<UploadIcon class="load-window__upload" />
 			<input
 				accept=".fate"
 				class="load-window__input"
 				multiple
 				type="file"
-				@change="load" />
+				@change="load"
+			/>
 		</label>
 		<div v-if="isValidCharacters">
 			<h3
 				v-for="(character, index) in loadedCharacters"
-				:key="character.name + index">
+				:key="character.name + index"
+			>
 				<strong> {{ character.name }}, </strong>
 				{{ character.race }}
-				{{ ` (${character.level} ${$t('level').toLocaleLowerCase()})` }}
+				{{ ` (${character.level} ${$t("level").toLocaleLowerCase()})` }}
 			</h3>
 		</div>
 		<Button
 			class="load-window__button"
 			:title="$t('ui-confirm')"
-			:disabled="errors.length || (errors.length && loadedCharacters.length)"
-			@click="confirmLoading">
-			{{ $t('ui-confirm') }}
+			:disabled="
+				errors.length || (errors.length && loadedCharacters.length)
+			"
+			@click="confirmLoading"
+		>
+			{{ $t("ui-confirm") }}
 		</Button>
-		<p
-			v-for="error in errors"
-			:key="error">
+		<p v-for="error in errors" :key="error">
 			{{ error }}
 		</p>
 	</div>
@@ -36,60 +39,64 @@
 
 <script lang="ts" setup>
 // TODO: Add file drop support
-import { defineEmits, ref } from 'vue'
-import { validateCharacter } from '@/shared/helpers/validators'
-import Button from '@/shared/ui/Button/Button.vue'
-import UploadIcon from '@/shared/ui/Icon/svg/UploadIcon.vue'
-import { Character } from '@/types'
-import { useCharactersStore } from '@/app/store/CharacterStore'
-import { storeToRefs } from 'pinia'
+import { defineEmits, ref } from "vue";
+import { validateCharacter } from "@/shared/helpers/validators";
+import Button from "@/shared/ui/Button/Button.vue";
+import UploadIcon from "@/shared/ui/Icon/svg/UploadIcon.vue";
+import { Character } from "@/types";
+import { useCharactersStore } from "@/app/store/CharacterStore";
+import { storeToRefs } from "pinia";
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(["close"]);
 
-const store = useCharactersStore()
+const store = useCharactersStore();
 
-const { characters } = storeToRefs(store)
-const { changeCharacter, setCharacter } = store
-const loadedCharacters = ref<Character[]>([])
-const errors = ref<string[]>([])
-const isValidCharacters = ref(true)
+const { characters } = storeToRefs(store);
+const { changeCharacter, setCharacter } = store;
+const loadedCharacters = ref<Character[]>([]);
+const errors = ref<string[]>([]);
+const isValidCharacters = ref(true);
 
 const load = (e: any) => {
 	if (!e.target.files.length) {
-		loadedCharacters.value = []
-		return
+		loadedCharacters.value = [];
+		return;
 	}
-	isValidCharacters.value = true
+	isValidCharacters.value = true;
 
-	const files = [...e.target.files] as File[]
+	const files = [...e.target.files] as File[];
 
 	files.forEach((file, index) => {
-		const reader = new FileReader()
-		reader.readAsText(file, 'UTF-8')
-		reader.onload = event => {
-			if (typeof event?.target?.result === 'string') {
-				const character = JSON.parse(event.target.result)
+		const reader = new FileReader();
+		reader.readAsText(file, "UTF-8");
+		reader.onload = (event) => {
+			if (typeof event?.target?.result === "string") {
+				const character = JSON.parse(event.target.result);
 				if (validateCharacter(character)) {
-					loadedCharacters.value.push(character as Character)
+					loadedCharacters.value.push(character as Character);
 				} else {
-					isValidCharacters.value = false
-					errors.value.push(`Unable to load '${character.name || index + 'nd'}' character.`)
+					isValidCharacters.value = false;
+					errors.value.push(
+						`Unable to load '${
+							character.name || index + "nd"
+						}' character.`
+					);
 				}
 			}
-		}
-		reader.onerror = () => (isValidCharacters.value = false)
-	})
-}
+		};
+		reader.onerror = () => (isValidCharacters.value = false);
+	});
+};
 
 const confirmLoading = () => {
-	loadedCharacters.value.forEach(character => {
-		setCharacter(character)
-	})
-	errors.value = []
-	loadedCharacters.value = []
-	changeCharacter(characters.value.length - 1)
-	emit('close')
-}
+	loadedCharacters.value.forEach((character) => {
+		setCharacter(character);
+	});
+	errors.value = [];
+	loadedCharacters.value = [];
+	changeCharacter(characters.value.length - 1);
+	emit("close");
+};
 </script>
 
 <style scoped lang="scss">

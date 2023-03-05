@@ -1,7 +1,5 @@
 <template>
-	<article
-		class="skill skill--clickable"
-		@click="editMode = true">
+	<article class="skill skill--clickable" @click="editMode = true">
 		<aside class="skill__level">
 			{{ skill.level }}
 		</aside>
@@ -12,10 +10,7 @@
 			{{ skill.experience }} /
 			{{ $options.rules.LEVEL_CUPS[skill.level - 1] }}
 		</span>
-		<progress
-			class="skill__progress"
-			max="100"
-			:value="experiencePercent">
+		<progress class="skill__progress" max="100" :value="experiencePercent">
 			{{ experiencePercent.toFixed() }}%
 		</progress>
 		<span class="skill__dice-roll">
@@ -23,28 +18,27 @@
 		</span>
 	</article>
 
-	<ModalWindow
-		v-model="editMode"
-		:title="$t('edit-skill')">
+	<ModalWindow v-model="editMode" :title="$t('edit-skill')">
 		<EditSkill
 			:skill="skill"
 			@remove="remove"
-			@update="newSkill => update(newSkill)"
-			@close="editMode = false" />
+			@update="(newSkill) => update(newSkill)"
+			@close="editMode = false"
+		/>
 	</ModalWindow>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { SkillProgress } from '@/types'
-import rules from '@/shared/constants/rules'
-import { ModalWindow } from '@/shared/ui'
-import { EditSkill, RollSkillDice } from '@/features'
+import { defineComponent, PropType } from "vue";
+import { SkillProgress } from "@/types";
+import rules from "@/shared/constants/rules";
+import { ModalWindow } from "@/shared/ui";
+import { EditSkill, RollSkillDice } from "@/features";
 
 export default defineComponent({
-	name: 'Skill',
+	name: "Skill",
 	components: { EditSkill, RollSkillDice, ModalWindow },
-	emits: ['update', 'remove'],
+	emits: ["update", "remove"],
 	rules: rules,
 	props: {
 		skill: {
@@ -55,23 +49,26 @@ export default defineComponent({
 	data() {
 		return {
 			editMode: false,
-		}
+		};
 	},
 	computed: {
 		experiencePercent() {
-			const percent = (this.skill.experience / this.$options.rules.LEVEL_CUPS[this.skill.level - 1]) * 100
-			return percent > 100 ? 100 : percent
+			const percent =
+				(this.skill.experience /
+					this.$options.rules.LEVEL_CUPS[this.skill.level - 1]) *
+				100;
+			return percent > 100 ? 100 : percent;
 		},
 	},
 	methods: {
 		update(skill: SkillProgress) {
-			this.$emit('update', skill)
+			this.$emit("update", skill);
 		},
 		remove() {
-			this.$emit('remove')
+			this.$emit("remove");
 		},
 	},
-})
+});
 </script>
 
 <style lang="scss">

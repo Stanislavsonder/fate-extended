@@ -1,18 +1,15 @@
 <template>
-	<button
-		:title="hint"
-		class="config-button"
-		:class="modifiers">
+	<button :title="hint" class="config-button" :class="modifiers">
 		<component :is="type" />
 	</button>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import Icons from '../Icon/svg'
+import { defineComponent } from "vue";
+import Icons from "../Icon/svg";
 
 export default defineComponent({
-	name: 'IconButton',
+	name: "IconButton",
 	components: { ...Icons },
 	props: {
 		type: {
@@ -21,25 +18,25 @@ export default defineComponent({
 		},
 		variant: {
 			type: [String, Array],
-			default: '',
+			default: "",
 		},
 		hint: {
 			type: String,
-			default: '',
+			default: "",
 		},
 	},
 	computed: {
 		modifiers(): string {
-			if (typeof this.variant === 'string' && this.variant) {
-				return 'config-button--' + this.variant
+			if (typeof this.variant === "string" && this.variant) {
+				return "config-button--" + this.variant;
 			}
 			if (Array.isArray(this.variant)) {
-				return this.variant.map(e => 'config-button--' + e).join(' ')
+				return this.variant.map((e) => "config-button--" + e).join(" ");
 			}
-			return ''
+			return "";
 		},
 	},
-})
+});
 </script>
 
 <style lang="scss">

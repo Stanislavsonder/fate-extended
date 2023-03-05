@@ -3,49 +3,45 @@
 		type="ManaIcon"
 		:hint="$t('manage-mana')"
 		variant="transparent"
-		@click="modal = true" />
-	<ModalWindow
-		v-model="modal"
-		:title="$t('manage-mana')">
+		@click="modal = true"
+	/>
+	<ModalWindow v-model="modal" :title="$t('manage-mana')">
 		<article class="character-health-manage">
 			<section class="character-health-manage__section">
-				<h3>{{ $t('restore-or-spend-mana') }}:</h3>
+				<h3>{{ $t("restore-or-spend-mana") }}:</h3>
 				<label>
-					<input
-						v-model="value"
-						type="number"
-						min="0"
-						max="999" />
+					<input v-model="value" type="number" min="0" max="999" />
 				</label>
 				<nav class="character-health-manage__hp-buttons">
 					<button
 						:title="$t('restore')"
 						class="character-health-manage__hp-button"
-						@click="heal">
+						@click="heal"
+					>
 						<Icon name="Heal" />
 					</button>
 					<button
 						:title="$t('spend')"
 						class="character-health-manage__hp-button"
-						@click="damage">
+						@click="damage"
+					>
 						<Icon name="Damage" />
 					</button>
 				</nav>
 			</section>
 			<section class="character-health-manage__section">
-				<h3>{{ $t('change-max-mana-modifier') }}:</h3>
+				<h3>{{ $t("change-max-mana-modifier") }}:</h3>
 				<label>
 					<input
 						v-model="modifier"
 						type="number"
 						min="-999"
-						max="999" />
+						max="999"
+					/>
 				</label>
 				<nav class="character-health-manage__hp-buttons">
-					<Button
-						:title="$t('ui-apply')"
-						@click="changeModifier">
-						{{ $t('ui-apply') }}
+					<Button :title="$t('ui-apply')" @click="changeModifier">
+						{{ $t("ui-apply") }}
 					</Button>
 				</nav>
 			</section>
@@ -54,13 +50,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { Button, Icon, IconButton, ModalWindow } from '@/shared/ui'
-import { useCharactersStore } from '@/app/store/CharacterStore'
-import { storeToRefs } from 'pinia'
+import { defineComponent } from "vue";
+import { Button, Icon, IconButton, ModalWindow } from "@/shared/ui";
+import { useCharactersStore } from "@/app/store/CharacterStore";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
-	name: 'ManageMana',
+	name: "ManageMana",
 	components: {
 		Button,
 		IconButton,
@@ -68,10 +64,10 @@ export default defineComponent({
 		ModalWindow,
 	},
 	setup() {
-		const store = useCharactersStore()
+		const store = useCharactersStore();
 
-		const { characters, current, maxMana } = storeToRefs(store)
-		const { updateName, updateRace, updateLuck } = store
+		const { characters, current, maxMana } = storeToRefs(store);
+		const { updateName, updateRace, updateLuck } = store;
 
 		return {
 			characters,
@@ -80,49 +76,49 @@ export default defineComponent({
 			updateName,
 			updateRace,
 			updateLuck,
-		}
+		};
 	},
 	data() {
 		return {
 			modal: false,
 			value: 0,
 			modifier: 0,
-		}
+		};
 	},
 	watch: {
 		modal() {
-			this.value = 0
-			this.modifier = this.characters[this.current].mana.modifier
+			this.value = 0;
+			this.modifier = this.characters[this.current].mana.modifier;
 		},
 	},
 	mounted() {
-		this.modifier = this.characters[this.current].mana.modifier
+		this.modifier = this.characters[this.current].mana.modifier;
 	},
 	methods: {
 		heal() {
 			this.characters[this.current].mana.current = Math.min(
 				this.characters[this.current].mana.current + this.value,
 				this.maxMana
-			)
-			this.close()
+			);
+			this.close();
 		},
 		damage() {
 			this.characters[this.current].mana.current = Math.max(
 				this.characters[this.current].mana.current - this.value,
 				0
-			)
-			this.close()
+			);
+			this.close();
 		},
 		changeModifier() {
-			this.characters[this.current].mana.modifier = this.modifier
-			this.close()
+			this.characters[this.current].mana.modifier = this.modifier;
+			this.close();
 		},
 		close() {
-			this.value = 0
-			this.modal = false
+			this.value = 0;
+			this.modal = false;
 		},
 	},
-})
+});
 </script>
 
 <style scoped lang="scss">

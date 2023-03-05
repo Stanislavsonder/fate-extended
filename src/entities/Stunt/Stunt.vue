@@ -1,7 +1,5 @@
 <template>
-	<article
-		class="stunt"
-		@click="modal = true">
+	<article class="stunt" @click="modal = true">
 		<header class="stunt__header">
 			<h5 class="stunt__name">
 				{{ stunt.name }}
@@ -14,28 +12,27 @@
 			{{ stunt.description }}
 		</p>
 	</article>
-	<ModalWindow
-		v-model="modal"
-		:title="$t('edit-stunt')">
+	<ModalWindow v-model="modal" :title="$t('edit-stunt')">
 		<AddNewAndEditStunt
 			:stunt="stunt"
 			mode="edit"
 			@remove="remove"
 			@update="update"
-			@close="modal = false" />
+			@close="modal = false"
+		/>
 	</ModalWindow>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { Stunt } from '@/types'
-import { ModalWindow } from '@/shared/ui'
-import { AddNewAndEditStunt } from '@/features'
+import { defineComponent, PropType } from "vue";
+import { Stunt } from "@/types";
+import { ModalWindow } from "@/shared/ui";
+import { AddNewAndEditStunt } from "@/features";
 
 export default defineComponent({
-	name: 'Stunt',
+	name: "Stunt",
 	components: { AddNewAndEditStunt, ModalWindow },
-	emits: ['update', 'remove'],
+	emits: ["update", "remove"],
 	props: {
 		stunt: {
 			type: Object as PropType<Stunt>,
@@ -45,17 +42,17 @@ export default defineComponent({
 	data() {
 		return {
 			modal: false,
-		}
+		};
 	},
 	methods: {
 		update(stunt: Stunt) {
-			this.$emit('update', stunt)
+			this.$emit("update", stunt);
 		},
 		remove() {
-			this.$emit('remove')
+			this.$emit("remove");
 		},
 	},
-})
+});
 </script>
 
 <style scoped lang="scss">
@@ -105,7 +102,7 @@ export default defineComponent({
 		background-color: var(--primary);
 
 		&:before {
-			content: '';
+			content: "";
 			display: block;
 			position: absolute;
 			left: 0;

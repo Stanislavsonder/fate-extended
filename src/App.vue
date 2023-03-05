@@ -3,45 +3,48 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, watch } from 'vue'
+import { onMounted, watch } from "vue";
 
-import CharacterSheet from '@/pages/CharacterSheet/CharacterSheet.vue'
+import CharacterSheet from "@/pages/CharacterSheet/CharacterSheet.vue";
 
-import { validateCharacter } from '@/shared/helpers/validators'
-import { useCharactersStore } from '@/app/store/CharacterStore'
-import { useI18n } from 'vue-i18n'
-import { storeToRefs } from 'pinia'
+import { validateCharacter } from "@/shared/helpers/validators";
+import { useCharactersStore } from "@/app/store/CharacterStore";
+import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
 
 // TODO: Apply Feature-Sliced Design to the project
 
-const store = useCharactersStore()
-const i18 = useI18n()
+const store = useCharactersStore();
+const i18 = useI18n();
 
-const { characters } = storeToRefs(store)
+const { characters } = storeToRefs(store);
 
-watch(i18.locale, language => {
-	window.localStorage.language = language
-})
+watch(i18.locale, (language) => {
+	window.localStorage.language = language;
+});
 
 watch(
 	characters,
-	characters => {
-		window.localStorage.characters = JSON.stringify(characters)
+	(characters) => {
+		window.localStorage.characters = JSON.stringify(characters);
 	},
 	{
 		deep: true,
 	}
-)
+);
 onMounted(() => {
-	i18.locale.value = window.localStorage.language || 'en'
+	i18.locale.value = window.localStorage.language || "en";
 
 	if (window.localStorage.characters) {
-		const parsedCharacters = JSON.parse(window.localStorage.characters)
-		if (Array.isArray(parsedCharacters) && parsedCharacters.every(validateCharacter)) {
-			store.loadCharacters(parsedCharacters)
+		const parsedCharacters = JSON.parse(window.localStorage.characters);
+		if (
+			Array.isArray(parsedCharacters) &&
+			parsedCharacters.every(validateCharacter)
+		) {
+			store.loadCharacters(parsedCharacters);
 		}
 	}
-})
+});
 </script>
 
 <style lang="scss">

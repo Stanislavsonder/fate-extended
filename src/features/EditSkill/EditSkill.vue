@@ -3,14 +3,10 @@
 		<article class="skill">
 			<aside class="skill__level">
 				{{ tmpSkill.level }}
-				<button
-					class="skill-edit__level-up"
-					@click="levelUp">
+				<button class="skill-edit__level-up" @click="levelUp">
 					<Icon name="ArrowIcon" />
 				</button>
-				<button
-					class="skill-edit__level-down"
-					@click="levelDown">
+				<button class="skill-edit__level-down" @click="levelDown">
 					<Icon name="ArrowIcon" />
 				</button>
 			</aside>
@@ -24,49 +20,47 @@
 					min="0"
 					:max="cup"
 					inputmode="number"
-					type="number" />
+					type="number"
+				/>
 				/ {{ cup }}
 			</span>
 			<progress
 				class="skill__progress"
 				max="100"
 				:value="experiencePercent"
-				@click="experienceUpdate">
+				@click="experienceUpdate"
+			>
 				{{ experiencePercent.toFixed() }}%
 			</progress>
 		</article>
 		<nav>
-			<Button
-				secondary
-				@click="remove">
-				{{ $t('ui-remove') }}
+			<Button secondary @click="remove">
+				{{ $t("ui-remove") }}
 			</Button>
-			<Button
-				secondary
-				@click="close">
-				{{ $t('ui-cancel') }}
+			<Button secondary @click="close">
+				{{ $t("ui-cancel") }}
 			</Button>
 			<Button @click="save">
-				{{ $t('ui-save') }}
+				{{ $t("ui-save") }}
 			</Button>
 		</nav>
 	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { SkillProgress } from '@/types'
-import rules from '@/shared/constants/rules'
-import { Button, Icon } from '@/shared/ui'
+import { defineComponent, PropType } from "vue";
+import { SkillProgress } from "@/types";
+import rules from "@/shared/constants/rules";
+import { Button, Icon } from "@/shared/ui";
 
 export default defineComponent({
-	name: 'EditSkill',
+	name: "EditSkill",
 	levelCups: rules.LEVEL_CUPS,
 	components: {
 		Icon,
 		Button,
 	},
-	emits: ['update', 'remove', 'close'],
+	emits: ["update", "remove", "close"],
 	props: {
 		skill: {
 			type: Object as PropType<SkillProgress>,
@@ -76,43 +70,50 @@ export default defineComponent({
 	data() {
 		return {
 			tmpSkill: JSON.parse(JSON.stringify(this.skill)),
-		}
+		};
 	},
 	computed: {
 		experiencePercent() {
-			const percent = (this.tmpSkill.experience / this.cup) * 100
-			return percent > 100 ? 100 : percent
+			const percent = (this.tmpSkill.experience / this.cup) * 100;
+			return percent > 100 ? 100 : percent;
 		},
 		cup() {
-			return this.$options.levelCups[this.tmpSkill.level - 1]
+			return this.$options.levelCups[this.tmpSkill.level - 1];
 		},
 	},
 	methods: {
 		close() {
-			this.$emit('close')
+			this.$emit("close");
 		},
 		remove() {
-			this.$emit('remove')
-			this.close()
+			this.$emit("remove");
+			this.close();
 		},
 		save() {
-			this.$emit('update', this.tmpSkill)
-			this.close()
+			this.$emit("update", this.tmpSkill);
+			this.close();
 		},
 		experienceUpdate(event: MouseEvent) {
-			const percent = event.offsetX / (event.target as HTMLElement).offsetWidth
-			this.tmpSkill.experience = Math.min(this.cup, Math.max(0, Math.ceil(this.cup * percent)))
+			const percent =
+				event.offsetX / (event.target as HTMLElement).offsetWidth;
+			this.tmpSkill.experience = Math.min(
+				this.cup,
+				Math.max(0, Math.ceil(this.cup * percent))
+			);
 		},
 		levelUp() {
-			this.tmpSkill.level = Math.min(Number(this.tmpSkill.level) + 1, this.$options.levelCups.length)
-			this.tmpSkill.experience = 0
+			this.tmpSkill.level = Math.min(
+				Number(this.tmpSkill.level) + 1,
+				this.$options.levelCups.length
+			);
+			this.tmpSkill.experience = 0;
 		},
 		levelDown() {
-			this.tmpSkill.level = Math.max(Number(this.tmpSkill.level) - 1, 1)
-			this.tmpSkill.experience = 0
+			this.tmpSkill.level = Math.max(Number(this.tmpSkill.level) - 1, 1);
+			this.tmpSkill.experience = 0;
 		},
 	},
-})
+});
 </script>
 
 <style scoped lang="scss">

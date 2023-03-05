@@ -1,34 +1,75 @@
-<script setup lang="ts">
-import { IconButton, ModalWindow } from '@/shared/ui'
-import { defineProps, PropType, ref } from 'vue'
-import { SkillProgress } from '@/types'
-import { useI18n } from 'vue-i18n'
-import RollWindow from '@/features/RollSkillDice/RollWindow.vue'
-
-const i18n = useI18n()
-const props = defineProps({
-	skill: {
-		type: Object as PropType<SkillProgress>,
-		required: true
-	}
-})
-const title = `${i18n.t('roll')}: ${i18n.t(`skill__${props.skill.name}`)}`
-const modal = ref(false)
-</script>
-
 <template>
-	<IconButton
-		:hint="$t('dice-roll')"
-		type="Dices"
-		@click.stop="modal = true" />
-	<ModalWindow
-		v-model="modal"
-		:title="title">
-		<RollWindow :skill="skill" />
-	</ModalWindow>
+	<div class="skill-dice-roll">
+		<nav>
+			<ul class="skill-dice-roll__roll-type-list">
+				<li
+					v-for="type in Object.keys(rollTypes)"
+					:key="type">
+					<Button
+						:secondary="rollType !== type"
+						@click="changeRollType(type)">
+						{{ $t(`roll-type__${type}`) }}
+					</Button>
+				</li>
+			</ul>
+		</nav>
+		<component
+			:is="component"
+			:key="rollType"
+			:roll-type="rollType"
+			:skill="skill" />
+	</div>
 </template>
 
-<style scoped lang="scss">
+<script lang="ts">
+import { defineComponent, markRaw, PropType } from 'vue'
+import RollBase from '@/features/RollSkillDice/rollTypes/RollBase.vue'
+import { RollType, SkillProgress } from '@/types'
+import { Button } from '@/shared/ui'
+import RollAttack from '@/features/RollSkillDice/rollTypes/RollAttack.vue'
+import RollDefence from '@/features/RollSkillDice/rollTypes/RollDefence.vue'
+
+export default defineComponent({
+	name: 'RollWindow',
+	props: {
+		skill: {
+			type: Object as PropType<SkillProgress>,
+			required: true
+		}
+	},
+	components: {
+		RollBase,
+		RollAttack,
+		RollDefence,
+		Button
+	},
+	data() {
+		return {
+			rollType: RollType.Overcome,
+			rollTypes: markRaw(
+				Object.fromEntries([
+					[RollType.Overcome, RollBase],
+					[RollType.Advantage, RollBase],
+					[RollType.Attack, RollAttack],
+					[RollType.Defence, RollDefence]
+				])
+			)
+		}
+	},
+	computed: {
+		component() {
+			return this.rollTypes[this.rollType]
+		}
+	},
+	methods: {
+		changeRollType(type: string) {
+			this.rollType = type as RollType
+		}
+	}
+})
+</script>
+
+<style lang="scss">
 .skill-dice-roll {
 	padding: 16px;
 

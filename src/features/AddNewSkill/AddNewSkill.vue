@@ -5,10 +5,12 @@
 				v-for="skill in skills"
 				:key="skill.name"
 				class="add-skill__skill"
-				@click="add(skill.name)">
+				@click="add(skill.name)"
+			>
 				<button
 					:title="$t('ui-add') + ' ' + $t(`skill__${skill.name}`)"
-					class="add-skill__button">
+					class="add-skill__button"
+				>
 					{{ skill.localizedName }}
 				</button>
 			</li>
@@ -17,17 +19,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { Skill, SkillProgress } from '@/types'
-import rules from '@/shared/constants/rules'
+import { defineComponent, PropType } from "vue";
+import { Skill, SkillProgress } from "@/types";
+import rules from "@/shared/constants/rules";
 
 interface Data {
-	skills: Skill[]
+	skills: Skill[];
 }
 
 export default defineComponent({
-	name: 'AddNewSkill',
-	emits: ['add', 'close'],
+	name: "AddNewSkill",
+	emits: ["add", "close"],
 	props: {
 		existedSkills: {
 			type: Array as PropType<SkillProgress[]>,
@@ -36,27 +38,30 @@ export default defineComponent({
 	},
 	data(): Data {
 		return {
-			skills: rules.SKILLS.filter(skill => !this.existedSkills?.find(s => s.name === skill.name))
-				.map(e => {
+			skills: rules.SKILLS.filter(
+				(skill) =>
+					!this.existedSkills?.find((s) => s.name === skill.name)
+			)
+				.map((e) => {
 					return {
 						...e,
 						localizedName: this.$t(`skill__${e.name}`),
-					}
+					};
 				})
 				.sort((a, b) => a.localizedName.localeCompare(b.localizedName)),
-		}
+		};
 	},
 	methods: {
 		add(skillName: string) {
-			this.$emit('add', {
+			this.$emit("add", {
 				name: skillName,
 				level: 1,
 				experience: 0,
-			})
-			this.$emit('close')
+			});
+			this.$emit("close");
 		},
 	},
-})
+});
 </script>
 
 <style lang="scss" scoped>

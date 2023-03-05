@@ -1,39 +1,34 @@
 <template>
-	<article
-		class="aspect"
-		@click="editMode = true">
+	<article class="aspect" @click="editMode = true">
 		<p>
 			{{ aspect.description }}
 		</p>
 		<h6>
 			{{ aspect.title }}
 		</h6>
-		<Icon
-			:name="diceIcon"
-			class="aspect__dice" />
+		<Icon :name="diceIcon" class="aspect__dice" />
 	</article>
-	<ModalWindow
-		v-model="editMode"
-		:title="$t('edit-aspect')">
+	<ModalWindow v-model="editMode" :title="$t('edit-aspect')">
 		<EditAspect
 			mode="edit"
 			:aspect="aspect"
 			@remove="remove"
-			@update="newAspect => update(newAspect)"
-			@close="editMode = false" />
+			@update="(newAspect) => update(newAspect)"
+			@close="editMode = false"
+		/>
 	</ModalWindow>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { Aspect } from '@/types'
-import { Icon, ModalWindow } from '@/shared/ui'
-import { EditAspect } from '@/features'
+import { defineComponent, PropType } from "vue";
+import { Aspect } from "@/types";
+import { Icon, ModalWindow } from "@/shared/ui";
+import { EditAspect } from "@/features";
 
 export default defineComponent({
-	name: 'Aspect',
+	name: "Aspect",
 	components: { EditAspect, Icon, ModalWindow },
-	emits: ['update', 'remove'],
+	emits: ["update", "remove"],
 	props: {
 		aspect: {
 			type: Object as PropType<Aspect>,
@@ -43,26 +38,26 @@ export default defineComponent({
 	data() {
 		return {
 			editMode: false,
-		}
+		};
 	},
 	computed: {
 		diceIcon() {
-			return this.aspect.type === 'concept'
-				? 'DicePositive'
-				: this.aspect.type === 'problem'
-					? 'DiceNegative'
-					: 'DiceNeutral'
+			return this.aspect.type === "concept"
+				? "DicePositive"
+				: this.aspect.type === "problem"
+				? "DiceNegative"
+				: "DiceNeutral";
 		},
 	},
 	methods: {
 		remove() {
-			this.$emit('remove')
+			this.$emit("remove");
 		},
 		update(newAspect: Aspect) {
-			this.$emit('update', newAspect)
+			this.$emit("update", newAspect);
 		},
 	},
-})
+});
 </script>
 
 <style scoped lang="scss">

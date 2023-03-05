@@ -1,24 +1,19 @@
 <template>
 	<nav class="language">
-		<button
-			class="language__current"
-			@click="modal = !modal">
+		<button class="language__current" @click="modal = !modal">
 			<LanguageIcon :lang="$i18n.locale" />
 			<span class="language__current-name">
-				{{ languages.find(e => e.lang === $i18n.locale)?.name || '' }}
+				{{ languages.find((e) => e.lang === $i18n.locale)?.name || "" }}
 			</span>
 		</button>
 
-		<ul
-			v-if="modal"
-			class="language__list">
-			<li
-				v-for="language in languages"
-				:key="language.lang">
+		<ul v-if="modal" class="language__list">
+			<li v-for="language in languages" :key="language.lang">
 				<button
 					class="language__button"
 					:title="language.name"
-					@click="() => changeLanguage(language)">
+					@click="() => changeLanguage(language)"
+				>
 					<LanguageIcon :lang="language.lang" />
 					<span class="language__list-name">
 						{{ language.name }}
@@ -30,42 +25,42 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { LanguageIcon } from '@/shared/ui'
+import { defineComponent } from "vue";
+import { LanguageIcon } from "@/shared/ui";
 
 export default defineComponent({
-	name: 'LanguageChanger',
+	name: "LanguageChanger",
 	components: { LanguageIcon },
 	data() {
 		return {
 			modal: false,
 			languages: [
 				{
-					lang: 'en',
-					name: 'English',
+					lang: "en",
+					name: "English",
 				},
 				{
-					lang: 'ru',
-					name: 'Русский',
+					lang: "ru",
+					name: "Русский",
 				},
 				{
-					lang: 'be',
-					name: 'Беларуская',
+					lang: "be",
+					name: "Беларуская",
 				},
 				{
-					lang: 'ua',
-					name: 'Українська',
+					lang: "ua",
+					name: "Українська",
 				},
 			],
-		}
+		};
 	},
 	methods: {
 		changeLanguage(language: { lang: string; name: string }) {
-			this.$i18n.locale = language.lang
-			this.modal = false
+			this.$i18n.locale = language.lang;
+			this.modal = false;
 		},
 	},
-})
+});
 </script>
 
 <style scoped lang="scss">

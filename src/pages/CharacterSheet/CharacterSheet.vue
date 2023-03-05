@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 import {
 	AspectSection,
 	CharacterInfoSection,
@@ -26,10 +26,10 @@ import {
 	SheetHeader,
 	SkillsSection,
 	StuntsSection,
-} from '@/widgets'
+} from "@/widgets";
 
 export default defineComponent({
-	name: 'CharacterSheet',
+	name: "CharacterSheet",
 	components: {
 		SheetHeader,
 		CharacterInfoSection,
@@ -40,8 +40,8 @@ export default defineComponent({
 		SkillsSection,
 		AspectSection,
 	},
-	emits: ['char-updated'],
-})
+	emits: ["char-updated"],
+});
 </script>
 
 <style lang="scss" scoped>

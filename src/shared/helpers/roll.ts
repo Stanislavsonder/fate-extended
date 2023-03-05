@@ -25,12 +25,12 @@ export const diceRoll = (amount: number, luck: number): DiceResult[] => {
 		if (isDiceLucky(index, luck)) {
 			return {
 				dice: 'lucky',
-				result: luckyDiceResult(),
+				result: luckyDiceResult()
 			}
 		}
 		return {
 			dice: 'default',
-			result: diceResult(),
+			result: diceResult()
 		}
 	})
 }
@@ -40,17 +40,17 @@ enum RollResult {
 	'Fail' = 'fail',
 	'Stalemate' = 'stalemate',
 	'Success' = 'success',
-	'SuccessWithStyle' = 'success-with-style',
+	'SuccessWithStyle' = 'success-with-style'
 }
 
-export function getResultWord(result: number): RollResult {
+export function getResultWord(result: number, fightMode?: boolean): RollResult {
 	if (result <= -4) {
 		return RollResult.CriticalFail
 	}
 	if (result <= -2) {
 		return RollResult.Fail
 	}
-	if (result <= 1) {
+	if (result <= (fightMode ? 0 : 1)) {
 		return RollResult.Stalemate
 	}
 	if (result <= 3) {

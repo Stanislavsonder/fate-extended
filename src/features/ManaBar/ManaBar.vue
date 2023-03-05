@@ -1,59 +1,61 @@
 <template>
-	<div
-		v-if="maxMana"
-		class="main-bar">
+	<div v-if="maxMana" class="main-bar">
 		<div class="main-bar__numbers">
 			<span class="main-bar__icon">
 				<ManaIcon />
 			</span>
 			<h6>{{ characters[current].mana.current }} / {{ maxMana }}</h6>
 		</div>
-		<div
-			:style="{ background: bg }"
-			class="main-bar__bar">
+		<div :style="{ background: bg }" class="main-bar__bar">
 			<span class="main-bar__bubbles" />
 			<span
 				v-if="percent > 10"
-				class="main-bar__threshold main-bar__threshold--high" />
+				class="main-bar__threshold main-bar__threshold--high"
+			/>
 			<span
 				v-if="percent > 25"
-				class="main-bar__threshold main-bar__threshold--medium" />
+				class="main-bar__threshold main-bar__threshold--medium"
+			/>
 			<span
 				v-if="percent > 50"
-				class="main-bar__threshold main-bar__threshold--light" />
+				class="main-bar__threshold main-bar__threshold--light"
+			/>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
-import ManaIcon from '@/shared/ui/Icon/svg/ManaIcon.vue'
-import { defineComponent } from 'vue'
-import { useCharactersStore } from '@/app/store/CharacterStore'
-import { storeToRefs } from 'pinia'
+import ManaIcon from "@/shared/ui/Icon/svg/ManaIcon.vue";
+import { defineComponent } from "vue";
+import { useCharactersStore } from "@/app/store/CharacterStore";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
-	name: 'ManaBar',
+	name: "ManaBar",
 	components: { ManaIcon },
 	setup() {
-		const store = useCharactersStore()
+		const store = useCharactersStore();
 
-		const { characters, current, maxMana } = storeToRefs(store)
+		const { characters, current, maxMana } = storeToRefs(store);
 
 		return {
 			characters,
 			current,
 			maxMana,
-		}
+		};
 	},
 	computed: {
 		percent(): number {
-			return (this.characters[this.current].mana.current / this.maxMana) * 100
+			return (
+				(this.characters[this.current].mana.current / this.maxMana) *
+				100
+			);
 		},
 		bg(): string {
-			return `linear-gradient(90deg, #181818 0%, #181818 ${this.percent}%, transparent ${this.percent}%)`
+			return `linear-gradient(90deg, #181818 0%, #181818 ${this.percent}%, transparent ${this.percent}%)`;
 		},
 	},
-})
+});
 </script>
 
 <style scoped lang="scss">
@@ -77,7 +79,7 @@ export default defineComponent({
 		border: 2px solid var(--primary);
 
 		&:before {
-			content: '';
+			content: "";
 			position: absolute;
 			left: 0;
 			width: 10px;
@@ -101,7 +103,7 @@ export default defineComponent({
 		display: block;
 		width: 100%;
 		height: 100%;
-		background-image: url('/public/img/bubbles.svg');
+		background-image: url("/public/img/bubbles.svg");
 		background-size: 80%;
 		background-repeat: repeat-x;
 	}

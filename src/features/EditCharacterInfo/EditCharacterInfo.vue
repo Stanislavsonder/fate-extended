@@ -3,47 +3,44 @@
 		type="EditIcon"
 		:hint="$t('edit')"
 		variant="transparent"
-		@click="modal = true" />
-	<ModalWindow
-		v-model="modal"
-		:title="$t('edit-character-info')">
+		@click="modal = true"
+	/>
+	<ModalWindow v-model="modal" :title="$t('edit-character-info')">
 		<article class="character-info-edit">
 			<div class="character-info-edit__name-section">
 				<label>
 					<input
 						v-model="name"
-						:placeholder="$t('character__name')" />
+						:placeholder="$t('character__name')"
+					/>
 				</label>
 				<label>
-					<input
-						v-model="race"
-						:placeholder="$t('race')" />
+					<input v-model="race" :placeholder="$t('race')" />
 				</label>
 			</div>
 			<div class="character-info-edit__luck-section">
 				<label>
-					<span> {{ $t('luck') }}: </span>
+					<span> {{ $t("luck") }}: </span>
 					<input
 						v-model="luck"
 						class=""
 						type="number"
 						inputmode="number"
 						:min="0"
-						:max="4" />
+						:max="4"
+					/>
 				</label>
 			</div>
 			<nav>
-				<Button
-					:title="$t('ui-cancel')"
-					secondary
-					@click="close">
-					{{ $t('ui-cancel') }}
+				<Button :title="$t('ui-cancel')" secondary @click="close">
+					{{ $t("ui-cancel") }}
 				</Button>
 				<Button
 					:title="$t('ui-save')"
 					:disabled="!isValidData"
-					@click="save">
-					{{ $t('ui-save') }}
+					@click="save"
+				>
+					{{ $t("ui-save") }}
 				</Button>
 			</nav>
 		</article>
@@ -51,19 +48,19 @@
 </template>
 
 <script lang="ts">
-import { Button, IconButton, ModalWindow } from '@/shared/ui'
-import { defineComponent } from 'vue'
-import { useCharactersStore } from '@/app/store/CharacterStore'
-import { storeToRefs } from 'pinia'
+import { Button, IconButton, ModalWindow } from "@/shared/ui";
+import { defineComponent } from "vue";
+import { useCharactersStore } from "@/app/store/CharacterStore";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
-	name: 'EditCharacterInfo',
+	name: "EditCharacterInfo",
 	components: { IconButton, Button, ModalWindow },
 	setup() {
-		const store = useCharactersStore()
+		const store = useCharactersStore();
 
-		const { characters, current } = storeToRefs(store)
-		const { updateName, updateRace, updateLuck } = store
+		const { characters, current } = storeToRefs(store);
+		const { updateName, updateRace, updateLuck } = store;
 
 		return {
 			characters,
@@ -71,46 +68,46 @@ export default defineComponent({
 			updateName,
 			updateRace,
 			updateLuck,
-		}
+		};
 	},
 	data() {
 		return {
 			modal: false,
-			name: '',
-			race: '',
+			name: "",
+			race: "",
 			luck: 0,
-		}
+		};
 	},
 	computed: {
 		isValidData(): boolean {
-			return !!(this.name && this.race)
+			return !!(this.name && this.race);
 		},
 	},
 	watch: {
 		modal(value) {
 			if (!value) {
-				return
+				return;
 			}
-			this.luck = this.characters[this.current].luck
-			this.name = this.characters[this.current].name
-			this.race = this.characters[this.current].race
+			this.luck = this.characters[this.current].luck;
+			this.name = this.characters[this.current].name;
+			this.race = this.characters[this.current].race;
 		},
 	},
 	methods: {
 		close() {
-			this.modal = false
-			this.name = ''
-			this.race = ''
-			this.luck = 0
+			this.modal = false;
+			this.name = "";
+			this.race = "";
+			this.luck = 0;
 		},
 		save() {
-			this.updateName(this.name)
-			this.updateRace(this.race)
-			this.updateLuck(this.luck)
-			this.modal = false
+			this.updateName(this.name);
+			this.updateRace(this.race);
+			this.updateLuck(this.luck);
+			this.modal = false;
 		},
 	},
-})
+});
 </script>
 
 <style scoped lang="scss">

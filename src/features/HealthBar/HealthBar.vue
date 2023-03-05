@@ -1,7 +1,5 @@
 <template>
-	<Bar
-		:max="maxHealth"
-		:current="characters[current].health.current">
+	<Bar :max="maxHealth" :current="characters[current].health.current">
 		<template #icon>
 			<Icon name="HealthIcon" />
 		</template>
@@ -9,10 +7,10 @@
 </template>
 
 <script lang="ts" setup>
-import { Bar, Icon } from '@/shared/ui'
-import { useCharactersStore } from '@/app/store/CharacterStore'
-import { storeToRefs } from 'pinia'
+import { Bar, Icon } from "@/shared/ui";
+import { useCharactersStore } from "@/app/store/CharacterStore";
+import { storeToRefs } from "pinia";
 
-const store = useCharactersStore()
-const { characters, current, maxHealth } = storeToRefs(store)
+const store = useCharactersStore();
+const { characters, current, maxHealth } = storeToRefs(store);
 </script>

@@ -6,23 +6,23 @@
 					v-model="tmpStunt.name"
 					:placeholder="$t('stunt__name')"
 					class="add-stunt__name"
-					type="text" />
+					type="text"
+				/>
 			</h2>
 			<h3 class="add-stunt__skill">
 				<select
 					v-model="tmpStunt.skill"
 					:title="$t('skill')"
-					class="add-stunt__select">
-					<option
-						selected
-						disabled
-						:value="undefined">
-						{{ $t('select-skill') }}
+					class="add-stunt__select"
+				>
+					<option selected disabled :value="undefined">
+						{{ $t("select-skill") }}
 					</option>
 					<option
 						v-for="skill in skills"
 						:key="skill.name"
-						:value="skill.name">
+						:value="skill.name"
+					>
 						{{ skill.localizedName }}
 					</option>
 				</select>
@@ -33,7 +33,8 @@
 				ref="textarea"
 				v-model="tmpStunt.description"
 				:placeholder="$t('stunt__description')"
-				class="add-stunt__textarea" />
+				class="add-stunt__textarea"
+			/>
 		</div>
 	</article>
 	<nav class="add-stunt__buttons">
@@ -41,40 +42,35 @@
 			v-if="mode === 'edit'"
 			secondary
 			:title="$t('ui-remove')"
-			@click="remove">
-			{{ $t('ui-remove') }}
+			@click="remove"
+		>
+			{{ $t("ui-remove") }}
 		</Button>
-		<Button
-			secondary
-			:title="$t('ui-cancel')"
-			@click="close">
-			{{ $t('ui-cancel') }}
+		<Button secondary :title="$t('ui-cancel')" @click="close">
+			{{ $t("ui-cancel") }}
 		</Button>
-		<Button
-			:title="$t('ui-save')"
-			:disabled="!isValid"
-			@click="update">
-			{{ $t('ui-save') }}
+		<Button :title="$t('ui-save')" :disabled="!isValid" @click="update">
+			{{ $t("ui-save") }}
 		</Button>
 	</nav>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { useAutoHeight } from '@/shared/composables/useAutoHeight'
-import Button from '@/shared/ui/Button/Button.vue'
-import { Skill, Stunt } from '@/types'
-import rules from '@/shared/constants/rules'
+import { defineComponent, PropType } from "vue";
+import { useAutoHeight } from "@/shared/composables/useAutoHeight";
+import Button from "@/shared/ui/Button/Button.vue";
+import { Skill, Stunt } from "@/types";
+import rules from "@/shared/constants/rules";
 
 interface Data {
-	tmpStunt: Stunt
-	skills: Skill[]
+	tmpStunt: Stunt;
+	skills: Skill[];
 }
 
 export default defineComponent({
-	name: 'AddNewAndEditStunt',
+	name: "AddNewAndEditStunt",
 	components: { Button },
-	emits: ['close', 'update', 'remove'],
+	emits: ["close", "update", "remove"],
 	props: {
 		stunt: {
 			type: Object as PropType<Stunt>,
@@ -82,45 +78,49 @@ export default defineComponent({
 		},
 		mode: {
 			type: String,
-			default: 'new',
+			default: "new",
 		},
 	},
 	setup() {
-		return useAutoHeight()
+		return useAutoHeight();
 	},
 	data(): Data {
 		return {
 			tmpStunt: JSON.parse(JSON.stringify(this.stunt)),
-			skills: rules.SKILLS.map(e => {
+			skills: rules.SKILLS.map((e) => {
 				return {
 					...e,
 					localizedName: this.$t(`skill__${e.name}`),
-				}
+				};
 			}).sort((a, b) => a.localizedName.localeCompare(b.localizedName)),
-		}
+		};
 	},
 	computed: {
 		isValid() {
-			return this.tmpStunt.name && this.tmpStunt.description && this.tmpStunt.skill
+			return (
+				this.tmpStunt.name &&
+				this.tmpStunt.description &&
+				this.tmpStunt.skill
+			);
 		},
 	},
 	mounted() {
-		this.autoUpdateHeight(this.$refs.textarea as HTMLTextAreaElement)
+		this.autoUpdateHeight(this.$refs.textarea as HTMLTextAreaElement);
 	},
 	methods: {
 		remove() {
-			this.$emit('remove')
-			this.$emit('close')
+			this.$emit("remove");
+			this.$emit("close");
 		},
 		close() {
-			this.$emit('close')
+			this.$emit("close");
 		},
 		update() {
-			this.$emit('update', this.tmpStunt)
-			this.$emit('close')
+			this.$emit("update", this.tmpStunt);
+			this.$emit("close");
 		},
 	},
-})
+});
 </script>
 
 <style scoped lang="scss">
@@ -169,7 +169,7 @@ export default defineComponent({
 		background-color: var(--primary);
 
 		&:before {
-			content: '';
+			content: "";
 			display: block;
 			position: absolute;
 			left: 0;

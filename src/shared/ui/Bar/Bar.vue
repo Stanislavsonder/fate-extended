@@ -10,25 +10,29 @@
 			:style="{
 				background: `linear-gradient(90deg, #181818 0%, #181818 ${percent}%, transparent ${percent}%)`,
 			}"
-			class="main-bar__bar">
+			class="main-bar__bar"
+		>
 			<span
 				v-if="percent > 10"
-				class="main-bar__threshold main-bar__threshold--high" />
+				class="main-bar__threshold main-bar__threshold--high"
+			/>
 			<span
 				v-if="percent > 25"
-				class="main-bar__threshold main-bar__threshold--medium" />
+				class="main-bar__threshold main-bar__threshold--medium"
+			/>
 			<span
 				v-if="percent > 50"
-				class="main-bar__threshold main-bar__threshold--light" />
+				class="main-bar__threshold main-bar__threshold--light"
+			/>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
 export default defineComponent({
-	name: 'Bar',
+	name: "Bar",
 	props: {
 		current: {
 			type: Number,
@@ -41,10 +45,10 @@ export default defineComponent({
 	},
 	computed: {
 		percent() {
-			return (this.current / this.max) * 100
+			return (this.current / this.max) * 100;
 		},
 	},
-})
+});
 </script>
 
 <style scoped lang="scss">
@@ -68,7 +72,7 @@ export default defineComponent({
 		border: 2px solid var(--primary);
 
 		&:before {
-			content: '';
+			content: "";
 			position: absolute;
 			left: 0;
 			width: 10px;
@@ -106,7 +110,7 @@ export default defineComponent({
 
 		&:before,
 		&:after {
-			content: '';
+			content: "";
 			position: absolute;
 			width: 5px;
 			height: 5px;

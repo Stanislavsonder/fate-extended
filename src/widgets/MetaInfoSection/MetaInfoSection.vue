@@ -3,15 +3,15 @@
 		<img
 			class="modules__fate-logo"
 			src="./assets/Logo.png"
-			:alt="$t('fate-extended-logo')" />
+			:alt="$t('fate-extended-logo')"
+		/>
 	</section>
 </template>
 
-
 <script>
 export default {
-	name: 'MetaInfoSection',
-}
+	name: "MetaInfoSection",
+};
 </script>
 
 <style scoped lang="scss">

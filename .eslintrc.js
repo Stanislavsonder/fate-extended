@@ -1,17 +1,17 @@
 module.exports = {
 	root: true,
 	env: {
-		node: true,
+		node: true
 	},
 	extends: [
 		'plugin:vue/vue3-essential',
 		'eslint:recommended',
 		'@vue/typescript/recommended',
 		'plugin:vue/recommended',
-		'plugin:prettier-vue/recommended',
+		'plugin:prettier-vue/recommended'
 	],
 	parserOptions: {
-		ecmaVersion: 2020,
+		ecmaVersion: 2020
 	},
 	rules: {
 		'no-console': 'warn',
@@ -57,9 +57,9 @@ module.exports = {
 					'LIFECYCLE_HOOKS',
 					'methods',
 					['template', 'render'],
-					'renderError',
-				],
-			},
+					'renderError'
+				]
+			}
 		],
 		'prettier-vue/prettier': [
 			'warn',
@@ -67,14 +67,14 @@ module.exports = {
 				printWidth: 120,
 				singleQuote: true,
 				semi: false,
-				trailingComma: 'es5',
+				trailingComma: 'none',
 				useTabs: true,
 				tabWidth: 3,
 				singleAttributePerLine: true,
 				jsxSingleQuote: true,
 				arrowParens: 'avoid',
-				bracketSameLine: true,
-			},
-		],
-	},
+				bracketSameLine: true
+			}
+		]
+	}
 }

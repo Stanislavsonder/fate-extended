@@ -47,6 +47,7 @@ function howMuchRollsWithLuckyDice(data) {
 
 require('child_process').spawn('clip').stdin.end(rolls.join())
 
+// eslint-disable-next-line no-console
 console.log(
 	rolls.length,
 	'из них:',

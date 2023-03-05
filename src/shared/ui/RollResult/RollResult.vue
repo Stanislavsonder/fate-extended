@@ -1,21 +1,19 @@
 <template>
 	<ul :class="{ column: column }">
-		<li
-			v-for="(die, index) in result"
-			:key="index">
+		<li v-for="(die, index) in result" :key="index">
 			<component :is="getDiceComponent(die)" />
 		</li>
 	</ul>
 </template>
 
 <script lang="ts" setup>
-import DiceNeutral from '@/shared/ui/Icon/svg/DiceNeutral.vue'
-import DiceNegative from '@/shared/ui/Icon/svg/DiceNegative.vue'
-import DicePositive from '@/shared/ui/Icon/svg/DicePositive.vue'
-import LuckyDicePositive from '@/shared/ui/Icon/svg/LuckyDicePositive.vue'
-import LuckyDiceNeutral from '@/shared/ui/Icon/svg/LuckyDiceNeutral.vue'
-import { DiceResult } from '@/shared/helpers/roll'
-import { defineProps, PropType } from 'vue'
+import DiceNeutral from "@/shared/ui/Icon/svg/DiceNeutral.vue";
+import DiceNegative from "@/shared/ui/Icon/svg/DiceNegative.vue";
+import DicePositive from "@/shared/ui/Icon/svg/DicePositive.vue";
+import LuckyDicePositive from "@/shared/ui/Icon/svg/LuckyDicePositive.vue";
+import LuckyDiceNeutral from "@/shared/ui/Icon/svg/LuckyDiceNeutral.vue";
+import { DiceResult } from "@/shared/helpers/roll";
+import { defineProps, PropType } from "vue";
 
 defineProps({
 	result: {
@@ -30,7 +28,7 @@ defineProps({
 		type: Number,
 		default: 60,
 	},
-})
+});
 
 const getDiceComponent = (result: DiceResult) => {
 	const dices = {
@@ -39,21 +37,21 @@ const getDiceComponent = (result: DiceResult) => {
 		DicePositive,
 		LuckyDicePositive,
 		LuckyDiceNeutral,
-	}
-	if (result.dice === 'lucky') {
+	};
+	if (result.dice === "lucky") {
 		if (result.result) {
-			return dices['LuckyDicePositive']
+			return dices["LuckyDicePositive"];
 		}
-		return dices['LuckyDiceNeutral']
+		return dices["LuckyDiceNeutral"];
 	}
 	if (result.result === -1) {
-		return dices['DiceNegative']
+		return dices["DiceNegative"];
 	}
 	if (result.result) {
-		return dices['DicePositive']
+		return dices["DicePositive"];
 	}
-	return dices['DiceNeutral']
-}
+	return dices["DiceNeutral"];
+};
 </script>
 
 <style scoped lang="scss">

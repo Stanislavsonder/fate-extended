@@ -6,14 +6,14 @@
 
 <script>
 export default {
-	name: 'Button',
+	name: "Button",
 	props: {
 		secondary: {
 			type: Boolean,
 			default: false,
 		},
 	},
-}
+};
 </script>
 
 <style scoped lang="scss">
