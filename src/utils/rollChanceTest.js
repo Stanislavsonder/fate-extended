@@ -4,12 +4,12 @@ function rollDices(count) {
 		if (isDiceLucky(index)) {
 			return {
 				dice: 'lucky',
-				result: luckyDiceResult(),
+				result: luckyDiceResult()
 			}
 		}
 		return {
 			dice: 'default',
-			result: diceResult(),
+			result: diceResult()
 		}
 	})
 }

@@ -33,7 +33,7 @@ function extendSkill(extendable: Skill, extension: Skill): Skill {
 		overcome: extension.overcome,
 		advantage: extension.advantage,
 		bonuses: [...extendable.bonuses, ...extension.bonuses],
-		status: extension.status,
+		status: extension.status
 	}
 }
 

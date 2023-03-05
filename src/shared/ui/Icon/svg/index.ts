@@ -47,5 +47,5 @@ export default {
 	PlusIcon,
 	CancelIcon,
 	AcceptIcon,
-	List,
+	List
 }

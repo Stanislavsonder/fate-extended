@@ -6,7 +6,7 @@ const BASE_MENTAL = 35
 const MODULE_META: ModuleMeta = {
 	code: 'core',
 	name: 'FATE: Extended Core',
-	icon: 'Core',
+	icon: 'Core'
 }
 
 const CHARACTER: CharacterCoreModule = {
@@ -16,12 +16,12 @@ const CHARACTER: CharacterCoreModule = {
 	health: {
 		current: BASE_HEALTH,
 		modifier: 0,
-		consequences: [],
+		consequences: []
 	},
 	mental: {
 		current: BASE_MENTAL,
 		modifier: 0,
-		consequences: [],
+		consequences: []
 	},
 	aspects: [],
 	inventory: '',
@@ -29,7 +29,7 @@ const CHARACTER: CharacterCoreModule = {
 	skills: [],
 	stunts: [],
 	modules: [],
-	level: 1,
+	level: 1
 }
 
 const SKILL_LEVEL_CUP = [20, 50, 90, 150, 200, 300, 450, 625, 825, 1000]
@@ -43,7 +43,7 @@ const SKILLS: Skill[] = [
 		defence: false,
 		bonuses: [],
 		module: 'core',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'driving',
@@ -53,7 +53,7 @@ const SKILLS: Skill[] = [
 		defence: false,
 		bonuses: [],
 		module: 'core',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'will',
@@ -63,7 +63,7 @@ const SKILLS: Skill[] = [
 		defence: true,
 		bonuses: ['+15 ед. ментального стресса за ед. навыка'],
 		module: 'core',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'theft',
@@ -73,7 +73,7 @@ const SKILLS: Skill[] = [
 		defence: false,
 		bonuses: ['+0.5 фт. к дальности кражи за ед. навыка'],
 		module: 'core',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'perception',
@@ -83,7 +83,7 @@ const SKILLS: Skill[] = [
 		defence: true,
 		bonuses: ['+5 фт. к дальности обзора за ед. навыка'],
 		module: 'core',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'deduction',
@@ -93,7 +93,7 @@ const SKILLS: Skill[] = [
 		defence: true,
 		bonuses: [],
 		module: 'core',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'fight',
@@ -103,7 +103,7 @@ const SKILLS: Skill[] = [
 		defence: true,
 		bonuses: [],
 		module: 'core',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'knowledge',
@@ -113,7 +113,7 @@ const SKILLS: Skill[] = [
 		defence: false,
 		bonuses: [],
 		module: 'core',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'contacts',
@@ -123,7 +123,7 @@ const SKILLS: Skill[] = [
 		defence: true,
 		bonuses: [],
 		module: 'core',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'agility',
@@ -133,7 +133,7 @@ const SKILLS: Skill[] = [
 		defence: true,
 		bonuses: ['+5 фт к перемещению за ед. навыка'],
 		module: 'core',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'medicine',
@@ -143,7 +143,7 @@ const SKILLS: Skill[] = [
 		defence: false,
 		bonuses: [],
 		module: 'core',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'craft',
@@ -153,7 +153,7 @@ const SKILLS: Skill[] = [
 		defence: false,
 		bonuses: [],
 		module: 'core',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'deceit',
@@ -163,7 +163,7 @@ const SKILLS: Skill[] = [
 		defence: true,
 		bonuses: [],
 		module: 'core',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'provocation',
@@ -173,7 +173,7 @@ const SKILLS: Skill[] = [
 		defence: false,
 		bonuses: [],
 		module: 'core',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'resources',
@@ -183,7 +183,7 @@ const SKILLS: Skill[] = [
 		defence: false,
 		bonuses: [],
 		module: 'core',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'stealth',
@@ -193,7 +193,7 @@ const SKILLS: Skill[] = [
 		defence: true,
 		bonuses: [],
 		module: 'core',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'shooting',
@@ -203,7 +203,7 @@ const SKILLS: Skill[] = [
 		defence: false,
 		bonuses: [],
 		module: 'core',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'constitution',
@@ -213,7 +213,7 @@ const SKILLS: Skill[] = [
 		defence: true,
 		bonuses: ['+15 ед. здоровья за ед. навыка'],
 		module: 'core',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'charisma',
@@ -223,8 +223,8 @@ const SKILLS: Skill[] = [
 		defence: true,
 		bonuses: [],
 		module: 'core',
-		status: ModuleStatus.New,
-	},
+		status: ModuleStatus.New
+	}
 ]
 
 export default {
@@ -233,7 +233,7 @@ export default {
 	character: CHARACTER,
 	other: {
 		baseHealth: BASE_HEALTH,
-		baseMental: BASE_MENTAL,
+		baseMental: BASE_MENTAL
 	},
-	experienceLevelCup: SKILL_LEVEL_CUP,
+	experienceLevelCup: SKILL_LEVEL_CUP
 } as Module

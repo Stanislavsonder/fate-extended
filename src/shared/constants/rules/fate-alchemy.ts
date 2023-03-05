@@ -5,7 +5,7 @@ const BASE_INTOXICATION = 20
 const MODULE_META: ModuleMeta = {
 	code: 'alchemy',
 	name: 'Toxicity',
-	icon: 'Alchemy',
+	icon: 'Alchemy'
 }
 
 const SKILLS: Skill[] = [
@@ -17,7 +17,7 @@ const SKILLS: Skill[] = [
 		defence: true,
 		bonuses: ['+15 ед безопасного порога интоксикации за ед. навыка'],
 		module: 'alchemy',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'constitution',
@@ -27,15 +27,15 @@ const SKILLS: Skill[] = [
 		defence: true,
 		bonuses: ['+20 ед безопасного порога интоксикации за ед. навыка'],
 		module: 'alchemy',
-		status: ModuleStatus.Changed,
-	},
+		status: ModuleStatus.Changed
+	}
 ]
 
 const CHARACTER: CharacterAlchemyModule = {
 	intoxication: {
 		modifier: 0,
-		current: BASE_INTOXICATION,
-	},
+		current: BASE_INTOXICATION
+	}
 }
 
 export default {
@@ -43,6 +43,6 @@ export default {
 	meta: MODULE_META,
 	character: CHARACTER,
 	other: {
-		baseIntoxication: BASE_INTOXICATION,
-	},
+		baseIntoxication: BASE_INTOXICATION
+	}
 } as Module

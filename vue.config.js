@@ -11,8 +11,8 @@ module.exports = defineConfig({
 		clientsClaim: true,
 		workboxPluginMode: 'InjectManifest',
 		workboxOptions: {
-			swSrc: './src/app/serviceWorkers/service-worker.js',
-		},
+			swSrc: './src/app/serviceWorkers/service-worker.js'
+		}
 	},
 	chainWebpack: config => {
 		config.entry('app').clear()
@@ -22,8 +22,8 @@ module.exports = defineConfig({
 		loaderOptions: {
 			scss: {
 				additionalData: `@import "./src/app/styles/media.scss";
-						 `,
-			},
-		},
-	},
+						 `
+			}
+		}
+	}
 })

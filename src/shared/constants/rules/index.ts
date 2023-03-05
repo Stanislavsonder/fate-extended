@@ -15,5 +15,5 @@ export default {
 	BASE_MENTAL: core.other.baseMental,
 	BASE_MANA: magic.other.baseMana,
 	BASE_INTOXICATION: alchemy.other.baseIntoxication,
-	LEVEL_CUPS: core.experienceLevelCup as number[],
+	LEVEL_CUPS: core.experienceLevelCup as number[]
 }

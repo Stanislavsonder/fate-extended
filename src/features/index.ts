@@ -33,5 +33,5 @@ export {
 	IntoxicationBar,
 	ManaBar,
 	MentalStateBar,
-	HealthBar,
+	HealthBar
 }

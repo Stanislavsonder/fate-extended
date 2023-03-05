@@ -17,6 +17,6 @@ const autoUpdateHeight = (element: HTMLTextAreaElement) => {
 
 export const useAutoHeight = () => {
 	return {
-		autoUpdateHeight,
+		autoUpdateHeight
 	}
 }

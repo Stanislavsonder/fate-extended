@@ -159,6 +159,6 @@ export const useCharactersStore = defineStore('character', () => {
 		addNewCharacter,
 		changeCharacter,
 		removeCharacter,
-		addSkillExperience,
+		addSkillExperience
 	}
 })

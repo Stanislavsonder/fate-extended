@@ -3,7 +3,7 @@ import { CharacterMagicModule, Module, ModuleMeta, ModuleStatus, Skill } from '@
 const MODULE_META: ModuleMeta = {
 	code: 'magic',
 	name: 'Magic & Wizardry',
-	icon: 'Magic',
+	icon: 'Magic'
 }
 
 const BASE_MANA = 0
@@ -17,7 +17,7 @@ const SKILLS: Skill[] = [
 		defence: true,
 		bonuses: ['+20 ед маны за ед. навыка'],
 		module: 'magic',
-		status: ModuleStatus.New,
+		status: ModuleStatus.New
 	},
 	{
 		name: 'will',
@@ -27,7 +27,7 @@ const SKILLS: Skill[] = [
 		defence: true,
 		bonuses: ['+30 ед маны за ед. навыка'],
 		module: 'magic',
-		status: ModuleStatus.Changed,
+		status: ModuleStatus.Changed
 	},
 	{
 		name: 'knowledge',
@@ -37,15 +37,15 @@ const SKILLS: Skill[] = [
 		defence: false,
 		bonuses: ['+3 максимум заклинаний за ед. навыка'],
 		module: 'magic',
-		status: ModuleStatus.Changed,
-	},
+		status: ModuleStatus.Changed
+	}
 ]
 
 const CHARACTER: CharacterMagicModule = {
 	mana: {
 		modifier: 0,
-		current: BASE_MANA,
-	},
+		current: BASE_MANA
+	}
 }
 
 export default {
@@ -53,6 +53,6 @@ export default {
 	meta: MODULE_META,
 	character: CHARACTER,
 	other: {
-		baseMana: BASE_MANA,
-	},
+		baseMana: BASE_MANA
+	}
 } as Module

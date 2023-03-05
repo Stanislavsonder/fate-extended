@@ -15,5 +15,5 @@ export {
 	InventorySection,
 	SkillsSection,
 	StuntsSection,
-	CharacterInfoSection,
+	CharacterInfoSection
 }

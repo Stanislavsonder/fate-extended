@@ -1,7 +1,7 @@
 export enum AspectType {
 	Concept = 'concept',
 	Neutral = 'neutral',
-	Problem = 'problem',
+	Problem = 'problem'
 }
 
 type CharacterModule = CharacterCoreModule | CharacterMagicModule | CharacterAlchemyModule
@@ -41,7 +41,7 @@ export type Stunt = {
 enum ConsequenceSeverity {
 	Easy,
 	Medium,
-	Hard,
+	Hard
 }
 
 export type Consequence = {
@@ -88,7 +88,7 @@ export type Character = CharacterCoreModule & CharacterAlchemyModule & Character
 export enum ModuleStatus {
 	New,
 	Changed,
-	Removed,
+	Removed
 }
 
 export type Skill = {
@@ -106,5 +106,5 @@ export enum RollType {
 	Overcome = 'overcome',
 	Advantage = 'advantage',
 	Attack = 'attack',
-	Defence = 'defence',
+	Defence = 'defence'
 }

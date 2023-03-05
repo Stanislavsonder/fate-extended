@@ -7,5 +7,5 @@ export default {
 	be: Belarus,
 	ru: Russia,
 	en: UnitedKingdom,
-	ua: Ukraine,
+	ua: Ukraine
 }

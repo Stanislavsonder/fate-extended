@@ -3,5 +3,5 @@ import { calculateExperienceForTheRoll, diceRoll, getResultWord } from '@/shared
 export default {
 	diceRoll,
 	getResultWord,
-	calculateExperienceForTheRoll,
+	calculateExperienceForTheRoll
 }
