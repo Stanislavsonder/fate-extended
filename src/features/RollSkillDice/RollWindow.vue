@@ -69,6 +69,7 @@ export default defineComponent({
 })
 </script>
 
+
 <style lang="scss">
 .skill-dice-roll {
 	padding: 16px;
@@ -118,157 +119,6 @@ export default defineComponent({
 		font-size: 26px;
 		font-weight: bold;
 	}
-
-	&__difficulty {
-		position: absolute;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		gap: 16px;
-		width: 100px;
-		height: 100px;
-		background: var(--primary);
-		border-radius: 0 13px 0 16px;
-		color: var(--white);
-		right: 0;
-		top: 0;
-		font-weight: bold;
-	}
-
-	&__difficulty-value {
-		font-size: 36px;
-	}
-
-	&__difficulty-button {
-		position: absolute;
-		display: grid;
-		place-content: center;
-		width: 36px;
-		height: 36px;
-		border: none;
-		border-radius: 0;
-		background: var(--primary);
-		color: var(--white);
-		left: 2px;
-
-		svg {
-			width: 100%;
-			fill: white;
-		}
-
-		&:hover {
-			filter: brightness(0.8);
-		}
-
-		&--up {
-			top: 0;
-			transform: translateX(-100%) rotate(180deg);
-		}
-
-		&--down {
-			transform: translateX(-100%);
-		}
-	}
-}
-
-.skill-dice-roll-skill {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-
-	&__circle {
-		position: relative;
-		z-index: 2;
-		height: 100px;
-		width: 100px;
-		border: 1px solid var(--primary);
-		border-radius: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-direction: column;
-		gap: 8px;
-		margin-bottom: 16px;
-	}
-
-	&__circle-bg {
-		position: absolute;
-		z-index: -1;
-		width: 100%;
-		height: 100%;
-		box-sizing: border-box;
-		border-radius: 100%;
-
-		&:after {
-			position: absolute;
-			content: '';
-			left: 0;
-			width: 100%;
-			height: 100%;
-			box-sizing: border-box;
-			background-color: var(--white);
-			border-radius: 100%;
-			transform: scale(0.9);
-		}
-	}
-
-	&__level {
-		font-size: 36px;
-		font-weight: bolder;
-	}
-
-	&__experience {
-		font-size: 12px;
-	}
-
-	&__name {
-		font-weight: bold;
-		font-size: 24px;
-	}
-
-	&__exp-gained {
-		position: absolute;
-		left: -100%;
-	}
-
-	&__bonus {
-		position: absolute;
-		display: grid;
-		width: 75px;
-		height: 36px;
-		font-size: 26px;
-		font-weight: bold;
-		right: -75%;
-	}
-
-	&__bonus-button {
-		position: absolute;
-		display: grid;
-		place-content: center;
-		background: transparent;
-		border-radius: 100%;
-		border: none;
-		width: 36px;
-		height: 36px;
-		right: 10px;
-
-		&:hover {
-			background: rgba(0, 0, 0, 0.1);
-		}
-
-		svg {
-			width: 100%;
-		}
-
-		&--up {
-			top: 0;
-			transform: translateY(-100%) rotate(180deg);
-		}
-		&--down {
-			transform: translateY(75%);
-		}
-	}
 }
 
 .skill-dice-roll-result {
@@ -282,19 +132,27 @@ export default defineComponent({
 		font-weight: bold;
 	}
 
-	&--success {
-		color: green;
+	&--mortal-strike {
+		color: blueviolet;
 	}
 
-	&--success-with-style {
+	&--success-with-style,
+	&--critical-hit {
 		color: gold;
 	}
 
-	&--fail {
-		color: orange;
+	&--success,
+	&--hit {
+		color: green;
 	}
 
-	&--critical-fail {
+	&--fail,
+	&--miss {
+		color: gray;
+	}
+
+	&--critical-fail,
+	&--critical-miss {
 		color: darkred;
 	}
 }

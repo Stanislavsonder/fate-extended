@@ -19,11 +19,6 @@ function useRoll(s: SkillProgress, rollType: RollType) {
 		return skill.experience + ' / ' + rules.LEVEL_CUPS[(skill.level || 0) - 1]
 	})
 
-	const gradient = computed(() => {
-		const p = ((skill.experience || 0) / rules.LEVEL_CUPS[(skill.level || 0) - 1]) * 100
-		return `linear-gradient(to top, #181818 0%, #181818 ${p}%, transparent ${p}%)`
-	})
-
 	function addExperience() {
 		if (isRollIsCounts.value) {
 			experienceGained.value = calculateExperienceForTheRoll(resultValue.value, difficulty.value, rollType)
@@ -70,7 +65,6 @@ function useRoll(s: SkillProgress, rollType: RollType) {
 		calculateResult,
 		addExperience,
 		getResultWord,
-		gradient,
 		experience,
 		result,
 		difficulty,

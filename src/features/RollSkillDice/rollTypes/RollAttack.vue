@@ -1,58 +1,16 @@
 <template>
 	<div class="skill-dice-roll__wrapper">
-		<div class="skill-dice-roll__difficulty">
-			<button
-				class="skill-dice-roll__difficulty-button skill-dice-roll__difficulty-button--down"
-				@click="difficulty--">
-				<Icon name="Caret" />
-			</button>
-			<button
-				class="skill-dice-roll__difficulty-button skill-dice-roll__difficulty-button--up"
-				@click="difficulty++">
-				<Icon name="Caret" />
-			</button>
-			<span class="skill-dice-roll__difficulty-value">
-				{{ difficulty }}
-			</span>
-			<span class="skill-dice-roll__difficulty-text">
-				{{ $t('difficulty') }}
-			</span>
-		</div>
-		<div class="skill-dice-roll-skill">
-			<div class="skill-dice-roll-skill__circle">
-				<span
-					v-show="result.length"
-					class="skill-dice-roll-skill__exp-gained">
-					{{ signed(experienceGained) }} {{ $t('exp') }}
-				</span>
-				<span class="skill-dice-roll-skill__bonus">
-					{{ signed(bonus) }}
-					<button
-						class="skill-dice-roll-skill__bonus-button skill-dice-roll-skill__bonus-button--up"
-						@click="bonus++">
-						<Icon name="Caret" />
-					</button>
-					<button
-						class="skill-dice-roll-skill__bonus-button skill-dice-roll-skill__bonus-button--down"
-						@click="bonus--">
-						<Icon name="Caret" />
-					</button>
-				</span>
-				<div
-					class="skill-dice-roll-skill__circle-bg"
-					:style="{ backgroundImage: gradient }" />
-				<p class="skill-dice-roll-skill__level">
-					{{ skill.level }}
-				</p>
-				<p class="skill-dice-roll-skill__experience">
-					{{ experience }}
-				</p>
-			</div>
-			<p class="skill-dice-roll-skill__name">
-				{{ $t(`skill__${skill.name}`) }}
-			</p>
-		</div>
-		<div class="skill-dice-roll__roll-result">
+		<RollDifficulty
+			v-if="isHitPreRolled && !isHitRolled"
+			v-model="difficulty" />
+		<SkillBubble
+			v-model:bonus="bonus"
+			:is-experience-displayed="result.length && isHitRolled"
+			:experience-gained="experienceGained"
+			:skill="skill" />
+		<div
+			v-show="result.length"
+			class="skill-dice-roll__roll-result">
 			<RollResult
 				:result="result"
 				:size="40" />
@@ -63,9 +21,16 @@
 		<div
 			v-show="result.length && !(isHitPreRolled && !isHitRolled)"
 			class="skill-dice-roll-result"
-			:class="`skill-dice-roll-result--${getResultWord(resultValue)}`">
+			:class="`skill-dice-roll-result--${getResultWord(resultValue, !isHitPreRolled && !isHitRolled)}`">
 			<p class="skill-dice-roll-result__word">
-				{{ $t(`roll-result__${getResultWord(resultValue, true)}${isHitRolled ? '--hit' : ''}`) }}
+				{{
+					$t(
+						`${isHitPreRolled || isHitRolled ? 'roll-hit' : 'roll-result'}__${getResultWord(
+							resultValue,
+							isHitPreRolled || isHitRolled
+						)}`
+					)
+				}}
 			</p>
 			<p class="skill-dice-roll-result__value">
 				{{ signed(resultValue, true) }}
@@ -92,14 +57,16 @@ import { defineComponent, PropType } from 'vue'
 import useRoll from './useRoll'
 import { RollType, SkillProgress } from '@/types'
 import { Button } from '@/shared/ui'
-import Icon from '@/shared/ui/Icon/Icon.vue'
 import RollResult from '@/shared/ui/RollResult/RollResult.vue'
+import RollDifficulty from '@/features/RollSkillDice/part/RollDifficulty.vue'
+import SkillBubble from '@/features/RollSkillDice/part/SkillBubble.vue'
 
 export default defineComponent({
 	name: 'RollAttack',
 	components: {
+		SkillBubble,
+		RollDifficulty,
 		RollResult,
-		Icon,
 		Button
 	},
 	props: {
@@ -128,6 +95,7 @@ export default defineComponent({
 		},
 		rollForHit() {
 			this.resultValue = this.calculateResult()
+			this.addExperience()
 			if (this.resultValue <= 0) {
 				this.isHitPreRolled = false
 				return
@@ -136,7 +104,7 @@ export default defineComponent({
 		},
 		rollForDamage() {
 			this.difficulty = 0
-			this.roll(true)
+			this.roll(false)
 			this.isHitPreRolled = false
 			this.isHitRolled = false
 		}

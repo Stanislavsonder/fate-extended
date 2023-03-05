@@ -43,20 +43,52 @@ enum RollResult {
 	'SuccessWithStyle' = 'success-with-style'
 }
 
-export function getResultWord(result: number, fightMode?: boolean): RollResult {
+enum HitWord {
+	'CriticalMiss' = 'critical-miss',
+	'Miss' = 'miss',
+	'SlidingHit' = 'sliding-hit',
+	'Hit' = 'hit',
+	'CriticalHit' = 'critical-hit',
+	'MortalStrike' = 'mortal-strike'
+}
+
+function getHitWord(result: number) {
+	if (result <= -4) {
+		return HitWord.CriticalMiss
+	}
+	if (result <= 0) {
+		return HitWord.Miss
+	}
+	if (result <= 1) {
+		return HitWord.SlidingHit
+	}
+	if (result <= 3) {
+		return HitWord.Hit
+	}
+	if (result <= 6) {
+		return HitWord.CriticalHit
+	}
+	return HitWord.MortalStrike
+}
+
+function getRollWord(result: number) {
 	if (result <= -4) {
 		return RollResult.CriticalFail
 	}
 	if (result <= -2) {
 		return RollResult.Fail
 	}
-	if (result <= (fightMode ? 0 : 1)) {
+	if (result <= 1) {
 		return RollResult.Stalemate
 	}
 	if (result <= 3) {
 		return RollResult.Success
 	}
 	return RollResult.SuccessWithStyle
+}
+
+export function getResultWord(result: number, fightMode?: boolean): RollResult | HitWord {
+	return fightMode ? getHitWord(result) : getRollWord(result)
 }
 
 export function calculateExperienceForTheRoll(result: number, difficulty: number, rollType: RollType): number {
